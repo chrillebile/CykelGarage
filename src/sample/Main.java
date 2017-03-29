@@ -22,7 +22,7 @@ public class Main extends Application {
         Button btn2 = new Button();
         btn2.setText("Lägg till customer");
         // See lambda expression
-        btn2.setOnAction(e -> /**Todo: Lägg till en användare*/);
+        btn2.setOnAction(e ->  {}/**Todo: Lägg till en användare*/);
 
 
 
