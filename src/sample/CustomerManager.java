@@ -12,10 +12,10 @@ public class CustomerManager {
      * Retunerar en lista med customers
      * @return
      */
-    public ArrayList<String> printCustomerNameList(){
-        ArrayList<String> temp = new ArrayList<>();
-        for (Customer c: customerList) {
-            temp.add(c.toString());
+    public String[] printCustomerNameList(){
+        String[] temp = new String[customerList.size()];
+        for (int i = 0; i < customerList.size(); i++) {
+            temp[i] = customerList.get(i).toString();
         }
         return temp;
     }
