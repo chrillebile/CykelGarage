@@ -1,4 +1,4 @@
-package sample;
+package BikeGarage;
 
 import java.util.Collection;
 

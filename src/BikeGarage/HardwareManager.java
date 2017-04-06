@@ -1,10 +1,8 @@
-package sample;
+package BikeGarage;
 
 import hardware_interfaces.*;
 import hardware_testdrivers.*;
-/**
- * Created by chrillebile on 2017-04-05.
- */
+
 public class HardwareManager {
     BarcodeScanner entryScanner;
 
@@ -17,6 +15,5 @@ public class HardwareManager {
 
 
     private void barcodeScanned() {
-        // Kod för vad som ska hända när en streckkod skannas
     }
 }
