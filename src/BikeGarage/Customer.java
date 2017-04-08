@@ -7,26 +7,26 @@ public class Customer {
 
     /**
      * Constructor for customers.
-     * @param firstName
-     * @param surname
-     * @param personNr
-     * @param pin
+     * @param firstName The customers first name
+     * @param surname The customers surname
+     * @param personNr The customers personal id-number
+     * @param pin The customers pin-code
      */
     public Customer(String firstName, String surname, String personNr, String pin){
         this.firstName = firstName;
         this.surname = surname;
         this.personNr = personNr;
         this.pin = pin;
-        this.regTime = regTime; //ToDo: Fixa detta
+        this.regTime = System.currentTimeMillis();
     }
 
     /**
-     * New customer used by startup
-     * @param firstName
-     * @param surname
-     * @param personNr
-     * @param pin
-     * @param regTime
+     * Constructor for customer used by startup
+     * @param firstName The customers first name
+     * @param surname The customers surname
+     * @param personNr The customers personal id-number
+     * @param pin The customers pin-code
+     * @param regTime The customers registration time
      */
     public Customer(String firstName, String surname, String personNr, String pin, long regTime){
         this.firstName = firstName;
@@ -37,35 +37,38 @@ public class Customer {
     }
 
     /**
-     * 
-     * @return Returns customers first name
+     * @return The customers first name
      */
     public String getFirstName(){
         return firstName;
     }
 
     /**
-     *
-     * @return Returns customers surname
+     * @return The customers surname
      */
     public String getSurname(){
         return surname;
     }
 
     /**
-     *
-     * @return Returns person-number
+     * @return The customers personal id-number
      */
     public String getPersonNr(){
         return personNr;
     }
 
     /**
-     *
-     * @return Returns pin
+     * @return The customers pin
      */
     public String getPin(){
         return pin;
+    }
+
+    /**
+     * @return The bike's registration time
+     */
+    public long getRegTime(){
+        return regTime;
     }
 
     /**
