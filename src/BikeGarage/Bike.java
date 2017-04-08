@@ -12,19 +12,25 @@ public class Bike {
      * @param customer The bike's owner.
      */
     public Bike(String barcodeNr, Customer customer){
-
+        this.barcodeNr = barcodeNr;
+        this.customer = customer;
+        this.regTime = System.currentTimeMillis();
     }
 
     /**
      * Constructor for bikes. This is primarily used by the database to create bikes during startup.
-     * @param customer The owner.
      * @param barcodeNr The unique barcode.
+     * @param customer The owner.
      * @param regTime Time when the bike was registered.
      * @param entryTime When the bike last entered the garage.
      * @param exitTime When the bike last exited the
      */
-    public Bike(Customer customer, String barcodeNr, long regTime, long entryTime, long exitTime){
-
+    public Bike(String barcodeNr, Customer customer, long regTime, long entryTime, long exitTime){
+        this.barcodeNr = barcodeNr;
+        this.customer = customer;
+        this.regTime = regTime;
+        this.entryTime = entryTime;
+        this.exitTime = exitTime;
     }
 
     /**
@@ -32,35 +38,35 @@ public class Bike {
      * @return The bike's customer
      */
     public Customer getCustomer(){
-        return null;
+        return customer;
     }
 
     /**
      * @return The bike's barcodeNr
      */
     public String getBarcodeNr(){
-        return null;
+        return barcodeNr;
     }
 
     /**
      * @return The bike's registration time
      */
     public long getRegTime(){
-        return 0;
+        return regTime;
     }
 
     /**
      * @return Time of entry
      */
     public long getEntryTime(){
-        return 0;
+        return entryTime;
     }
 
     /**
      * @return Time of exit
      */
     public long getExitTime(){
-        return 0;
+        return exitTime;
     }
 
     /**
@@ -68,7 +74,7 @@ public class Bike {
      * @param customer
      */
     public void setCustomer(Customer customer){
-
+        this.customer = customer;
     }
 
     /**
@@ -76,7 +82,7 @@ public class Bike {
      * @param entryTime
      */
     public void setEntryTime(long entryTime){
-
+        this.entryTime = entryTime;
     }
 
     /**
@@ -84,7 +90,7 @@ public class Bike {
      * @param exitTime
      */
     public void setExitTime(long exitTime){
-
+        this.exitTime = exitTime;
     }
 
     /**
@@ -93,6 +99,10 @@ public class Bike {
      * @return
      */
     public boolean equals(Object object){
-        return false;
+        if(object instanceof Bike){
+            return barcodeNr == ((Bike) object).barcodeNr;
+        } else {
+            return false;
+        }
     }
 }
