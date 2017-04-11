@@ -19,6 +19,11 @@ public class CustomerManager {
      * @return
      */
     public Customer findCustomerByPersonNr(String personNr){
+        for(Customer c: customerList){
+            if(c.getPersonNr() == personNr){
+                return c;
+            }
+        }
         return null;
     }
 
@@ -28,6 +33,11 @@ public class CustomerManager {
      * @return
      */
     public boolean checkIfPinExist(String pin){
+        for(Customer c: customerList){
+            if(c.getPin() == pin){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -36,7 +46,7 @@ public class CustomerManager {
      * @return
      */
     public ArrayList<Customer> getCustomerList(){
-        return null;
+        return customerList;
     }
 
     /**
@@ -48,7 +58,13 @@ public class CustomerManager {
      * @return
      */
     public boolean createCustomer(String firstName, String surname, String personNr, String pin){
-        return false;
+        Customer temp1 = findCustomerByPersonNr(personNr);
+        if(temp1 != null){
+            customerList.add(temp1);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     /**
@@ -57,7 +73,8 @@ public class CustomerManager {
      * @return
      */
     public boolean removeCustomer(String personNr){
-        return false;
+        Customer temp = findCustomerByPersonNr(personNr);
+        return customerList.remove(temp);
     }
 
     /**
@@ -68,7 +85,14 @@ public class CustomerManager {
      * @return
      */
     public boolean editCustomerName(String personNr, String firsName, String surname){
-        return false;
+        Customer temp = findCustomerByPersonNr(personNr);
+        if(temp != null){
+            temp.setFirstName(firsName);
+            temp.setSurname(surname);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     /**
@@ -78,6 +102,12 @@ public class CustomerManager {
      * @return
      */
     public boolean editCustomerPin(String personNr, String pin){
-        return false;
+        Customer temp = findCustomerByPersonNr(personNr);
+        if(temp != null){
+            temp.setPin(pin);
+            return true;
+        }else {
+            return false;
+        }
     }
 }
