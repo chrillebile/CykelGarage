@@ -22,7 +22,7 @@ public class AdminManager {
      * @return A list of bikes a user has.
      */
     public ArrayList<Bike> findBikesByCustomer(String personNr){
-
+        return null;
     }
 
     /**
@@ -34,7 +34,7 @@ public class AdminManager {
      * @return The created user.
      */
     public Customer createCustomer(String firstName, String surname, String personNr, String pin){
-
+        return null;
     }
 
     /**
@@ -43,7 +43,7 @@ public class AdminManager {
      * @return Whether the removal was successful.
      */
     public boolean removeCustomer(String personNr){
-
+        return false;
     }
 
     /**
@@ -52,7 +52,7 @@ public class AdminManager {
      * @return The created bike.
      */
     public Bike addBike(Customer customer){
-
+        return null;
     }
 
     /**
@@ -61,7 +61,7 @@ public class AdminManager {
      * @return The bike that has been created.
      */
     public Bike addBike(String personNr){
-
+        return null;
     }
 
     /**
@@ -70,21 +70,21 @@ public class AdminManager {
      * @return Whether the bike has been successfully removed.
      */
     public boolean removeBike(String barcodeNr){
-
+        return false;
     }
 
     /**
      * @return The list of stored customers.
      */
     public ArrayList<Customer> getCustomerList(){
-
+        return null;
     }
 
     /**
      * @return The list of all stored bikes.
      */
     public ArrayList<Bike> getBikeList(){
-
+        return null;
     }
 
     /**
@@ -93,7 +93,7 @@ public class AdminManager {
      * @return The found customer.
      */
     public Customer findCustomer(String personNr){
-
+        return null;
     }
 
     /**
@@ -102,20 +102,20 @@ public class AdminManager {
      * @return The found bike.
      */
     public Bike findBike(String barcodeNr){
-
+        return null;
     }
 
     /**
      * @return Number of free parking spots.
      */
     public int numberOfFreeParkingSpots(){
-
+        return 0;
     }
 
     /**
      * @return Total number of parking spots the garage has.
      */
     public int totalNumberOfParkingSpots(){
-
+        return 0;
     }
 }

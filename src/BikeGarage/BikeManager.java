@@ -17,7 +17,7 @@ public class BikeManager {
      * @return The found bike.
      */
     public Bike findBikeByPersonNr(String personNr){
-
+        return null;
     }
 
     /**
@@ -26,14 +26,14 @@ public class BikeManager {
      * @return The found bike.
      */
     public Bike findBikeByBarcodeNr(String barcodeNr){
-
+        return null;
     }
 
     /**
      * @return A list of all bikes stored in the system.
      */
     public ArrayList<Bike> getBikeList(){
-
+        return null;
     }
 
     /**
@@ -42,7 +42,7 @@ public class BikeManager {
      * @return The complete bike object, including the customer.
      */
     public Bike addBike(Customer customer){
-
+        return null;
     }
 
     /**
@@ -51,7 +51,7 @@ public class BikeManager {
      * @return Whether the removal was successful.
      */
     public boolean removeBike(String barcodeNr){
-
+        return false;
     }
 
     /**
@@ -61,7 +61,7 @@ public class BikeManager {
      * @return Whether the edit was successful.
      */
     public boolean editBikeCustomer(String barcodeNr, Customer newCustomer){
-
+        return false;
     }
 
     /**
@@ -71,7 +71,7 @@ public class BikeManager {
      * @return Whether the edit was successful.
      */
     public boolean setBikeEntryTime(String barcodeNr, long entryTime){
-
+        return false;
     }
 
     /**
@@ -81,7 +81,7 @@ public class BikeManager {
      * @return Whether the edit was successful.
      */
     public boolean setBikeExitTime(String barcodenr, long exitTime){
-
+        return false;
     }
 
     /**
@@ -90,7 +90,7 @@ public class BikeManager {
      * @return Whether the bike is parked.
      */
     public boolean isBikeParked(String barcodeNr){
-
+        return false;
     }
 
 
