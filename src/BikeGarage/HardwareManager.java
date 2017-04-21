@@ -13,6 +13,8 @@ public class HardwareManager {
     private PincodeTerminal pincodeTerminal;
 
 
+    private StringBuilder pincodeTerminalInput;
+
     /**
      * Create the class that handles connection to the hardware
      * @param customerManager Manager that manages customers. The hardware uses this to edit customers.
@@ -52,6 +54,10 @@ public class HardwareManager {
      */
     public void initPincodeTerminal(){
         pincodeTerminal = new PincodeTerminalTestDriver("PincodeTerminal", 0, 0);
+        // Create the stringbuilder that will store the input
+        pincodeTerminalInput = new StringBuilder();
+
+        // This handles the character input
         pincodeTerminal.registerObserver(s -> handlePincodeTerminalInput(s));
     }
 
@@ -61,7 +67,24 @@ public class HardwareManager {
      * @param character The character input.
      */
     private void handlePincodeTerminalInput(char character) {
+        // The character that is sent to this method is appended to the global variable that stores current char input.
+        // This method does a check to see the number of characters in that string. If the characters are more than the max characters allowed, the variable is emptied.
+        pincodeTerminalInput.append(character);
 
+        // The PIN has reached it's required length and is sent on for verification
+        if(pincodeTerminalInput.length() >= 5){
+            // TODO - Verify times given
+            // If the PIN exists then the door should be opened
+            if(customerManager.checkIfPinExist(pincodeTerminalInput.toString())){
+                electronicLock.open(5);
+                pincodeTerminal.lightLED(PincodeTerminal.GREEN_LED, 5);
+            }
+            else{
+                pincodeTerminal.lightLED(PincodeTerminal.RED_LED, 2);
+            }
+            // Empty the string
+            pincodeTerminalInput.setLength(0);
+        }
     }
 
     /**
