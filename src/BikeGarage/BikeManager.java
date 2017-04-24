@@ -31,11 +31,11 @@ public class BikeManager {
     /**
      * Search after a bike given its barcode number.
      * @param barcodeNr Unique identification for the bike.
-     * @return The found bike. If not found, return null. 
+     * @return The found bike. If not found, return null.
      */
-    public Bike findBikeByBarcodeNr(String barcodeNr){
+    public Bike findBikeByBarcodeNr(long barcodeNr){
         for (Bike bike : bikeList) {
-            if(bike.getBarcodeNr().equals(barcodeNr)){
+            if(bike.getBarcodeNr() == barcodeNr){
                 return bike;
             }
         }
