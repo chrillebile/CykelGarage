@@ -14,18 +14,31 @@ public class BikeManager {
     /**
      * Search after a bike that is owned by a specific user.
      * @param personNr The user's personal identification number.
-     * @return The found bike.
+     * @return The found bike. If not found, return null.
      */
     public Bike findBikeByPersonNr(String personNr){
+        for (Bike bike : bikeList) {
+            // Check so that the bike's personnr matches the given personr
+            if(bike.getCustomer().getPersonNr().equals(personNr)){
+                return bike;
+            }
+        }
+
+        // If no bike is found, return null
         return null;
     }
 
     /**
      * Search after a bike given its barcode number.
      * @param barcodeNr Unique identification for the bike.
-     * @return The found bike.
+     * @return The found bike. If not found, return null. 
      */
     public Bike findBikeByBarcodeNr(String barcodeNr){
+        for (Bike bike : bikeList) {
+            if(bike.getBarcodeNr().equals(barcodeNr)){
+                return bike;
+            }
+        }
         return null;
     }
 
