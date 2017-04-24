@@ -25,6 +25,7 @@ public class HardwareManager {
         this.bikeManager = bikeManager;
         initElectronicLock();
         initPincodeTerminal();
+        initBarcodeScanner();
     }
 
     /**
@@ -92,5 +93,9 @@ public class HardwareManager {
      * @param barcode The input barcode
      */
     private void handleScannedBarcode(String barcode) {
+        // Check so that there is a bike with that barcode
+        if(bikeManager.findBikeByBarcodeNr(barcode)!= null){
+            electronicLock.open(10);
+        }
     }
 }
