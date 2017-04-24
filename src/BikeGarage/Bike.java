@@ -3,7 +3,7 @@ package BikeGarage;
 public class Bike {
 
     private Customer customer;
-    private String barcodeNr;
+    private long barcodeNr;
     private long regTime, entryTime, exitTime;
 
     /**
@@ -11,7 +11,7 @@ public class Bike {
      * @param barcodeNr The assigned unique barcode the bike should have.
      * @param customer The bike's owner.
      */
-    public Bike(String barcodeNr, Customer customer){
+    public Bike(long barcodeNr, Customer customer){
         this.barcodeNr = barcodeNr;
         this.customer = customer;
         this.regTime = System.currentTimeMillis();
@@ -25,7 +25,7 @@ public class Bike {
      * @param entryTime When the bike last entered the garage.
      * @param exitTime When the bike last exited the
      */
-    public Bike(String barcodeNr, Customer customer, long regTime, long entryTime, long exitTime){
+    public Bike(long barcodeNr, Customer customer, long regTime, long entryTime, long exitTime){
         this.barcodeNr = barcodeNr;
         this.customer = customer;
         this.regTime = regTime;
@@ -44,7 +44,7 @@ public class Bike {
     /**
      * @return The bike's barcodeNr
      */
-    public String getBarcodeNr(){
+    public long getBarcodeNr(){
         return barcodeNr;
     }
 
