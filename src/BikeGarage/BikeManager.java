@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class BikeManager {
     private ArrayList<Bike>  bikeList;
-    private long lastUsedBarcode;
 
     /**
      * The manager that manages bikes registered in the garage.
@@ -152,6 +151,12 @@ public class BikeManager {
      * @return Whether the bike is parked.
      */
     public boolean isBikeParked(long barcodeNr){
+        for (Bike bike: bikeList) {
+            if(bike.getBarcodeNr() == barcodeNr){
+                return bike.getParkingStatus();
+            }
+        }
+
         return false;
     }
 

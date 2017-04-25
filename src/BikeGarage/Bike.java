@@ -116,4 +116,17 @@ public class Bike {
             return false;
         }
     }
+
+    /**
+     * Returns whether a bike is parked in the garage. If no exitTime is defined(set as 0), then the bike is in the garage
+     * @return True if bike is parked in the garage.
+     */
+    public boolean getParkingStatus(){
+        // If exitTime is null, the bike is in
+        if(exitTime == 0){
+            return true;
+        }
+
+        return false;
+    }
 }
