@@ -83,7 +83,7 @@ public class BikeManager {
      * @param barcodeNr Unique identification for the bike.
      * @return Whether the removal was successful.
      */
-    public boolean removeBike(String barcodeNr){
+    public boolean removeBike(long barcodeNr){
         return false;
     }
 
@@ -93,7 +93,7 @@ public class BikeManager {
      * @param newCustomer The bike's customer.
      * @return Whether the edit was successful.
      */
-    public boolean editBikeCustomer(String barcodeNr, Customer newCustomer){
+    public boolean editBikeCustomer(long barcodeNr, Customer newCustomer){
         return false;
     }
 
@@ -103,7 +103,7 @@ public class BikeManager {
      * @param entryTime The time specified in unix time.
      * @return Whether the edit was successful.
      */
-    public boolean setBikeEntryTime(String barcodeNr, long entryTime){
+    public boolean setBikeEntryTime(long barcodeNr, long entryTime){
         return false;
     }
 
@@ -113,7 +113,7 @@ public class BikeManager {
      * @param exitTime The exit time specified in unix time.
      * @return Whether the edit was successful.
      */
-    public boolean setBikeExitTime(String barcodenr, long exitTime){
+    public boolean setBikeExitTime(long barcodenr, long exitTime){
         return false;
     }
 
@@ -122,7 +122,7 @@ public class BikeManager {
      * @param barcodeNr Unique identification for the bike.
      * @return Whether the bike is parked.
      */
-    public boolean isBikeParked(String barcodeNr){
+    public boolean isBikeParked(long barcodeNr){
         return false;
     }
 
