@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 public class BikeManager {
     private ArrayList<Bike>  bikeList;
+    private long lastUsedBarcode;
 
     /**
      * The manager that manages bikes registered in the garage.
      */
     public BikeManager(){
+        bikeList = new ArrayList<Bike>();
     }
 
     /**
@@ -46,7 +48,7 @@ public class BikeManager {
      * @return A list of all bikes stored in the system.
      */
     public ArrayList<Bike> getBikeList(){
-        return null;
+        return bikeList;
     }
 
     /**
@@ -55,7 +57,25 @@ public class BikeManager {
      * @return The complete bike object, including the customer.
      */
     public Bike addBike(Customer customer){
-        return null;
+        Bike bikeToBeAdded = new Bike(getNextFreeBarcode(), customer);
+        bikeList.add(bikeToBeAdded);
+        return bikeToBeAdded;
+    }
+
+    /**
+     * Iterate through the bikelist and get the next free barcode. Ideally to be used when adding a bike.
+     * @return The next barcode. This barcode is not used by anyone and is one (1) larger than the current maximum barcode.
+     */
+    private long getNextFreeBarcode(){
+        long localMaximumBarcode = 0;
+        for (Bike bike : bikeList) {
+            if(bike.getBarcodeNr() > localMaximumBarcode){
+                localMaximumBarcode = bike.getBarcodeNr();
+            }
+        }
+
+        // localMaximumBarcode is already taken. Since it is maximum, localMaximumBarcode + 1 is not taken.
+        return localMaximumBarcode + 1;
     }
 
     /**
