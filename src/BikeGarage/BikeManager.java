@@ -84,6 +84,15 @@ public class BikeManager {
      * @return Whether the removal was successful.
      */
     public boolean removeBike(long barcodeNr){
+        for (Bike bike : bikeList) {
+            // Check that the barcodes match
+            if(bike.getBarcodeNr() == barcodeNr){
+                bikeList.remove(bike);
+                // Removal was successful
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -94,6 +103,14 @@ public class BikeManager {
      * @return Whether the edit was successful.
      */
     public boolean editBikeCustomer(long barcodeNr, Customer newCustomer){
+        for (Bike bike: bikeList) {
+            if(bike.getBarcodeNr() == barcodeNr){
+                bike.setCustomer(newCustomer);
+
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -104,16 +121,28 @@ public class BikeManager {
      * @return Whether the edit was successful.
      */
     public boolean setBikeEntryTime(long barcodeNr, long entryTime){
+        for (Bike bike : bikeList) {
+            if(bike.getBarcodeNr() == barcodeNr){
+                bike.setEntryTime(entryTime);
+                return true;
+            }
+        }
         return false;
     }
 
     /**
      * Set a bike's exit time.
-     * @param barcodenr Unique identification for the bike.
+     * @param barcodeNr Unique identification for the bike.
      * @param exitTime The exit time specified in unix time.
      * @return Whether the edit was successful.
      */
-    public boolean setBikeExitTime(long barcodenr, long exitTime){
+    public boolean setBikeExitTime(long barcodeNr, long exitTime){
+        for (Bike bike : bikeList) {
+            if(bike.getBarcodeNr() == barcodeNr){
+                bike.setExitTime(exitTime);
+                return true;
+            }
+        }
         return false;
     }
 
