@@ -42,10 +42,21 @@ public class Bike {
     }
 
     /**
-     * @return The bike's barcodeNr
+     * Get a bikes barcodeNr in long form. Notice: There is no guarantee for it to be 5 digits.
+     * @return The bike's barcodeNr in long form
      */
     public long getBarcodeNr(){
         return barcodeNr;
+    }
+
+    /**
+     * Get a bike's barcode in string form. This will return a 5 digit barcodeNr. Use this when printing/showing barcode.
+     * @return The bike's barcodeNr in string form
+     */
+    public String getBarcodeNrInString(){
+        String returnedString =  String.format("%05d", barcodeNr);
+
+        return returnedString;
     }
 
     /**
