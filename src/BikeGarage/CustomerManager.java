@@ -66,7 +66,7 @@ public class CustomerManager {
                 customer = new Customer(firstName, surname, personNr, pin);
             }
             else {
-                customer = new Customer(firstName, surname, personNr, pin);
+                customer = new Customer(firstName, surname, personNr, pin, regTime);
             }
             customerList.add(customer);
             return true;
