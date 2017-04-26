@@ -9,23 +9,37 @@ public class BikeManager {
      * The manager that manages bikes registered in the garage.
      */
     public BikeManager(){
+        bikeList = new ArrayList<Bike>();
     }
 
     /**
      * Search after a bike that is owned by a specific user.
      * @param personNr The user's personal identification number.
-     * @return The found bike.
+     * @return The found bike. If not found, return null.
      */
     public Bike findBikeByPersonNr(String personNr){
+        for (Bike bike : bikeList) {
+            // Check so that the bike's personnr matches the given personr
+            if(bike.getCustomer().getPersonNr().equals(personNr)){
+                return bike;
+            }
+        }
+
+        // If no bike is found, return null
         return null;
     }
 
     /**
      * Search after a bike given its barcode number.
      * @param barcodeNr Unique identification for the bike.
-     * @return The found bike.
+     * @return The found bike. If not found, return null.
      */
-    public Bike findBikeByBarcodeNr(String barcodeNr){
+    public Bike findBikeByBarcodeNr(long barcodeNr){
+        for (Bike bike : bikeList) {
+            if(bike.getBarcodeNr() == barcodeNr){
+                return bike;
+            }
+        }
         return null;
     }
 
@@ -33,7 +47,7 @@ public class BikeManager {
      * @return A list of all bikes stored in the system.
      */
     public ArrayList<Bike> getBikeList(){
-        return null;
+        return bikeList;
     }
 
     /**
@@ -42,7 +56,25 @@ public class BikeManager {
      * @return The complete bike object, including the customer.
      */
     public Bike addBike(Customer customer){
-        return null;
+        Bike bikeToBeAdded = new Bike(getNextFreeBarcode(), customer);
+        bikeList.add(bikeToBeAdded);
+        return bikeToBeAdded;
+    }
+
+    /**
+     * Iterate through the bikelist and get the next free barcode. Ideally to be used when adding a bike.
+     * @return The next barcode. This barcode is not used by anyone and is one (1) larger than the current maximum barcode.
+     */
+    private long getNextFreeBarcode(){
+        long localMaximumBarcode = 0;
+        for (Bike bike : bikeList) {
+            if(bike.getBarcodeNr() > localMaximumBarcode){
+                localMaximumBarcode = bike.getBarcodeNr();
+            }
+        }
+
+        // localMaximumBarcode is already taken. Since it is maximum, localMaximumBarcode + 1 is not taken.
+        return localMaximumBarcode + 1;
     }
 
     /**
@@ -50,7 +82,16 @@ public class BikeManager {
      * @param barcodeNr Unique identification for the bike.
      * @return Whether the removal was successful.
      */
-    public boolean removeBike(String barcodeNr){
+    public boolean removeBike(long barcodeNr){
+        for (Bike bike : bikeList) {
+            // Check that the barcodes match
+            if(bike.getBarcodeNr() == barcodeNr){
+                bikeList.remove(bike);
+                // Removal was successful
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -60,7 +101,15 @@ public class BikeManager {
      * @param newCustomer The bike's customer.
      * @return Whether the edit was successful.
      */
-    public boolean editBikeCustomer(String barcodeNr, Customer newCustomer){
+    public boolean editBikeCustomer(long barcodeNr, Customer newCustomer){
+        for (Bike bike: bikeList) {
+            if(bike.getBarcodeNr() == barcodeNr){
+                bike.setCustomer(newCustomer);
+
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -70,17 +119,29 @@ public class BikeManager {
      * @param entryTime The time specified in unix time.
      * @return Whether the edit was successful.
      */
-    public boolean setBikeEntryTime(String barcodeNr, long entryTime){
+    public boolean setBikeEntryTime(long barcodeNr, long entryTime){
+        for (Bike bike : bikeList) {
+            if(bike.getBarcodeNr() == barcodeNr){
+                bike.setEntryTime(entryTime);
+                return true;
+            }
+        }
         return false;
     }
 
     /**
      * Set a bike's exit time.
-     * @param barcodenr Unique identification for the bike.
+     * @param barcodeNr Unique identification for the bike.
      * @param exitTime The exit time specified in unix time.
      * @return Whether the edit was successful.
      */
-    public boolean setBikeExitTime(String barcodenr, long exitTime){
+    public boolean setBikeExitTime(long barcodeNr, long exitTime){
+        for (Bike bike : bikeList) {
+            if(bike.getBarcodeNr() == barcodeNr){
+                bike.setExitTime(exitTime);
+                return true;
+            }
+        }
         return false;
     }
 
@@ -89,7 +150,13 @@ public class BikeManager {
      * @param barcodeNr Unique identification for the bike.
      * @return Whether the bike is parked.
      */
-    public boolean isBikeParked(String barcodeNr){
+    public boolean isBikeParked(long barcodeNr){
+        for (Bike bike: bikeList) {
+            if(bike.getBarcodeNr() == barcodeNr){
+                return bike.getParkingStatus();
+            }
+        }
+
         return false;
     }
 

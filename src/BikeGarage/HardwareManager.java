@@ -93,8 +93,11 @@ public class HardwareManager {
      * @param barcode The input barcode
      */
     private void handleScannedBarcode(String barcode) {
+        // TODO - add error catching
+        long barcodeInLong = Long.parseLong(barcode);
+
         // Check so that there is a bike with that barcode
-        if(bikeManager.findBikeByBarcodeNr(barcode)!= null){
+        if(bikeManager.findBikeByBarcodeNr(barcodeInLong)!= null){
             electronicLock.open(10);
         }
     }
