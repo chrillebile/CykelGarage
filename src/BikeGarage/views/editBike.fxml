@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.TextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="190.0" layoutY="60.0" text="Barcode Nr">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets right="14.0" />
+         </padding>
+      </Label>
+      <Label layoutX="218.0" layoutY="88.0" text="Ägare">
+         <padding>
+            <Insets right="14.0" />
+         </padding>
+      </Label>
+      <TextField fx:id="tbxBikeBarcode" disable="true" layoutX="264.0" layoutY="55.0" />
+      <TextField fx:id="tbxBikeOwner" layoutX="264.0" layoutY="83.0" />
+      <Label layoutX="211.0" layoutY="118.0" text="Parkerad">
+         <padding>
+            <Insets right="14.0" />
+         </padding>
+      </Label>
+      <ComboBox fx:id="cbxParkedState" layoutX="264.0" layoutY="113.0" prefWidth="150.0" />
+      <Button fx:id="btnSpara" layoutX="277.0" layoutY="188.0" mnemonicParsing="false" text="Spara" />
+   </children>
+</AnchorPane>

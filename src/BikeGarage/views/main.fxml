@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane fx:controller="BikeGarage.WindowManager" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane prefHeight="400.0" prefWidth="900.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <MenuBar BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem fx:id="menuBtnClose" mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Statistik">
+                  <items>
+                    <MenuItem fx:id="menuBtnNumberOfUsers" mnemonicParsing="false" text="Antal användare: " />
+                        <MenuItem fx:id="menuBtnNumberOfBikes" mnemonicParsing="false" text="Antal cyklar" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </top>
+         <center>
+            <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <BorderPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+                           <center>
+                              <TableView fx:id="tblUserList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                <columns>
+                                  <TableColumn fx:id="tblColUserPersonnr" prefWidth="75.0" text="Personnr" />
+                                  <TableColumn fx:id="tblColUserFirstName" prefWidth="75.0" text="Förnamn" />
+                                    <TableColumn fx:id="tblColUserLastName" prefWidth="75.0" text="Efternamn" />
+                                    <TableColumn fx:id="tblColUserRegisterTime" prefWidth="101.0" text="Registreringstid" />
+                                    <TableColumn fx:id="tblColUserTelephoneNr" text="Telefonnr" />
+                                </columns>
+                              </TableView>
+                           </center>
+                           <bottom>
+                              <AnchorPane prefHeight="87.0" prefWidth="418.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="btnAddUser" layoutX="14.0" layoutY="19.0" mnemonicParsing="false" text="Lägg till" onAction="#handleButton"/>
+                                    <Button fx:id="btnRemoveUser" layoutX="88.0" layoutY="19.0" mnemonicParsing="false" text="Ta bort" />
+                                    <Button fx:id="btnEditUser" layoutX="157.0" layoutY="19.0" mnemonicParsing="false" text="Ändra" />
+                                 </children>
+                              </AnchorPane>
+                           </bottom>
+                           <top>
+                              <TextField fx:id="tbxSearchPersonalNr" promptText="Sök - personnr" BorderPane.alignment="CENTER" />
+                           </top>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <BorderPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+                           <center>
+                              <TableView fx:id="tblBikeList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                <columns>
+                                  <TableColumn fx:id="tblColBikeBarcode" prefWidth="75.0" text="Streckkod" />
+                                  <TableColumn fx:id="tblColBikeOwner" prefWidth="75.0" text="Ägare" />
+                                    <TableColumn fx:id="tblColBikeParkingStart" prefWidth="128.0" text="Starttid för parkering" />
+                                    <TableColumn fx:id="tblColBikeParkingEnd" prefWidth="136.0" text="Sluttid för parkering" />
+                                </columns>
+                              </TableView>
+                           </center>
+                           <bottom>
+                              <AnchorPane prefHeight="87.0" prefWidth="418.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="btnAddBike" layoutX="7.0" layoutY="14.0" mnemonicParsing="false" text="Lägg till" />
+                                    <Button fx:id="btnRemoveBike" layoutX="85.0" layoutY="14.0" mnemonicParsing="false" text="Ta bort" />
+                                    <Button fx:id="btnEditBike" layoutX="157.0" layoutY="14.0" mnemonicParsing="false" text="Ändra" />
+                                 </children>
+                              </AnchorPane>
+                           </bottom>
+                           <top>
+                              <TextField fx:id="tbxSearchBarcode" promptText="Sök - barcode" BorderPane.alignment="CENTER" />
+                           </top>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
