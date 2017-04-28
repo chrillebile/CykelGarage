@@ -109,7 +109,7 @@ public class DatabaseManager {
         try {
             fileReader = new BufferedReader(new FileReader(Config.FILENAME_CONFIG));
             fileReader.readLine();
-            config.setMaxParkingSports(fileReader.read());
+            config.setMaxParkingSports(Integer.parseInt(fileReader.readLine()));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -136,11 +136,11 @@ public class DatabaseManager {
                 fileWriter.append(COMMA_DELIMITER);
                 fileWriter.append(b.getCustomer().getPersonNr());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append((char)b.getRegTime());
+                fileWriter.append(String.valueOf(b.getRegTime()));
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append((char)b.getEntryTime());
+                fileWriter.append(String.valueOf(b.getEntryTime()));
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append((char)b.getExitTime());
+                fileWriter.append(String.valueOf(b.getExitTime()));
                 fileWriter.append(NEW_LINE_SEPARATOR);
             }
         } catch (Exception e) {
@@ -175,7 +175,7 @@ public class DatabaseManager {
                 fileWriter.append(COMMA_DELIMITER);
                 fileWriter.append(c.getPhoneNr());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append((char) c.getRegTime());
+                fileWriter.append(String.valueOf(c.getRegTime()));
                 fileWriter.append(NEW_LINE_SEPARATOR);
             }
         } catch (Exception e) {
@@ -198,7 +198,7 @@ public class DatabaseManager {
             fileWriter = new FileWriter(Config.FILENAME_CONFIG);
             fileWriter.append(FILE_HEADER_CONFIG.toString());
             fileWriter.append(NEW_LINE_SEPARATOR);
-            fileWriter.append((char)Config.MAX_PARKING_SPOTS);
+            fileWriter.append(String.valueOf(Config.MAX_PARKING_SPOTS));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
