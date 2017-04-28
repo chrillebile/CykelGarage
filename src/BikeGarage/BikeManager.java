@@ -62,6 +62,19 @@ public class BikeManager {
     }
 
     /**
+     * Add a bike used by DatabaseManager
+     * @param barcodeNr Barcode number
+     * @param customer Customer
+     * @param regTime Registration time
+     * @param entryTime Entry time
+     * @param exitTime Exit time
+     */
+    public void addBike(long barcodeNr, Customer customer, long regTime, long entryTime, long exitTime){
+        Bike bikeToBeAdded = new Bike(barcodeNr, customer, regTime, entryTime, exitTime);
+        bikeList.add(bikeToBeAdded);
+    }
+
+    /**
      * Iterate through the bikelist and get the next free barcode. Ideally to be used when adding a bike.
      * @return The next barcode. This barcode is not used by anyone and is one (1) larger than the current maximum barcode.
      */

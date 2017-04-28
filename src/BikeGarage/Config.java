@@ -1,17 +1,31 @@
 package BikeGarage;
 
 public class Config {
-    public static int NUMBER_OF_CHARACTER_OF_PIN = 5;
-    public static int TIME_TIL_TERMINAL_DROP = 30;
-    public static int TIME_TIL_PIN_DROP = 10;
-    public static int MAX_USERS = 50000;
+
+    /**
+     * Default constants
+     */
+    public static final int NUMBER_OF_CHARACTER_OF_PIN = 5;
+    public static final int TIME_TIL_TERMINAL_DROP = 30;
+    public static final int TIME_TIL_PIN_DROP = 10;
+    public static final int MAX_USERS = 50000;
     public static int MAX_PARKING_SPOTS;
+    public static final String FILENAME_BIKE = "bikeTable.csv";
+    public static final String FILENAME_CUSTOMER = "customerTable.csv";
+    public static final String FILENAME_CONFIG = "config.csv";
 
     /**
      * Add config file
-     * @param MAX_PARKING_SPOTS Maximum of sports in the parking garage
      */
-    public Config(int MAX_PARKING_SPOTS){
-        this.MAX_PARKING_SPOTS = MAX_PARKING_SPOTS;
+    public Config(){
+
+    }
+
+    /**
+     * Set maximum of parking spots in the garage.
+     * @param maxParkingSports
+     */
+    public void setMaxParkingSports(int maxParkingSports){
+        MAX_PARKING_SPOTS = maxParkingSports;
     }
 }
