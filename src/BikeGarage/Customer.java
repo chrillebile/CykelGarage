@@ -2,7 +2,7 @@ package BikeGarage;
 
 public class Customer {
 
-    private String firstName, surname, personNr, pin;
+    private String firstName, surname, personNr, pin, phoneNr;
     private long regTime;
 
     /**
@@ -11,12 +11,14 @@ public class Customer {
      * @param surname The customers surname
      * @param personNr The customers personal id-number
      * @param pin The customers pin-code
+     * @param phoneNr The customers phone number
      */
-    public Customer(String firstName, String surname, String personNr, String pin){
+    public Customer(String firstName, String surname, String personNr, String pin, String phoneNr){
         this.firstName = firstName;
         this.surname = surname;
         this.personNr = personNr;
         this.pin = pin;
+        this.phoneNr = phoneNr;
         this.regTime = System.currentTimeMillis();
     }
 
@@ -26,13 +28,15 @@ public class Customer {
      * @param surname The customers surname
      * @param personNr The customers personal id-number
      * @param pin The customers pin-code
+     * @param phoneNr The customers phone number
      * @param regTime The customers registration time
      */
-    public Customer(String firstName, String surname, String personNr, String pin, long regTime){
+    public Customer(String firstName, String surname, String personNr, String pin, String phoneNr, long regTime){
         this.firstName = firstName;
         this.surname = surname;
         this.personNr = personNr;
         this.pin = pin;
+        this.phoneNr = phoneNr;
         this.regTime = regTime;
     }
 
@@ -64,6 +68,12 @@ public class Customer {
         return pin;
     }
 
+    /**
+     * @return The customers phone number
+     */
+    public String getPhoneNr(){
+        return phoneNr;
+    }
     /**
      * @return The bike's registration time
      */

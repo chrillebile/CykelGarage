@@ -19,7 +19,7 @@ public class DatabaseManager {
      */
     private static final String COMMA_DELIMITER = ",";
     private static final String NEW_LINE_SEPARATOR = "\n";
-    private static final String FILE_HEADER_CUSTOMER = "firstName,lastName,personNr,pin,regTime";
+    private static final String FILE_HEADER_CUSTOMER = "firstName,lastName,personNr,pin,phoneNr,regTime";
     private static final String FILE_HEADER_BIKE = "barcodeNr,personNr,regTime,entryTime,exitTime";
     private static final String FILE_HEADER_CONFIG = "MaxParkingSpots";
 
@@ -30,7 +30,8 @@ public class DatabaseManager {
     private static final int CUSTOMER_LNAME = 1;
     private static final int CUSTOMER_PERSONNR = 2;
     private static final int CUSTOMER_PIN = 3;
-    private static final int CUSTOMER_REGTIME = 4;
+    private static final int CUSTOMER_PHONENR = 4;
+    private static final int CUSTOMER_REGTIME = 5;
 
     /**
      * Bike index
@@ -86,7 +87,7 @@ public class DatabaseManager {
             fileReader.readLine();
             while((line = fileReader.readLine()) != null){
                 String[] split = line.split(COMMA_DELIMITER);
-                customerManager.createCustomer(split[CUSTOMER_FNAME], split[CUSTOMER_LNAME], split[CUSTOMER_PERSONNR], split[CUSTOMER_PIN], Long.parseLong(split[CUSTOMER_REGTIME]));
+                customerManager.createCustomer(split[CUSTOMER_FNAME], split[CUSTOMER_LNAME], split[CUSTOMER_PERSONNR], split[CUSTOMER_PIN], split[CUSTOMER_PHONENR], Long.parseLong(split[CUSTOMER_REGTIME]));
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -171,6 +172,8 @@ public class DatabaseManager {
                 fileWriter.append(c.getPersonNr());
                 fileWriter.append(COMMA_DELIMITER);
                 fileWriter.append(c.getPin());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(c.getPhoneNr());
                 fileWriter.append(COMMA_DELIMITER);
                 fileWriter.append((char) c.getRegTime());
                 fileWriter.append(NEW_LINE_SEPARATOR);

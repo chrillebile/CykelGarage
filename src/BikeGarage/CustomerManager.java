@@ -55,18 +55,19 @@ public class CustomerManager {
      * @param surname
      * @param personNr
      * @param pin
+     * @param phoneNr
      * @param regTime
      * @return
      */
-    public boolean createCustomer(String firstName, String surname, String personNr, String pin, long regTime){
+    public boolean createCustomer(String firstName, String surname, String personNr, String pin, String phoneNr, long regTime){
         Customer temp1 = findCustomerByPersonNr(personNr);
         if(temp1 == null){
             Customer customer;
             if(regTime == 0){
-                customer = new Customer(firstName, surname, personNr, pin);
+                customer = new Customer(firstName, surname, personNr, phoneNr, pin);
             }
             else {
-                customer = new Customer(firstName, surname, personNr, pin, regTime);
+                customer = new Customer(firstName, surname, personNr, pin, phoneNr, regTime);
             }
             customerList.add(customer);
             return true;
