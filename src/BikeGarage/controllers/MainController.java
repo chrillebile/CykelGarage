@@ -1,5 +1,6 @@
 package BikeGarage.controllers;
 
+import BikeGarage.AdminManager;
 import BikeGarage.WindowManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -92,8 +93,9 @@ public class MainController {
      * Used by WindowManager to give access to itself to this class
      * @param windowManager
      */
-    public void setWindowManager(WindowManager windowManager){
+    public void setWindowManager(WindowManager windowManager, AdminManager adminManager){
         this.windowManager = windowManager;
+        this.adminManager = adminManager;
     }
 
 }

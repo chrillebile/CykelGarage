@@ -10,12 +10,10 @@ import java.io.IOException;
 
 public class WindowManager {
 
-    private CustomerManager customerManager;
-    private BikeManager bikeManager;
+    private AdminManager adminManager;
 
-    public WindowManager(CustomerManager customerManager, BikeManager bikeManager){
-        this.customerManager = customerManager;
-        this.bikeManager = bikeManager;
+    public WindowManager(AdminManager adminManager){
+        this.adminManager = adminManager;
     }
 
     public void initMain(){
@@ -29,7 +27,7 @@ public class WindowManager {
             stage.setScene(new Scene(root));
 
             MainController controller = loader.getController();
-            controller.setWindowManager(this);
+            controller.setWindowManager(this, adminManager);
 
             stage.show();
         } catch (IOException e) {
