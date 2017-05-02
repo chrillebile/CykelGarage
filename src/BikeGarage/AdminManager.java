@@ -83,7 +83,7 @@ public class AdminManager {
         ArrayList<Customer> tempCustomerList = new ArrayList<>();
         for(Customer c: customerManager.getCustomerList()){
             int spot = 0;
-            while(tempCustomerList.get(spot).getPersonNr().compareTo(c.getPersonNr()) <= 0){
+            while(spot < tempCustomerList.size() && tempCustomerList.get(spot).getPersonNr().compareTo(c.getPersonNr()) <= 0){
                 spot++;
             }
             tempCustomerList.add(spot, c);
@@ -98,7 +98,7 @@ public class AdminManager {
         ArrayList<Bike> tempBikeList = new ArrayList<>();
         for(Bike b: bikeManager.getBikeList()){
             int spot = 0;
-            while(tempBikeList.get(spot).getBarcodeNr() <= b.getBarcodeNr()){
+            while(spot < tempBikeList.size() && tempBikeList.get(spot).getBarcodeNr() <= b.getBarcodeNr()){
                 spot++;
             }
             tempBikeList.add(spot, b);
