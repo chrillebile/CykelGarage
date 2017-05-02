@@ -20,7 +20,7 @@ public class CustomerManager {
      */
     public Customer findCustomerByPersonNr(String personNr){
         for(Customer c: customerList){
-            if(c.getPersonNr() == personNr){
+            if(c.getPersonNr().equals(personNr)){
                 return c;
             }
         }
