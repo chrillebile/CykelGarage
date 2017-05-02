@@ -18,14 +18,14 @@ public class BikeManager {
      * @return The found bikes. If not found, return empty list.
      */
     public ArrayList<Bike> findBikesByPersonNr(String personNr){
-        ArrayList<Bike> bikeList = new ArrayList<>();
+        ArrayList<Bike> tempBikeList = new ArrayList<>();
         for (Bike bike : bikeList) {
             // Check so that the bike's personnr matches the given personr
             if(bike.getCustomer().getPersonNr().equals(personNr)){
-                bikeList.add(bike);
+                tempBikeList.add(bike);
             }
         }
-        return bikeList;
+        return tempBikeList;
     }
 
     /**
