@@ -26,8 +26,9 @@ public class WindowManager {
 
             stage.setScene(new Scene(root));
 
+
             MainController controller = loader.getController();
-            controller.setWindowManager(this, adminManager);
+            controller.init(this, adminManager);
 
             stage.show();
         } catch (IOException e) {
