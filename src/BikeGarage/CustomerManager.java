@@ -57,9 +57,9 @@ public class CustomerManager {
      * @param pin
      * @param phoneNr
      * @param regTime
-     * @return
+     * @return Created customer. If customer already exist return null.
      */
-    public boolean createCustomer(String firstName, String surname, String personNr, String pin, String phoneNr, long regTime){
+    public Customer createCustomer(String firstName, String surname, String personNr, String pin, String phoneNr, long regTime){
         Customer temp1 = findCustomerByPersonNr(personNr);
         if(temp1 == null){
             Customer customer;
@@ -70,9 +70,9 @@ public class CustomerManager {
                 customer = new Customer(firstName, surname, personNr, pin, phoneNr, regTime);
             }
             customerList.add(customer);
-            return true;
+            return customer;
         }else {
-            return false;
+            return null;
         }
     }
 
