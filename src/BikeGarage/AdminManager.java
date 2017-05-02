@@ -14,7 +14,9 @@ public class AdminManager {
      * @param dbManager Manager for database
      */
     public AdminManager(CustomerManager customerManager, BikeManager bikeManager, DatabaseManager dbManager){
-
+        this.customerManager = customerManager;
+        this.bikeManager = bikeManager;
+        this.dbManager = dbManager;
     }
 
     /**
@@ -22,19 +24,20 @@ public class AdminManager {
      * @return A list of bikes a user has.
      */
     public ArrayList<Bike> findBikesByCustomer(String personNr){
-        return null;
+        return bikeManager.findBikesByPersonNr(personNr);
     }
 
     /**
      * Create a new user with the given parameters.
-     * @param firstName
-     * @param surname
+     * @param firstName The user's first name.
+     * @param surname The user's surname.
      * @param personNr The user's personal id number.
-     * @param pin
+     * @param pin The user's pin code.
+     * @param phoneNr The user's phone number.
      * @return The created user.
      */
-    public Customer createCustomer(String firstName, String surname, String personNr, String pin){
-        return null;
+    public Customer createCustomer(String firstName, String surname, String personNr, String pin, String phoneNr){
+        return customerManager.createCustomer(firstName, surname, personNr, pin, phoneNr, 0);
     }
 
     /**
@@ -43,7 +46,7 @@ public class AdminManager {
      * @return Whether the removal was successful.
      */
     public boolean removeCustomer(String personNr){
-        return false;
+        return customerManager.removeCustomer(personNr);
     }
 
     /**
@@ -52,7 +55,7 @@ public class AdminManager {
      * @return The created bike.
      */
     public Bike addBike(Customer customer){
-        return null;
+        return bikeManager.addBike(customer);
     }
 
     /**
@@ -61,7 +64,7 @@ public class AdminManager {
      * @return The bike that has been created.
      */
     public Bike addBike(String personNr){
-        return null;
+        return (findCustomer(personNr) != null) ? bikeManager.addBike(findCustomer(personNr)) : null;
     }
 
     /**
@@ -69,22 +72,38 @@ public class AdminManager {
      * @param barcodeNr This is the bike's identification number. It is unique.
      * @return Whether the bike has been successfully removed.
      */
-    public boolean removeBike(String barcodeNr){
-        return false;
+    public boolean removeBike(Long barcodeNr){
+        return bikeManager.removeBike(barcodeNr);
     }
 
     /**
      * @return The list of stored customers.
      */
     public ArrayList<Customer> getCustomerList(){
-        return null;
+        ArrayList<Customer> tempCustomerList = new ArrayList<>();
+        for(Customer c: customerManager.getCustomerList()){
+            int spot = 0;
+            while(tempCustomerList.get(spot).getPersonNr().compareTo(c.getPersonNr()) <= 0){
+                spot++;
+            }
+            tempCustomerList.add(spot, c);
+        }
+        return tempCustomerList;
     }
 
     /**
      * @return The list of all stored bikes.
      */
     public ArrayList<Bike> getBikeList(){
-        return null;
+        ArrayList<Bike> tempBikeList = new ArrayList<>();
+        for(Bike b: bikeManager.getBikeList()){
+            int spot = 0;
+            while(tempBikeList.get(spot).getBarcodeNr() <= b.getBarcodeNr()){
+                spot++;
+            }
+            tempBikeList.add(spot, b);
+        }
+        return tempBikeList;
     }
 
     /**
@@ -93,7 +112,7 @@ public class AdminManager {
      * @return The found customer.
      */
     public Customer findCustomer(String personNr){
-        return null;
+        return customerManager.findCustomerByPersonNr(personNr);
     }
 
     /**
@@ -101,8 +120,8 @@ public class AdminManager {
      * @param barcodeNr Unique identification for the bike.
      * @return The found bike.
      */
-    public Bike findBike(String barcodeNr){
-        return null;
+    public Bike findBike(Long barcodeNr){
+        return bikeManager.findBikeByBarcodeNr(barcodeNr);
     }
 
     /**
@@ -116,6 +135,6 @@ public class AdminManager {
      * @return Total number of parking spots the garage has.
      */
     public int totalNumberOfParkingSpots(){
-        return 0;
+        return Config.MAX_PARKING_SPOTS;
     }
 }
