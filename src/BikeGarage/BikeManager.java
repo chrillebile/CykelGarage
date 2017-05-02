@@ -13,20 +13,19 @@ public class BikeManager {
     }
 
     /**
-     * Search after a bike that is owned by a specific user.
+     * Search after bikes that are owned by a specific user.
      * @param personNr The user's personal identification number.
-     * @return The found bike. If not found, return null.
+     * @return The found bikes. If not found, return empty list.
      */
-    public Bike findBikeByPersonNr(String personNr){
+    public ArrayList<Bike> findBikesByPersonNr(String personNr){
+        ArrayList<Bike> bikeList = new ArrayList<>();
         for (Bike bike : bikeList) {
             // Check so that the bike's personnr matches the given personr
             if(bike.getCustomer().getPersonNr().equals(personNr)){
-                return bike;
+                bikeList.add(bike);
             }
         }
-
-        // If no bike is found, return null
-        return null;
+        return bikeList;
     }
 
     /**
@@ -63,15 +62,17 @@ public class BikeManager {
 
     /**
      * Add a bike used by DatabaseManager
-     * @param barcodeNr Barcode number
-     * @param customer Customer
-     * @param regTime Registration time
-     * @param entryTime Entry time
-     * @param exitTime Exit time
+     * @param barcodeNr Barcode number.
+     * @param customer Customer.
+     * @param regTime Registration time.
+     * @param entryTime Entry time.
+     * @param exitTime Exit time.
+     * @return The created bike.
      */
-    public void addBike(long barcodeNr, Customer customer, long regTime, long entryTime, long exitTime){
+    public Bike addBike(long barcodeNr, Customer customer, long regTime, long entryTime, long exitTime){
         Bike bikeToBeAdded = new Bike(barcodeNr, customer, regTime, entryTime, exitTime);
         bikeList.add(bikeToBeAdded);
+        return bikeToBeAdded;
     }
 
     /**
