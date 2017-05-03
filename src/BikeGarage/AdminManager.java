@@ -80,33 +80,17 @@ public class AdminManager {
     }
 
     /**
-     * @return The list of stored customers.
+     * @return The list of customers.
      */
     public ArrayList<Customer> getCustomerList(){
-        ArrayList<Customer> tempCustomerList = new ArrayList<>();
-        for(Customer c: customerManager.getCustomerList()){
-            int spot = 0;
-            while(spot < tempCustomerList.size() && tempCustomerList.get(spot).getPersonNr().compareTo(c.getPersonNr()) <= 0){
-                spot++;
-            }
-            tempCustomerList.add(spot, c);
-        }
-        return tempCustomerList;
+        return customerManager.getCustomerList();
     }
 
     /**
-     * @return The list of all stored bikes.
+     * @return The list of all bikes.
      */
     public ArrayList<Bike> getBikeList(){
-        ArrayList<Bike> tempBikeList = new ArrayList<>();
-        for(Bike b: bikeManager.getBikeList()){
-            int spot = 0;
-            while(spot < tempBikeList.size() && tempBikeList.get(spot).getBarcodeNr() <= b.getBarcodeNr()){
-                spot++;
-            }
-            tempBikeList.add(spot, b);
-        }
-        return tempBikeList;
+        return bikeManager.getBikeList();
     }
 
     /**
