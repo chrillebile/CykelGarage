@@ -96,8 +96,8 @@ public class MainController {
 
 
     @FXML
-    void handleButton(ActionEvent event) {
-        //windowManager.initEditUser();
+    void handleAddUserButton(ActionEvent event) {
+        windowManager.initEditUser(null);
     }
 
     @FXML
@@ -129,7 +129,7 @@ public class MainController {
         System.out.println("init");
 
         // Set the data for the customer tableview. The bike tableview is updated when clicking on a customer
-        customerList = FXCollections.observableArrayList(adminManager.getCustomerList());
+        customerList = FXCollections.observableList(adminManager.getCustomerList());
 
 
         tblColUserPersonnr.setCellValueFactory(customer -> new SimpleStringProperty(customer.getValue().getPersonNr()));
@@ -160,6 +160,11 @@ public class MainController {
         tblBikeList.setItems(bikeList);
         // We have to refresh in order for it to show
         tblBikeList.refresh();
+    }
+
+    @FXML
+    void handleRefreshUserListButton(){
+        tblUserList.refresh();
     }
 
 

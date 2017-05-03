@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane fx:controller="BikeGarage.controllers.MainController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BikeGarage.controllers.MainController">
    <children>
       <BorderPane prefHeight="400.0" prefWidth="900.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -51,9 +51,10 @@
                            <bottom>
                               <AnchorPane prefHeight="87.0" prefWidth="418.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button fx:id="btnAddUser" layoutX="14.0" layoutY="19.0" mnemonicParsing="false" text="Lägg till" onAction="#handleButton"/>
+                                    <Button fx:id="btnAddUser" layoutX="14.0" layoutY="19.0" mnemonicParsing="false" onAction="#handleAddUserButton" text="Lägg till" />
                                     <Button fx:id="btnRemoveUser" layoutX="88.0" layoutY="19.0" mnemonicParsing="false" text="Ta bort" />
-                                    <Button fx:id="btnEditUser" layoutX="157.0" layoutY="19.0" mnemonicParsing="false" text="Ändra" onAction="#handleEditUserButton" />
+                                    <Button fx:id="btnEditUser" layoutX="157.0" layoutY="19.0" mnemonicParsing="false" onAction="#handleEditUserButton" text="Ändra" />
+                                    <Button fx:id="btnRefreshUserList" layoutX="209.0" layoutY="19.0" mnemonicParsing="false" text="Uppdatera listan" onAction="#handleRefreshUserListButton" />
                                  </children>
                               </AnchorPane>
                            </bottom>
