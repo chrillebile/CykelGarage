@@ -2,6 +2,9 @@ package BikeGarage;
 
 import java.util.ArrayList;
 
+/**
+ * @author Ennio Mara
+ */
 public class BikeManager {
     private ArrayList<Bike>  bikeList;
 

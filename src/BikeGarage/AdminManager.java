@@ -2,6 +2,9 @@ package BikeGarage;
 
 import java.util.ArrayList;
 
+/**
+ * @author Christian Bilevits
+ */
 public class AdminManager {
     CustomerManager customerManager;
     BikeManager bikeManager;

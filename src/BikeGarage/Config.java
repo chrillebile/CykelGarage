@@ -1,5 +1,8 @@
 package BikeGarage;
 
+/**
+ * @author Christian Bilevits
+ */
 public class Config {
 
     /**

@@ -3,6 +3,9 @@ package BikeGarage;
 
 import java.io.*;
 
+/**
+ * @author Christian Bilevits
+ */
 public class DatabaseManager {
 
     private BikeManager bikeManager;
