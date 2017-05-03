@@ -97,7 +97,16 @@ public class MainController {
 
     @FXML
     void handleButton(ActionEvent event) {
-        windowManager.initEditUser();
+        //windowManager.initEditUser();
+    }
+
+    @FXML
+    void handleEditUserButton(ActionEvent event){
+        Customer customerToEdit = tblUserList.getSelectionModel().getSelectedItem();
+        if(customerToEdit != null){
+            windowManager.initEditUser(customerToEdit);
+        }
+
     }
 
     /**
@@ -152,5 +161,7 @@ public class MainController {
         // We have to refresh in order for it to show
         tblBikeList.refresh();
     }
+
+
 
 }

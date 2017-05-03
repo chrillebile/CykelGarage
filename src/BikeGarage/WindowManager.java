@@ -1,5 +1,7 @@
 package BikeGarage;
 
+import BikeGarage.controllers.EditBikeController;
+import BikeGarage.controllers.EditUserController;
 import BikeGarage.controllers.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -36,7 +38,7 @@ public class WindowManager {
         }
     }
 
-    public void initEditUser(){
+    public void initEditUser(Customer customer){
         Stage stage = new Stage();
 
         try {
@@ -45,6 +47,10 @@ public class WindowManager {
             AnchorPane root = loader.load();
 
             stage.setScene(new Scene(root));
+
+            EditUserController controller = loader.getController();
+            controller.init(this, adminManager, customer);
+
 
             stage.show();
         } catch (IOException e) {
