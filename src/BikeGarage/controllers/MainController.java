@@ -15,6 +15,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * Controller for main.fxml file.
@@ -94,6 +95,13 @@ public class MainController {
     @FXML
     private TextField tbxSearchBarcode;
 
+    @FXML
+    private AnchorPane anchPaneCustomerButtons;
+
+    @FXML
+    private AnchorPane anchPaneBikeButtons;
+
+    @FXML Button btnShowAllBikes;
 
     @FXML
     void handleAddUserButton(ActionEvent event) {
@@ -143,10 +151,14 @@ public class MainController {
 
 
         // Initialize the tblBikeList's attributes
+        bikeList = FXCollections.observableList(adminManager.getBikeList());
         tblColBikeBarcode.setCellValueFactory(bike -> new SimpleStringProperty(bike.getValue().getBarcodeNrInString()));
         tblColBikeOwner.setCellValueFactory(bike -> new SimpleStringProperty(( bike.getValue().getCustomer().getFirstName() + " " + bike.getValue().getCustomer().getSurname())));
         tblColBikeParkingStart.setCellValueFactory(bike -> new SimpleStringProperty(Long.toString(bike.getValue().getEntryTime())));
         tblColBikeParkingEnd.setCellValueFactory(bike -> new SimpleStringProperty((Long.toString(bike.getValue().getExitTime()))));
+        tblBikeList.setItems(bikeList);
+
+        tblBikeList.getSelectionModel().selectedItemProperty().addListener(this::handleSelectionChangeTblBikeList);
     }
 
     /**
@@ -156,15 +168,59 @@ public class MainController {
      * @param newValue
      */
     private void handleSelectionChangeTblUserList(ObservableValue<? extends Customer> observable, Customer oldValue, Customer newValue){
-        bikeList = FXCollections.observableArrayList(adminManager.findBikesByCustomer(newValue.getPersonNr()));
+        // selectedItemProperty does send null when there isn't a row selected. When that happens, we set bikelist to show all bikes
+        if(newValue == null){
+            btnEditUser.setDisable(true);
+            btnRemoveUser.setDisable(true);
+
+
+            bikeList = FXCollections.observableList(adminManager.getBikeList());
+        }
+        else{
+            bikeList = FXCollections.observableArrayList(adminManager.findBikesByCustomer(newValue.getPersonNr()));
+
+            btnEditUser.setDisable(false);
+            btnRemoveUser.setDisable(false);
+        }
+
+
         tblBikeList.setItems(bikeList);
         // We have to refresh in order for it to show
         tblBikeList.refresh();
+
+
     }
+
+    /**
+     * Handles the change of selection in tblBikeList.
+     * @param observable
+     * @param oldBike The old bike that was selected
+     * @param newBike The new bike that is selected
+     */
+    private void handleSelectionChangeTblBikeList(ObservableValue<? extends  Bike> observable, Bike oldBike, Bike newBike){
+        // if no selection is made, disable buttons
+        if(newBike == null){
+            btnEditBike.setDisable(true);
+            btnRemoveBike.setDisable(true);
+        }
+        else{
+            btnEditBike.setDisable(false);
+            btnRemoveBike.setDisable(false);
+        }
+    }
+
 
     @FXML
     void handleRefreshUserListButton(){
         tblUserList.refresh();
+    }
+
+    @FXML
+    void handleShowAllBikesButton(){
+        // When changing selection, handleSelectionChangeTblUserList is fired. There we do the update
+        tblUserList.getSelectionModel().select(null);
+        tblBikeList.getSelectionModel().select(null);
+
     }
 
 

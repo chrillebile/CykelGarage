@@ -49,12 +49,12 @@
                               </TableView>
                            </center>
                            <bottom>
-                              <AnchorPane prefHeight="87.0" prefWidth="418.0" BorderPane.alignment="CENTER">
+                              <AnchorPane fx:id="anchPaneCustomerButtons" prefHeight="87.0" prefWidth="418.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <Button fx:id="btnAddUser" layoutX="14.0" layoutY="19.0" mnemonicParsing="false" onAction="#handleAddUserButton" text="Lägg till" />
-                                    <Button fx:id="btnRemoveUser" layoutX="88.0" layoutY="19.0" mnemonicParsing="false" text="Ta bort" />
-                                    <Button fx:id="btnEditUser" layoutX="157.0" layoutY="19.0" mnemonicParsing="false" onAction="#handleEditUserButton" text="Ändra" />
-                                    <Button fx:id="btnRefreshUserList" layoutX="209.0" layoutY="19.0" mnemonicParsing="false" text="Uppdatera listan" onAction="#handleRefreshUserListButton" />
+                                    <Button fx:id="btnRemoveUser" disable="true" layoutX="88.0" layoutY="19.0" mnemonicParsing="false" text="Ta bort" />
+                                    <Button fx:id="btnEditUser" disable="true" layoutX="157.0" layoutY="19.0" mnemonicParsing="false" onAction="#handleEditUserButton" text="Ändra" />
+                                    <Button fx:id="btnRefreshUserList" layoutX="209.0" layoutY="19.0" mnemonicParsing="false" onAction="#handleRefreshUserListButton" text="Uppdatera listan" />
                                  </children>
                               </AnchorPane>
                            </bottom>
@@ -78,11 +78,12 @@
                               </TableView>
                            </center>
                            <bottom>
-                              <AnchorPane prefHeight="87.0" prefWidth="418.0" BorderPane.alignment="CENTER">
+                              <AnchorPane fx:id="anchPaneBikeButtons" prefHeight="87.0" prefWidth="418.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <Button fx:id="btnAddBike" layoutX="7.0" layoutY="14.0" mnemonicParsing="false" text="Lägg till" />
-                                    <Button fx:id="btnRemoveBike" layoutX="85.0" layoutY="14.0" mnemonicParsing="false" text="Ta bort" />
-                                    <Button fx:id="btnEditBike" layoutX="157.0" layoutY="14.0" mnemonicParsing="false" text="Ändra" />
+                                    <Button fx:id="btnRemoveBike" disable="true" layoutX="85.0" layoutY="14.0" mnemonicParsing="false" text="Ta bort" />
+                                    <Button fx:id="btnEditBike" disable="true" layoutX="157.0" layoutY="14.0" mnemonicParsing="false" text="Ändra" />
+                                    <Button fx:id="btnShowAllBikes" layoutX="7.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleShowAllBikesButton" text="Visa alla cyklar" />
                                  </children>
                               </AnchorPane>
                            </bottom>
