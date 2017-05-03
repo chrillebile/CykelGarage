@@ -1,9 +1,7 @@
 package BikeGarage;
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 
 public class DatabaseManager {
 
@@ -64,14 +62,17 @@ public class DatabaseManager {
                 String[] split = line.split(COMMA_DELIMITER);
                 bikeManager.addBike(Long.parseLong(split[BIKE_BARCODENR]), customerManager.findCustomerByPersonNr(split[BIKE_PERSONNR]), Long.parseLong(split[BIKE_REGTIME]), Long.parseLong(split[BIKE_ENTRYTIME]), Long.parseLong(split[BIKE_EXITTIME]));
             }
+        } catch (FileNotFoundException e) {
+            try {
+                fileWriter = new FileWriter(Config.FILENAME_BIKE);
+                fileWriter.append(FILE_HEADER_BIKE);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try{
-                fileReader.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            finallyForLoad();
         }
         return bikeManager;
     }
@@ -89,14 +90,17 @@ public class DatabaseManager {
                 String[] split = line.split(COMMA_DELIMITER);
                 customerManager.createCustomer(split[CUSTOMER_FNAME], split[CUSTOMER_LNAME], split[CUSTOMER_PERSONNR], split[CUSTOMER_PIN], split[CUSTOMER_PHONENR], Long.parseLong(split[CUSTOMER_REGTIME]));
             }
+        } catch (FileNotFoundException e){
+            try {
+                fileWriter = new FileWriter(Config.FILENAME_CUSTOMER);
+                fileWriter.append(FILE_HEADER_CUSTOMER);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
         } catch (Exception e){
             e.printStackTrace();
         } finally {
-            try{
-                fileReader.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            finallyForLoad();
         }
         return customerManager;
     }
@@ -110,18 +114,40 @@ public class DatabaseManager {
             fileReader = new BufferedReader(new FileReader(Config.FILENAME_CONFIG));
             fileReader.readLine();
             config.setMaxParkingSports(Integer.parseInt(fileReader.readLine()));
+        } catch (FileNotFoundException e){
+            try {
+                fileWriter = new FileWriter(Config.FILENAME_CONFIG);
+                fileWriter.append(FILE_HEADER_CONFIG);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try{
-                fileReader.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            finallyForLoad();
         }
         return config;
     }
 
+    /**
+     * All loaders uses the same finally
+     */
+    private void finallyForLoad(){
+        if(fileReader != null) {
+            try {
+                fileReader.close();
+                System.out.println();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                fileWriter.close();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
     /**
      * Updates bike file
      */
