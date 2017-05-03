@@ -164,7 +164,8 @@ public class MainController {
 
     @FXML
     void handleRefreshUserListButton(){
-        tblUserList.refresh();
+       tblUserList.setItems(customerList);
+       tblUserList.refresh();
     }
 
 
