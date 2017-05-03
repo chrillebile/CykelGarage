@@ -1,16 +1,10 @@
 package BikeGarage.controllers;
 
 import BikeGarage.*;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-
-import java.awt.event.ActionEvent;
+import javafx.scene.control.*;
 
 /**
  * Controller for editUser.fxml
@@ -36,16 +30,7 @@ public class EditUserController {
     private TextField tbxFirstName;
 
     @FXML
-    private TableView<Bike> tableViewBikeList;
-
-    @FXML
-    private TableColumn<Bike, String> tblColBarcode;
-
-    @FXML
-    private TableColumn<Bike, String> tblColOwner;
-
-    @FXML
-    private TableColumn<Bike, String> tblColParkingStatus;
+    private ListView<String> lsvBikeList;
 
     @FXML
     private Button btnAddBike;
@@ -59,6 +44,13 @@ public class EditUserController {
     @FXML
     void handleSaveButton(){
         Customer createdCustomer = adminManager.createCustomer(tbxFirstName.getText(), tbxLastName.getText(), tbxPersonNr.getText(), tbxPin.getText(), "");
+
+        // Get the number of bikes that need to be added to the customer
+        int numOfBikes = lsvBikeList.getItems().size();
+
+        for (int i = 0; i < numOfBikes; i++) {
+            adminManager.addBike(createdCustomer);
+        }
     }
 
     /**
@@ -92,12 +84,17 @@ public class EditUserController {
 
             // Initialize the textbox
             bikeList = FXCollections.observableArrayList(adminManager.findBikesByCustomer(customer.getPersonNr()));
-            tblColBarcode.setCellValueFactory(bike -> new SimpleStringProperty(bike.getValue().getBarcodeNrInString()));
-            tblColOwner.setCellValueFactory(bike -> new SimpleStringProperty(( bike.getValue().getCustomer().getFirstName() + " " + bike.getValue().getCustomer().getSurname())));
-
-            tableViewBikeList.setItems(bikeList);
-
         }
+    }
+
+    @FXML
+    void handleAddBikeButton(){
+        lsvBikeList.getItems().add("Bike");
+    }
+
+    @FXML
+    void handleRemoveBikeButton(){
+        lsvBikeList.getItems().remove(lsvBikeList.getSelectionModel().getSelectedIndex());
     }
 
 
