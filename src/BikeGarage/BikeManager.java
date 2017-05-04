@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 public class BikeManager {
     private ArrayList<Bike>  bikeList;
+    private ArrayList<Bike> parkedBikeList;
 
     /**
      * The manager that manages bikes registered in the garage.
      */
     public BikeManager(){
         bikeList = new ArrayList<Bike>();
+        parkedBikeList = new ArrayList<Bike>();
     }
 
     /**
@@ -50,6 +52,13 @@ public class BikeManager {
     }
 
     /**
+     * @return A list of all parked bikes in the system.
+     */
+    public ArrayList<Bike> getParkedBikeList(){
+        return parkedBikeList;
+    }
+
+    /**
      * Add a bike to a given customer.
      * @param customer The customer where the bike will be added.
      * @return The complete bike object, including the customer.
@@ -72,6 +81,9 @@ public class BikeManager {
     public Bike addBike(long barcodeNr, Customer customer, long regTime, long entryTime, long exitTime){
         Bike bikeToBeAdded = new Bike(barcodeNr, customer, regTime, entryTime, exitTime);
         bikeList.add(bikeToBeAdded);
+        if(entryTime > exitTime){
+            parkedBikeList.add(bikeToBeAdded);
+        }
         return bikeToBeAdded;
     }
 
@@ -128,7 +140,7 @@ public class BikeManager {
     }
 
     /**
-     * Set a bike's entry time.
+     * Set a bike's entry time and adds bike to parkedBikeList if it's parked.
      * @param barcodeNr Unique identification for the bike.
      * @param entryTime The time specified in unix time.
      * @return Whether the edit was successful.
@@ -137,6 +149,9 @@ public class BikeManager {
         for (Bike bike : bikeList) {
             if(bike.getBarcodeNr() == barcodeNr){
                 bike.setEntryTime(entryTime);
+                if(bike.getParkingStatus()){
+                   parkedBikeList.add(bike);
+                }
                 return true;
             }
         }
@@ -144,7 +159,7 @@ public class BikeManager {
     }
 
     /**
-     * Set a bike's exit time.
+     * Set a bike's exit time and removes bike from parkedBikeList if it's not parked.
      * @param barcodeNr Unique identification for the bike.
      * @param exitTime The exit time specified in unix time.
      * @return Whether the edit was successful.
@@ -153,6 +168,9 @@ public class BikeManager {
         for (Bike bike : bikeList) {
             if(bike.getBarcodeNr() == barcodeNr){
                 bike.setExitTime(exitTime);
+                if(!bike.getParkingStatus()){
+                    parkedBikeList.remove(bike);
+                }
                 return true;
             }
         }
@@ -161,18 +179,15 @@ public class BikeManager {
 
     /**
      * Check if a given bike is parked in the garage.
-     * @param barcodeNr Unique identification for the bike.
-     * @return Whether the bike is parked.
+     * @param customer The customer.
+     * @return Whether a customer has a parked bike bike is parked.
      */
-    public boolean isBikeParked(long barcodeNr){
-        for (Bike bike: bikeList) {
-            if(bike.getBarcodeNr() == barcodeNr){
-                return bike.getParkingStatus();
+    public boolean hasBikeParked(Customer customer){
+        for (Bike bike: parkedBikeList) {
+            if(bike.getCustomer() == customer){
+                return true;
             }
         }
-
         return false;
     }
-
-
 }
