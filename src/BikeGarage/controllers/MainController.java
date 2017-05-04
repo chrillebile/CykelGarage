@@ -223,6 +223,14 @@ public class MainController {
 
     }
 
+    @FXML
+    void handleEditBikeButton(){
+        Bike bikeToEdit = tblBikeList.getSelectionModel().getSelectedItem();
+        if(bikeToEdit != null){
+            windowManager.initEditBike(bikeToEdit);
+        }
+    }
+
 
 
 }

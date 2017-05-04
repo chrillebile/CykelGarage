@@ -82,7 +82,7 @@
                                  <children>
                                     <Button fx:id="btnAddBike" layoutX="7.0" layoutY="14.0" mnemonicParsing="false" text="Lägg till" />
                                     <Button fx:id="btnRemoveBike" disable="true" layoutX="85.0" layoutY="14.0" mnemonicParsing="false" text="Ta bort" />
-                                    <Button fx:id="btnEditBike" disable="true" layoutX="157.0" layoutY="14.0" mnemonicParsing="false" text="Ändra" />
+                                    <Button fx:id="btnEditBike" disable="true" layoutX="157.0" layoutY="14.0" mnemonicParsing="false" text="Ändra" onAction="#handleEditBikeButton" />
                                     <Button fx:id="btnShowAllBikes" layoutX="7.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleShowAllBikesButton" text="Visa alla cyklar" />
                                  </children>
                               </AnchorPane>
