@@ -220,6 +220,8 @@ public class MainController {
         // When changing selection, handleSelectionChangeTblUserList is fired. There we do the update
         tblUserList.getSelectionModel().select(null);
         tblBikeList.getSelectionModel().select(null);
+        tblUserList.refresh();
+        tblBikeList.refresh();
 
     }
 
@@ -229,6 +231,23 @@ public class MainController {
         if(bikeToEdit != null){
             windowManager.initEditBike(bikeToEdit);
         }
+    }
+
+    @FXML
+    void handleRemoveUserButton(){
+        Customer customerToBeRemoved = tblUserList.getSelectionModel().getSelectedItem();
+
+        adminManager.removeCustomer(customerToBeRemoved.getPersonNr());
+
+        handleRefreshUserListButton();
+    }
+
+    @FXML
+    void handleRemoveBikeButton(){
+        Bike bikeToBeRemoved = tblBikeList.getSelectionModel().getSelectedItem();
+
+        adminManager.removeBike(bikeToBeRemoved.getBarcodeNr());
+        
     }
 
 
