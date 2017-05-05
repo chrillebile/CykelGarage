@@ -67,7 +67,7 @@ public class CustomerManager {
         if(temp1 == null){
             Customer customer;
             if(regTime == 0){
-                customer = new Customer(firstName, surname, personNr, phoneNr, pin);
+                customer = new Customer(firstName, surname, personNr, pin, phoneNr);
             }
             else {
                 customer = new Customer(firstName, surname, personNr, pin, phoneNr, regTime);
