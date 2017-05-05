@@ -115,7 +115,7 @@ public class AdminManager {
      * @return Number of free parking spots.
      */
     public int numberOfFreeParkingSpots(){
-        return 0;
+        return totalNumberOfParkingSpots() - bikeManager.getParkedBikeList().size();
     }
 
     /**

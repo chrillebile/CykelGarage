@@ -37,7 +37,7 @@ public class Bike {
     }
 
     /**
-     *
+     * Get the customer for this bike.
      * @return The bike's customer
      */
     public Customer getCustomer(){
@@ -121,15 +121,13 @@ public class Bike {
     }
 
     /**
-     * Returns whether a bike is parked in the garage. If no exitTime is defined(set as 0), then the bike is in the garage
+     * Returns whether a bike is parked in the garage. If exitTime is smaller than entryTime, then the bike is in the garage
      * @return True if bike is parked in the garage.
      */
     public boolean getParkingStatus(){
-        // If exitTime is null, the bike is in
-        if(exitTime == 0){
+        if(exitTime < entryTime){
             return true;
         }
-
         return false;
     }
 }
