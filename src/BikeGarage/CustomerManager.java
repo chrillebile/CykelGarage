@@ -64,7 +64,7 @@ public class CustomerManager {
      */
     public Customer createCustomer(String firstName, String surname, String personNr, String pin, String phoneNr, long regTime){
         Customer temp1 = findCustomerByPersonNr(personNr);
-        if(temp1 == null){
+        if(temp1 == null && customerList.size() < Config.MAX_USERS){
             Customer customer;
             if(regTime == 0){
                 customer = new Customer(firstName, surname, personNr, pin, phoneNr);
