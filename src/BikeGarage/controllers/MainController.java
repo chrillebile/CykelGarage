@@ -245,8 +245,13 @@ public class MainController {
     @FXML
     void handleRemoveBikeButton(){
         Bike bikeToBeRemoved = tblBikeList.getSelectionModel().getSelectedItem();
-
         adminManager.removeBike(bikeToBeRemoved.getBarcodeNr());
+
+        // If a user is selected, the tableview cannot automatically update its internal list as its pointing in the list in adminManager.findBikesByCustomer(). Adminmanager removes the bike in adminManager.getBikeList()
+        if(tblUserList.getSelectionModel().getSelectedItem() != null){
+            tblBikeList.getItems().remove(bikeToBeRemoved);
+        }
+        tblBikeList.refresh();
         
     }
 
