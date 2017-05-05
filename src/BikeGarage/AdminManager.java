@@ -94,6 +94,13 @@ public class AdminManager {
     }
 
     /**
+     * @return The list of all parked bikes.
+     */
+    public ArrayList<Bike> getParkedBikeList(){
+        return bikeManager.getParkedBikeList();
+    }
+
+    /**
      * Seearch a specific customer given its personNr.
      * @param personNr Unique identification for the customer
      * @return The found customer.
