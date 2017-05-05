@@ -154,6 +154,8 @@ public class BikeManager {
                 bike.setEntryTime(entryTime);
                 if(bike.getParkingStatus()){
                    parkedBikeList.add(bike);
+                }else{
+                   parkedBikeList.remove(bike);
                 }
                 return true;
             }
@@ -173,6 +175,8 @@ public class BikeManager {
                 bike.setExitTime(exitTime);
                 if(!bike.getParkingStatus()){
                     parkedBikeList.remove(bike);
+                }else {
+                    parkedBikeList.add(bike);
                 }
                 return true;
             }
