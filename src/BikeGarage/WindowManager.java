@@ -58,7 +58,7 @@ public class WindowManager {
         }
     }
 
-    public void initEditBike(Bike bike){
+    public void initEditBike(Bike bike, Customer customer){
         Stage stage = new Stage();
 
         try {
@@ -69,7 +69,7 @@ public class WindowManager {
             stage.setScene(new Scene(root));
 
             EditBikeController controller = loader.getController();
-            controller.init(this, adminManager, bike);
+            controller.init(this, adminManager, bike, customer);
 
             stage.show();
         } catch (IOException e) {

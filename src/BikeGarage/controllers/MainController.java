@@ -172,7 +172,7 @@ public class MainController {
         if(newValue == null){
             btnEditUser.setDisable(true);
             btnRemoveUser.setDisable(true);
-
+            btnAddBike.setDisable(true);
 
             bikeList = FXCollections.observableList(adminManager.getBikeList());
         }
@@ -181,6 +181,7 @@ public class MainController {
 
             btnEditUser.setDisable(false);
             btnRemoveUser.setDisable(false);
+            btnAddBike.setDisable(false);
         }
 
 
@@ -228,8 +229,9 @@ public class MainController {
     @FXML
     void handleEditBikeButton(){
         Bike bikeToEdit = tblBikeList.getSelectionModel().getSelectedItem();
-        if(bikeToEdit != null){
-            windowManager.initEditBike(bikeToEdit);
+        Customer owner = tblUserList.getSelectionModel().getSelectedItem();
+        if(bikeToEdit != null && owner != null){
+            windowManager.initEditBike(bikeToEdit, owner);
         }
     }
 
@@ -252,9 +254,12 @@ public class MainController {
             tblBikeList.getItems().remove(bikeToBeRemoved);
         }
         tblBikeList.refresh();
-        
     }
 
-
+    @FXML
+    void handleAddBikeButton(){
+        Customer owner = tblUserList.getSelectionModel().getSelectedItem();
+        windowManager.initEditBike(null, owner);
+    }
 
 }
