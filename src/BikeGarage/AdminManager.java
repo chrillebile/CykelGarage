@@ -49,6 +49,13 @@ public class AdminManager {
      * @return Whether the removal was successful.
      */
     public boolean removeCustomer(String personNr){
+        if(bikeManager.hasBikeParked(customerManager.findCustomerByPersonNr(personNr))){
+            throw new IllegalArgumentException("The customer has a parked bike.");
+        }
+        ArrayList<Bike> tempList = bikeManager.findBikesByPersonNr(personNr);
+        for(Bike b: tempList){
+            removeBike(b.getBarcodeNr());
+        }
         return customerManager.removeCustomer(personNr);
     }
 
