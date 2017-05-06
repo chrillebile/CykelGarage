@@ -229,9 +229,8 @@ public class MainController {
     @FXML
     void handleEditBikeButton(){
         Bike bikeToEdit = tblBikeList.getSelectionModel().getSelectedItem();
-        Customer owner = tblUserList.getSelectionModel().getSelectedItem();
-        if(bikeToEdit != null && owner != null){
-            windowManager.initEditBike(bikeToEdit, owner);
+        if(bikeToEdit != null){
+            windowManager.initEditBike(bikeToEdit, bikeToEdit.getCustomer());
         }
     }
 
