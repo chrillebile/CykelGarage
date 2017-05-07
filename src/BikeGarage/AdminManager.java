@@ -82,7 +82,7 @@ public class AdminManager {
      * @param barcodeNr This is the bike's identification number. It is unique.
      * @return Whether the bike has been successfully removed.
      */
-    public boolean removeBike(Long barcodeNr){
+    public boolean removeBike(long barcodeNr){
         return bikeManager.removeBike(barcodeNr);
     }
 
@@ -121,7 +121,7 @@ public class AdminManager {
      * @param barcodeNr Unique identification for the bike.
      * @return The found bike.
      */
-    public Bike findBike(Long barcodeNr){
+    public Bike findBike(long barcodeNr){
         return bikeManager.findBikeByBarcodeNr(barcodeNr);
     }
 
