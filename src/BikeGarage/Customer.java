@@ -9,24 +9,7 @@ public class Customer {
     private long regTime;
 
     /**
-     * Constructor for customers.
-     * @param firstName The customers first name
-     * @param surname The customers surname
-     * @param personNr The customers personal id-number
-     * @param pin The customers pin-code
-     * @param phoneNr The customers phone number
-     */
-    public Customer(String firstName, String surname, String personNr, String pin, String phoneNr){
-        this.firstName = firstName;
-        this.surname = surname;
-        this.personNr = personNr;
-        this.pin = pin;
-        this.phoneNr = phoneNr;
-        this.regTime = System.currentTimeMillis();
-    }
-
-    /**
-     * Constructor for customer used by startup
+     * Constructor for customers
      * @param firstName The customers first name
      * @param surname The customers surname
      * @param personNr The customers personal id-number
@@ -35,12 +18,19 @@ public class Customer {
      * @param regTime The customers registration time
      */
     public Customer(String firstName, String surname, String personNr, String pin, String phoneNr, long regTime){
-        this.firstName = firstName;
-        this.surname = surname;
+        setFirstName(firstName);
+        setSurname(surname);
+        if(personNr.matches("(.*)\\D(.*)") || personNr.length() != 10){
+            throw new IllegalArgumentException("Vänligen skriv in ditt personnummmer som 10 siffror");
+        }
         this.personNr = personNr;
-        this.pin = pin;
-        this.phoneNr = phoneNr;
-        this.regTime = regTime;
+        setPin(pin);
+        setPhoneNr(phoneNr);
+        if(regTime == 0){
+            this.regTime = System.currentTimeMillis();
+        }else {
+            this.regTime = regTime;
+        }
     }
 
     /**
@@ -86,28 +76,47 @@ public class Customer {
 
     /**
      * Setting new first name
-     * @param firstName
+     * @param firstName The customers first name
      */
     public void setFirstName(String firstName){
+        if(!firstName.matches("(.*)[a-zåäöA-ZÅÄÖ](.*)")){
+            throw new IllegalArgumentException("Förnamnet får bara innehålla bokstäver");
+        }
         this.firstName = firstName;
     }
 
     /**
-     * Setting new surname
-     * @param surname
+     * Setting new surname.
+     * @param surname The customers surname.
      */
     public void setSurname(String surname){
+        if(!surname.matches("(.*)[a-zåäöA-ZÅÄÖ](.*)")){
+            throw new IllegalArgumentException("Efternament får bara innehålla bokstäver");
+        }
         this.surname = surname;
     }
 
     /**
-     * Setting new pin-code
-     * @param pin
+     * Setting new pin-code.
+     * @param pin The customers pin-code.
      */
     public void setPin(String pin){
+        if(pin.matches("(.*)\\D(.*)") || pin.length() != 6){
+            throw new IllegalArgumentException("Pin-koden måste vara 6 siffror (0-9)");
+        }
         this.pin = pin;
     }
 
+    /**
+     * Setting new Phone number.
+     * @param phoneNr The customers phone number.
+     */
+    public void setPhoneNr(String phoneNr){
+        if(phoneNr.matches("(.*)\\D(.*)")){
+            throw new IllegalArgumentException("Ogiltigt telefonnummer.");
+        }
+        this.phoneNr = phoneNr;
+    }
     /**
      * Checks if a customer has the same personNr as this customer.
      * @param object
