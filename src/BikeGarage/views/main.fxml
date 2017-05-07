@@ -24,8 +24,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Statistik">
                   <items>
-                    <MenuItem fx:id="menuBtnNumberOfUsers" mnemonicParsing="false" text="Antal användare: " />
-                        <MenuItem fx:id="menuBtnNumberOfBikes" mnemonicParsing="false" text="Antal cyklar" />
+                    <MenuItem fx:id="menuBtnNumberOfParkedBikes" mnemonicParsing="false" text="Antal parkerade cyklar: " />
+                        <MenuItem fx:id="menuBtnNumberOfFreeParkingSpots" mnemonicParsing="false" text="Antal lediga platser: " />
                   </items>
                 </Menu>
               </menus>
