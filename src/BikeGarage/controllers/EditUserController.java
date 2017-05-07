@@ -30,6 +30,9 @@ public class EditUserController {
     private TextField tbxFirstName;
 
     @FXML
+    private TextField tbxPhoneNr;
+
+    @FXML
     private ListView<String> lsvBikeList;
 
     @FXML
@@ -43,14 +46,26 @@ public class EditUserController {
 
     @FXML
     void handleSaveButton(){
-        Customer createdCustomer = adminManager.createCustomer(tbxFirstName.getText(), tbxLastName.getText(), tbxPersonNr.getText(), tbxPin.getText(), "");
+        if(isNewUser) {
+            customer = adminManager.createCustomer(tbxFirstName.getText(), tbxLastName.getText(), tbxPersonNr.getText(), tbxPin.getText(), tbxPhoneNr.getText());
 
-        // Get the number of bikes that need to be added to the customer
-        int numOfBikes = lsvBikeList.getItems().size();
+            // Get the number of bikes that need to be added to  the customer
+            int numOfBikes = lsvBikeList.getItems().size();
 
-        for (int i = 0; i < numOfBikes; i++) {
-            adminManager.addBike(createdCustomer);
+            for (int i = 0; i < numOfBikes; i++) {
+                adminManager.addBike(customer);
+            }
+
         }
+        else{
+            // We have an existing user. Use his setters to set the data
+            customer.setFirstName(tbxFirstName.getText());
+            customer.setSurname(tbxLastName.getText());
+            customer.setPin(tbxPin.getText());
+            customer.setPhoneNr(tbxPhoneNr.getText());
+        }
+
+
     }
 
     /**
@@ -81,6 +96,7 @@ public class EditUserController {
             tbxLastName.setText(customer.getSurname());
             tbxPersonNr.setText(customer.getPersonNr());
             tbxPin.setText(customer.getPin());
+            tbxPhoneNr.setText(customer.getPhoneNr());
 
             // Initialize the textbox
             bikeList = FXCollections.observableArrayList(adminManager.findBikesByCustomer(customer.getPersonNr()));
