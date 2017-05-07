@@ -58,7 +58,6 @@ public class Bike {
      */
     public String getBarcodeNrInString(){
         String returnedString =  String.format("%05d", barcodeNr);
-
         return returnedString;
     }
 
