@@ -121,4 +121,26 @@ public class AdminManager {
     public int totalNumberOfParkingSpots(){
         return Config.MAX_PARKING_SPOTS;
     }
+
+
+    /**
+     * Calls the databasemanager and performs and updates the list in database
+     */
+    public void updateCustomers(){
+        dbManager.updateCustomers();
+    }
+
+    /**
+     * Calls the databasemanager and performs and updates the list in database
+     */
+    public void updateBikes(){
+        dbManager.updateBikes();
+    }
+
+    /**
+     * Calls the databasemanager and performs and updates the list in database
+     */
+    public void updateConfig(){
+        dbManager.updateConfig();
+    }
 }
