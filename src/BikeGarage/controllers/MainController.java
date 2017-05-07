@@ -33,10 +33,10 @@ public class MainController {
     private MenuItem menuBtnClose;
 
     @FXML
-    private MenuItem menuBtnNumberOfUsers;
+    private MenuItem menuBtnNumberOfParkedBikes;
 
     @FXML
-    private MenuItem menuBtnNumberOfBikes;
+    private MenuItem menuBtnNumberOfFreeParkingSpots;
 
     @FXML
     private TableView<Customer> tblUserList;
@@ -159,6 +159,11 @@ public class MainController {
         tblBikeList.setItems(bikeList);
 
         tblBikeList.getSelectionModel().selectedItemProperty().addListener(this::handleSelectionChangeTblBikeList);
+
+
+        // Set the number of bikes and customers in menubar
+        menuBtnNumberOfParkedBikes.setText("Antal parkerade cyklar: " + (adminManager.totalNumberOfParkingSpots() - adminManager.numberOfFreeParkingSpots()));
+        menuBtnNumberOfFreeParkingSpots.setText("Antal lediga platser :" + adminManager.numberOfFreeParkingSpots());
     }
 
     /**
