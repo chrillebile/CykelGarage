@@ -20,7 +20,7 @@ public class Customer {
     public Customer(String firstName, String surname, String personNr, String pin, String phoneNr, long regTime){
         setFirstName(firstName);
         setSurname(surname);
-        if(personNr.matches("[A-Z]") || personNr.length() != 10){
+        if(personNr.matches("(.*)\\D(.*)") || personNr.length() != 10){
             throw new IllegalArgumentException("Vänligen skriv in ditt personnummmer som 10 siffror");
         }
         this.personNr = personNr;
@@ -79,7 +79,7 @@ public class Customer {
      * @param firstName The customers first name
      */
     public void setFirstName(String firstName){
-        if(firstName.matches("\\d")){
+        if(!firstName.matches("(.*)[a-zåäöA-ZÅÄÖ](.*)")){
             throw new IllegalArgumentException("Förnamnet får bara innehålla bokstäver");
         }
         this.firstName = firstName;
@@ -90,7 +90,7 @@ public class Customer {
      * @param surname The customers surname.
      */
     public void setSurname(String surname){
-        if(surname.matches("\\d")){
+        if(!surname.matches("(.*)[a-zåäöA-ZÅÄÖ](.*)")){
             throw new IllegalArgumentException("Efternament får bara innehålla bokstäver");
         }
         this.surname = surname;
@@ -101,7 +101,7 @@ public class Customer {
      * @param pin The customers pin-code.
      */
     public void setPin(String pin){
-        if(pin.matches("[A-Z]") || pin.length() != 6){
+        if(pin.matches("(.*)\\D(.*)") || pin.length() != 6){
             throw new IllegalArgumentException("Pin-koden måste vara 6 siffror (0-9)");
         }
         this.pin = pin;
@@ -112,7 +112,7 @@ public class Customer {
      * @param phoneNr The customers phone number.
      */
     public void setPhoneNr(String phoneNr){
-        if(phoneNr.matches("[A-Z]")){
+        if(phoneNr.matches("(.*)\\D(.*)")){
             throw new IllegalArgumentException("Ogiltigt telefonnummer.");
         }
         this.phoneNr = phoneNr;
