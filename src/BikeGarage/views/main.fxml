@@ -59,7 +59,12 @@
                               </AnchorPane>
                            </bottom>
                            <top>
-                              <TextField fx:id="tbxSearchPersonalNr" promptText="Sök - personnr" BorderPane.alignment="CENTER" />
+                              <AnchorPane BorderPane.alignment="CENTER">
+                                 <children>
+                                    <TextField fx:id="tbxSearchPersonalNr" prefHeight="25.0" prefWidth="314.0" promptText="Sök - personnr" />
+                                    <Button fx:id="btnSearchByPersonNr" layoutX="319.0" mnemonicParsing="false" text="Sök efter personnr" onAction="#handleSearchByPersonNrButton" />
+                                 </children>
+                              </AnchorPane>
                            </top>
                         </BorderPane>
                      </children>
@@ -80,7 +85,7 @@
                            <bottom>
                               <AnchorPane fx:id="anchPaneBikeButtons" prefHeight="87.0" prefWidth="418.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button fx:id="btnAddBike" layoutX="7.0" layoutY="14.0" mnemonicParsing="false" text="Lägg till" onAction="#handleAddBikeButton" />
+                                    <Button fx:id="btnAddBike" layoutX="7.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleAddBikeButton" text="Lägg till" />
                                     <Button fx:id="btnRemoveBike" disable="true" layoutX="85.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleRemoveBikeButton" text="Ta bort" />
                                     <Button fx:id="btnEditBike" disable="true" layoutX="157.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleEditBikeButton" text="Ändra" />
                                     <Button fx:id="btnShowAllBikes" layoutX="7.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleShowAllBikesButton" text="Visa alla cyklar" />
@@ -88,7 +93,12 @@
                               </AnchorPane>
                            </bottom>
                            <top>
-                              <TextField fx:id="tbxSearchBarcode" promptText="Sök - barcode" BorderPane.alignment="CENTER" />
+                              <AnchorPane BorderPane.alignment="CENTER">
+                                 <children>
+                                    <TextField fx:id="tbxSearchBarcode" prefHeight="25.0" prefWidth="306.0" promptText="Sök - barcode" />
+                                    <Button fx:id="btnSearchByBarcode" layoutX="316.0" mnemonicParsing="false" text="Sök efer streckkod" onAction="#handleSearchByBarcodeButton" />
+                                 </children>
+                              </AnchorPane>
                            </top>
                         </BorderPane>
                      </children>

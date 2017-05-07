@@ -261,4 +261,21 @@ public class MainController {
         windowManager.initEditBike(null, owner);
     }
 
+    @FXML
+    void handleSearchByBarcodeButton(){
+        String searchInput = tbxSearchBarcode.getText();
+        Bike foundBike = adminManager.findBike(Long.parseLong(searchInput));
+
+        tblUserList.getSelectionModel().select(foundBike.getCustomer());
+        tblBikeList.getSelectionModel().select(foundBike);
+    }
+
+    @FXML
+    void handleSearchByPersonNrButton(){
+        String searchInput = tbxSearchPersonalNr.getText();
+        Customer foundCustomer = adminManager.findCustomer(searchInput);
+
+        tblUserList.getSelectionModel().select(foundCustomer);
+    }
+
 }
