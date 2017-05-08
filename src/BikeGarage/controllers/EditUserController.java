@@ -65,7 +65,8 @@ public class EditUserController {
             customer.setPhoneNr(tbxPhoneNr.getText());
         }
 
-
+        adminManager.updateCustomers();
+        adminManager.updateBikes();
     }
 
     /**

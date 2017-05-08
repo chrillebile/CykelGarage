@@ -245,6 +245,10 @@ public class MainController {
 
         adminManager.removeCustomer(customerToBeRemoved.getPersonNr());
 
+        // Save the customers
+        adminManager.updateCustomers();
+
+
         handleRefreshUserListButton();
     }
 
@@ -257,6 +261,9 @@ public class MainController {
         if(tblUserList.getSelectionModel().getSelectedItem() != null){
             tblBikeList.getItems().remove(bikeToBeRemoved);
         }
+        // Save the new bikelist
+        adminManager.updateBikes();
+
         tblBikeList.refresh();
     }
 
@@ -281,6 +288,11 @@ public class MainController {
         Customer foundCustomer = adminManager.findCustomer(searchInput);
 
         tblUserList.getSelectionModel().select(foundCustomer);
+    }
+
+    @FXML
+    void handlePrintBarcodeButton(){
+
     }
 
 }

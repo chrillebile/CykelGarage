@@ -83,5 +83,8 @@ public class EditBikeController {
         if(!isNewBike && customer != null && !(tbxBikeOwner.getText().equals(customer.getPersonNr()))){
             bikeToBeCreated.setCustomer(adminManager.findCustomer(tbxBikeOwner.getText()));
         }
+
+
+        adminManager.updateBikes();
     }
 }
