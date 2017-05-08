@@ -79,7 +79,7 @@ public class Customer {
      * @param firstName The customers first name
      */
     public void setFirstName(String firstName){
-        if(!firstName.matches("(.*)[a-zåäöA-ZÅÄÖ](.*)")){
+        if(!firstName.matches("[a-zA-ZåäöÅÄÖ]+")){
             throw new IllegalArgumentException("Förnamnet får bara innehålla bokstäver");
         }
         this.firstName = firstName;
@@ -90,7 +90,7 @@ public class Customer {
      * @param surname The customers surname.
      */
     public void setSurname(String surname){
-        if(!surname.matches("(.*)[a-zåäöA-ZÅÄÖ](.*)")){
+        if(!surname.matches("[a-zA-ZåäöÅÄÖ]+")){
             throw new IllegalArgumentException("Efternament får bara innehålla bokstäver");
         }
         this.surname = surname;
@@ -128,5 +128,9 @@ public class Customer {
         } else {
             return false;
         }
+    }
+
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
     }
 }
