@@ -119,6 +119,15 @@ public class AdminManager {
     }
 
     /**
+     * Change boolean to readable format
+     * @param status Status of parked bike
+     * @return Returns "Ja" if bikes is parked and "Nej" if it's not parked
+     */
+    public String getParkingStatus(Boolean status){
+        return status ? "Ja" : "Nej";
+    }
+
+    /**
      * Seearch a specific customer given its personNr.
      * @param personNr Unique identification for the customer
      * @return The found customer.
