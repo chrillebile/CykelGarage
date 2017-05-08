@@ -93,13 +93,12 @@ public class BikeManager {
      * @return The next barcode. This barcode is not used by anyone and is one (1) larger than the current maximum barcode.
      */
     private long getNextFreeBarcode(){
-        long localMaximumBarcode = 0;
+        long localMaximumBarcode = -1;
         for (Bike bike : bikeList) {
             if(bike.getBarcodeNr() > localMaximumBarcode){
                 localMaximumBarcode = bike.getBarcodeNr();
             }
         }
-
         // localMaximumBarcode is already taken. Since it is maximum, localMaximumBarcode + 1 is not taken.
         return localMaximumBarcode + 1;
     }
