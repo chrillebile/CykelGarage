@@ -16,13 +16,13 @@
             <Label layoutX="22.0" layoutY="126.0" text="PIN kod" />
             <Label layoutX="15.0" layoutY="89.0" text="Personnr" />
             <Label layoutX="6.0" layoutY="52.0" text="Efternamn" />
-            <TextField fx:id="tbxPin" layoutX="80.0" layoutY="121.0" promptText="123456" />
+            <TextField fx:id="tbxFirstName" layoutX="80.0" layoutY="10.0" promptText="Exempel" />
             <TextField fx:id="tbxLastName" layoutX="80.0" layoutY="47.0" promptText="Exempelsson" />
             <TextField fx:id="tbxPersonNr" layoutX="80.0" layoutY="84.0" promptText="ÅÅMMDDNNNN" />
-            <Label layoutX="16.0" layoutY="15.0" text="Förnamn" />
-            <TextField fx:id="tbxFirstName" layoutX="80.0" layoutY="10.0" promptText="Exempel" />
-            <Label layoutX="-26.0" layoutY="163.0" text="Telefonnummer" />
+            <TextField fx:id="tbxPin" layoutX="80.0" layoutY="121.0" promptText="123456" />
             <TextField fx:id="tbxPhoneNr" layoutX="80.0" layoutY="158.0" promptText="0123456789" />
+            <Label layoutX="16.0" layoutY="15.0" text="Förnamn" />
+            <Label layoutX="-26.0" layoutY="163.0" text="Telefonnummer" />
          </children>
       </AnchorPane>
       <BorderPane layoutX="100.0" layoutY="225.0" prefHeight="75.0">
