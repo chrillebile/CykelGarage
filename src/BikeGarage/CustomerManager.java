@@ -64,14 +64,21 @@ public class CustomerManager {
      * @return Created customer. If customer already exist return null.
      */
     public Customer createCustomer(String firstName, String surname, String personNr, String pin, String phoneNr, long regTime){
+        // Check that the personn does not exist. findCustomer returns a customer if it exists
         Customer temp1 = findCustomerByPersonNr(personNr);
-        if(temp1 == null && customerList.size() < Config.MAX_USERS){
+        if(temp1 != null){
+            throw new IllegalArgumentException("Personnummret redan finns");
+        }
+        else if(customerList.size() >= Config.MAX_USERS){
+            throw  new IllegalArgumentException("Antalet användare överstiger systemets maximala antal användare");
+        }
+        else{
             Customer customer = new Customer(firstName, surname, personNr, pin, phoneNr, regTime);
             customerList.add(customer);
             return customer;
-        }else {
-            return null;
         }
+
+
     }
 
     /**
