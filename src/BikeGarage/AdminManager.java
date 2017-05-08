@@ -1,5 +1,6 @@
 package BikeGarage;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -106,6 +107,15 @@ public class AdminManager {
      */
     public ArrayList<Bike> getParkedBikeList(){
         return bikeManager.getParkedBikeList();
+    }
+
+    /**
+     * Changes unix time to readable format
+     * @param unixTime Unix time
+     * @return Readable time
+     */
+    public String getFormatUnixTime(long unixTime){
+        return new SimpleDateFormat(Config.DATE_FORMAT).format(unixTime);
     }
 
     /**

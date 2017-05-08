@@ -17,12 +17,12 @@ public class Config {
     public static final String FILENAME_BIKE = "databaseFiles/bikeTable.csv";
     public static final String FILENAME_CUSTOMER = "databaseFiles/customerTable.csv";
     public static final String FILENAME_CONFIG = "databaseFiles/config.csv";
+    public static final String DATE_FORMAT = "H:mm:ss d/MM-yy";
 
     /**
      * Add config file
      */
     public Config(){
-
     }
 
     /**

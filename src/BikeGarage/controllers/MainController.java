@@ -143,7 +143,7 @@ public class MainController {
         tblColUserPersonnr.setCellValueFactory(customer -> new SimpleStringProperty(customer.getValue().getPersonNr()));
         tblColUserFirstName.setCellValueFactory(customer -> new SimpleStringProperty(customer.getValue().getFirstName()));
         tblColUserLastName.setCellValueFactory(customer -> new SimpleStringProperty(customer.getValue().getSurname()));
-        tblColUserRegisterTime.setCellValueFactory(p -> new SimpleStringProperty(Long.toString(p.getValue().getRegTime())));
+        tblColUserRegisterTime.setCellValueFactory(p -> new SimpleStringProperty(adminManager.getFormatUnixTime(p.getValue().getRegTime())));
 
         tblUserList.setItems(customerList);
 
@@ -154,8 +154,8 @@ public class MainController {
         bikeList = FXCollections.observableList(adminManager.getBikeList());
         tblColBikeBarcode.setCellValueFactory(bike -> new SimpleStringProperty(bike.getValue().getBarcodeNrInString()));
         tblColBikeOwner.setCellValueFactory(bike -> new SimpleStringProperty(( bike.getValue().getCustomer().getFirstName() + " " + bike.getValue().getCustomer().getSurname())));
-        tblColBikeParkingStart.setCellValueFactory(bike -> new SimpleStringProperty(Long.toString(bike.getValue().getEntryTime())));
-        tblColBikeParkingEnd.setCellValueFactory(bike -> new SimpleStringProperty((Long.toString(bike.getValue().getExitTime()))));
+        tblColBikeParkingStart.setCellValueFactory(bike -> new SimpleStringProperty(adminManager.getFormatUnixTime(bike.getValue().getEntryTime())));
+        tblColBikeParkingEnd.setCellValueFactory(bike -> new SimpleStringProperty((adminManager.getFormatUnixTime(bike.getValue().getExitTime()))));
         tblBikeList.setItems(bikeList);
 
         tblBikeList.getSelectionModel().selectedItemProperty().addListener(this::handleSelectionChangeTblBikeList);
