@@ -127,6 +127,19 @@ public class AdminManager {
     }
 
     /**
+     * Check if a pin exist
+     * @param pin A pin-code.
+     * @return Returns if pin-code exist.
+     */
+    public boolean checkIfPinExist(String pin){
+        for(Bike b: bikeManager.getParkedBikeList()){
+            if(b.getCustomer().getPin() == pin){
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
      * @return Number of free parking spots.
      */
     public int numberOfFreeParkingSpots(){
