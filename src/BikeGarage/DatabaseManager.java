@@ -167,16 +167,22 @@ public class DatabaseManager {
             fileWriter.append(NEW_LINE_SEPARATOR);
 
             for(Bike b: bikeManager.getBikeList()){
-                fileWriter.append(b.getBarcodeNrInString());
-                fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(b.getCustomer().getPersonNr());
-                fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(String.valueOf(b.getRegTime()));
-                fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(String.valueOf(b.getEntryTime()));
-                fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(String.valueOf(b.getExitTime()));
-                fileWriter.append(NEW_LINE_SEPARATOR);
+                StringBuilder bike = new StringBuilder();
+                try {
+                    bike.append(b.getBarcodeNrInString());
+                    bike.append(COMMA_DELIMITER);
+                    bike.append(b.getCustomer().getPersonNr());
+                    bike.append(COMMA_DELIMITER);
+                    bike.append(String.valueOf(b.getRegTime()));
+                    bike.append(COMMA_DELIMITER);
+                    bike.append(String.valueOf(b.getEntryTime()));
+                    bike.append(COMMA_DELIMITER);
+                    bike.append(String.valueOf(b.getExitTime()));
+                    fileWriter.append(bike.toString());
+                    fileWriter.append(NEW_LINE_SEPARATOR);
+                } catch(Error e){
+                    e.printStackTrace();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -200,18 +206,24 @@ public class DatabaseManager {
             fileWriter.append(NEW_LINE_SEPARATOR);
 
             for(Customer c: customerManager.getCustomerList()){
-                fileWriter.append(c.getFirstName());
-                fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(c.getSurname());
-                fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(c.getPersonNr());
-                fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(c.getPin());
-                fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(c.getPhoneNr());
-                fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(String.valueOf(c.getRegTime()));
-                fileWriter.append(NEW_LINE_SEPARATOR);
+                StringBuilder customer = new StringBuilder();
+                try{
+                    customer.append(c.getFirstName());
+                    customer.append(COMMA_DELIMITER);
+                    customer.append(c.getSurname());
+                    customer.append(COMMA_DELIMITER);
+                    customer.append(c.getPersonNr());
+                    customer.append(COMMA_DELIMITER);
+                    customer.append(c.getPin());
+                    customer.append(COMMA_DELIMITER);
+                    customer.append(c.getPhoneNr());
+                    customer.append(COMMA_DELIMITER);
+                    customer.append(String.valueOf(c.getRegTime()));
+                    fileWriter.append(customer.toString());
+                    fileWriter.append(NEW_LINE_SEPARATOR);
+                } catch (Error e){
+                    e.printStackTrace();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
