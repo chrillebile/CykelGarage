@@ -54,7 +54,7 @@ public class MainController {
     private TableColumn<Customer, String> tblColUserRegisterTime;
 
     @FXML
-    private TableColumn<Bike, String> tblColUserTelephoneNr;
+    private TableColumn<Customer, String> tblColUserTelephoneNr;
 
     @FXML
     private Button btnAddUser;
@@ -82,6 +82,9 @@ public class MainController {
 
     @FXML
     private TableColumn<Bike, String> tblColBikeParkingEnd;
+
+    @FXML
+    private TableColumn<Bike, String> tblColBikeParkingStatus;
 
     @FXML
     private Button btnAddBike;
@@ -143,7 +146,8 @@ public class MainController {
         tblColUserPersonnr.setCellValueFactory(customer -> new SimpleStringProperty(customer.getValue().getPersonNr()));
         tblColUserFirstName.setCellValueFactory(customer -> new SimpleStringProperty(customer.getValue().getFirstName()));
         tblColUserLastName.setCellValueFactory(customer -> new SimpleStringProperty(customer.getValue().getSurname()));
-        tblColUserRegisterTime.setCellValueFactory(p -> new SimpleStringProperty(adminManager.getFormatUnixTime(p.getValue().getRegTime())));
+        tblColUserRegisterTime.setCellValueFactory(customer -> new SimpleStringProperty(adminManager.getFormatUnixTime(customer.getValue().getRegTime())));
+        tblColUserTelephoneNr.setCellValueFactory(customer -> new SimpleStringProperty(customer.getValue().getPhoneNr()));
 
         tblUserList.setItems(customerList);
 
@@ -155,7 +159,8 @@ public class MainController {
         tblColBikeBarcode.setCellValueFactory(bike -> new SimpleStringProperty(bike.getValue().getBarcodeNrInString()));
         tblColBikeOwner.setCellValueFactory(bike -> new SimpleStringProperty(( bike.getValue().getCustomer().getFirstName() + " " + bike.getValue().getCustomer().getSurname())));
         tblColBikeParkingStart.setCellValueFactory(bike -> new SimpleStringProperty(adminManager.getFormatUnixTime(bike.getValue().getEntryTime())));
-        tblColBikeParkingEnd.setCellValueFactory(bike -> new SimpleStringProperty((adminManager.getFormatUnixTime(bike.getValue().getExitTime()))));
+        tblColBikeParkingEnd.setCellValueFactory(bike -> new SimpleStringProperty(adminManager.getFormatUnixTime(bike.getValue().getExitTime())));
+        tblColBikeParkingStatus.setCellValueFactory(bike -> new SimpleStringProperty(adminManager.getParkingStatus(bike.getValue().getParkingStatus())));
         tblBikeList.setItems(bikeList);
 
         tblBikeList.getSelectionModel().selectedItemProperty().addListener(this::handleSelectionChangeTblBikeList);

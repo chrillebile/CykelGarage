@@ -9,56 +9,28 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BikeGarage.controllers.EditUserController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BikeGarage.controllers.EditUserController">
    <children>
-      <AnchorPane layoutX="167.0" prefHeight="186.0" prefWidth="266.0">
+      <AnchorPane layoutX="125.0" layoutY="25.0">
          <children>
-            <Label layoutX="21.0" layoutY="124.0" text="PIN kod">
-               <padding>
-                  <Insets right="14.0" />
-               </padding>
-            </Label>
-            <Label layoutX="16.0" layoutY="85.0" text="Personnr">
-               <padding>
-                  <Insets right="14.0" />
-               </padding>
-            </Label>
-            <Label layoutX="13.0" layoutY="48.0" text="Efternamn">
-               <padding>
-                  <Insets right="14.0" />
-               </padding>
-            </Label>
-            <TextField fx:id="tbxPin" layoutX="78.0" layoutY="120.0" prefHeight="25.0" prefWidth="135.0" />
-            <TextField fx:id="tbxLastName" layoutX="78.0" layoutY="46.0">
-               <padding>
-                  <Insets bottom="14.0" />
-               </padding>
-            </TextField>
-            <TextField fx:id="tbxPersonNr" layoutX="78.0" layoutY="81.0">
-               <padding>
-                  <Insets bottom="14.0" />
-               </padding>
-            </TextField>
-            <Label layoutX="16.0" layoutY="14.0" text="Förnamn">
-               <padding>
-                  <Insets right="14.0" />
-               </padding>
-            </Label>
-            <TextField fx:id="tbxFirstName" layoutX="78.0" layoutY="9.0">
-               <padding>
-                  <Insets bottom="14.0" />
-               </padding>
-            </TextField>
-            <Label layoutX="-14.0" layoutY="154.0" text="Telefonnummer" />
-            <TextField fx:id="tbxPhoneNr" layoutX="78.0" layoutY="150.0" prefHeight="25.0" prefWidth="135.0" />
+            <Label layoutX="22.0" layoutY="126.0" text="PIN kod" />
+            <Label layoutX="15.0" layoutY="89.0" text="Personnr" />
+            <Label layoutX="6.0" layoutY="52.0" text="Efternamn" />
+            <TextField fx:id="tbxPin" layoutX="80.0" layoutY="121.0" promptText="123456" />
+            <TextField fx:id="tbxLastName" layoutX="80.0" layoutY="47.0" promptText="Exempelsson" />
+            <TextField fx:id="tbxPersonNr" layoutX="80.0" layoutY="84.0" promptText="ÅÅMMDDNNNN" />
+            <Label layoutX="16.0" layoutY="15.0" text="Förnamn" />
+            <TextField fx:id="tbxFirstName" layoutX="80.0" layoutY="10.0" promptText="Exempel" />
+            <Label layoutX="-26.0" layoutY="163.0" text="Telefonnummer" />
+            <TextField fx:id="tbxPhoneNr" layoutX="80.0" layoutY="158.0" promptText="0123456789" />
          </children>
       </AnchorPane>
-      <BorderPane layoutX="97.0" layoutY="168.0" prefHeight="200.0" prefWidth="407.0">
+      <BorderPane layoutX="100.0" layoutY="225.0" prefHeight="75.0">
          <right>
             <VBox prefHeight="186.0" prefWidth="81.0" spacing="14.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btnAddBike" mnemonicParsing="false" onAction="#handleAddBikeButton" text="Lägg till" />
-                  <Button fx:id="btnRemoveBike" mnemonicParsing="false" onAction="#handleRemoveBikeButton" text="Ta bort" />
+                  <Button fx:id="btnAddBike" mnemonicParsing="false" onAction="#handleAddBikeButton" prefWidth="70.0" text="Lägg till" />
+                  <Button fx:id="btnRemoveBike" mnemonicParsing="false" onAction="#handleRemoveBikeButton" prefWidth="70.0" text="Ta bort" />
                </children>
                <padding>
                   <Insets left="7.0" right="7.0" />
@@ -75,6 +47,6 @@
             <ListView fx:id="lsvBikeList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
-      <Button fx:id="btnSave" layoutX="278.0" layoutY="368.0" mnemonicParsing="false" onAction="#handleSaveButton" text="Spara" />
+      <Button fx:id="btnSave" layoutX="100.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleSaveButton" prefHeight="50.0" prefWidth="275.0" text="Spara" />
    </children>
 </AnchorPane>
