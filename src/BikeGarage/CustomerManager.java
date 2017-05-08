@@ -3,6 +3,7 @@ package BikeGarage;
 import java.util.ArrayList;
 
 /**
+ * Manages all the customers
  * @author Christian Bilevits
  */
 public class CustomerManager {

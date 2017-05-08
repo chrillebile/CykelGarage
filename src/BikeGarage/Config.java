@@ -1,6 +1,7 @@
 package BikeGarage;
 
 /**
+ * All setting for the program
  * @author Christian Bilevits
  */
 public class Config {

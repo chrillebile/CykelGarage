@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Manages all the windows
+ * @author Ennio Mara
+ */
 public class WindowManager {
 
     private AdminManager adminManager;

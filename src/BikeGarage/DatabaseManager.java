@@ -4,6 +4,7 @@ package BikeGarage;
 import java.io.*;
 
 /**
+ * Reads and writes to fil.
  * @author Christian Bilevits
  */
 public class DatabaseManager {

@@ -3,7 +3,10 @@ package BikeGarage;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-
+/**
+ * Starts the program.
+ * @author Ennio Mara
+ */
 public class Main extends Application {
 
     @Override
@@ -12,7 +15,6 @@ public class Main extends Application {
         CustomerManager customerManager = databaseManager.loadCustomers();
         BikeManager bikeManager = databaseManager.loadBikes();
         AdminManager adminManager = new AdminManager(customerManager, bikeManager, databaseManager);
-
 
         WindowManager windowManager = new WindowManager(adminManager);
         windowManager.initMain();

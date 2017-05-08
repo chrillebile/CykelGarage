@@ -1,6 +1,7 @@
 package BikeGarage;
 
 /**
+ * The bike and its properties.
  * @author Christian Bilevits
  */
 public class Bike {

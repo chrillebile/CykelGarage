@@ -3,6 +3,10 @@ package BikeGarage;
 import hardware_interfaces.*;
 import hardware_testdrivers.*;
 
+/**
+ * Manages and connects all the hardware.
+ * @author Ennio Mara
+ */
 public class HardwareManager {
     private BikeManager bikeManager;
     private CustomerManager customerManager;

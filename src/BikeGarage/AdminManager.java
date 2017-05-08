@@ -3,6 +3,7 @@ package BikeGarage;
 import java.util.ArrayList;
 
 /**
+ * Maneges all the managers
  * @author Christian Bilevits
  */
 public class AdminManager {

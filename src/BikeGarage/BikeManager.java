@@ -3,6 +3,7 @@ package BikeGarage;
 import java.util.ArrayList;
 
 /**
+ * Manages all the bikes
  * @author Ennio Mara
  */
 public class BikeManager {

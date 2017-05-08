@@ -1,6 +1,7 @@
 package BikeGarage;
 
 /**
+ * Users and its properties
  * @author Christian Bilevits
  */
 public class Customer {
