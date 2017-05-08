@@ -18,10 +18,10 @@ public class DatabaseManager {
     /**
      * Default constants
      */
-    private static final String COMMA_DELIMITER = ",";
+    private static final String COMMA_DELIMITER = ";";
     private static final String NEW_LINE_SEPARATOR = "\n";
-    private static final String FILE_HEADER_CUSTOMER = "firstName,lastName,personNr,pin,phoneNr,regTime";
-    private static final String FILE_HEADER_BIKE = "barcodeNr,personNr,regTime,entryTime,exitTime";
+    private static final String FILE_HEADER_CUSTOMER = "firstName;lastName;personNr;pin;phoneNr;regTime";
+    private static final String FILE_HEADER_BIKE = "barcodeNr;personNr;regTime;entryTime;exitTime";
     private static final String FILE_HEADER_CONFIG = "MaxParkingSpots";
 
     /**
