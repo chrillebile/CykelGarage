@@ -67,7 +67,9 @@ public class DatabaseManager {
             }
         } catch (FileNotFoundException e) {
             try {
-                fileWriter = new FileWriter(Config.FILENAME_BIKE);
+                File file = new File(Config.FILENAME_BIKE);
+                file.getParentFile().mkdir();
+                fileWriter = new FileWriter(file);
                 fileWriter.append(FILE_HEADER_BIKE);
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -95,7 +97,9 @@ public class DatabaseManager {
             }
         } catch (FileNotFoundException e){
             try {
-                fileWriter = new FileWriter(Config.FILENAME_CUSTOMER);
+                File file = new File(Config.FILENAME_CUSTOMER);
+                file.getParentFile().mkdir();
+                fileWriter = new FileWriter(file);
                 fileWriter.append(FILE_HEADER_CUSTOMER);
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -119,7 +123,9 @@ public class DatabaseManager {
             config.setMaxParkingSports(Integer.parseInt(fileReader.readLine()));
         } catch (FileNotFoundException e){
             try {
-                fileWriter = new FileWriter(Config.FILENAME_CONFIG);
+                File file = new File(Config.FILENAME_CONFIG);
+                file.getParentFile().mkdir();
+                fileWriter = new FileWriter(file);
                 fileWriter.append(FILE_HEADER_CONFIG);
             } catch (Exception e1) {
                 e1.printStackTrace();
