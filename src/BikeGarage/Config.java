@@ -1,5 +1,8 @@
 package BikeGarage;
 
+/**
+ * @author Christian Bilevits
+ */
 public class Config {
 
     /**
@@ -10,9 +13,9 @@ public class Config {
     public static final int TIME_TIL_PIN_DROP = 10;
     public static final int MAX_USERS = 50000;
     public static int MAX_PARKING_SPOTS;
-    public static final String FILENAME_BIKE = "bikeTable.csv";
-    public static final String FILENAME_CUSTOMER = "customerTable.csv";
-    public static final String FILENAME_CONFIG = "config.csv";
+    public static final String FILENAME_BIKE = "databaseFiles/bikeTable.csv";
+    public static final String FILENAME_CUSTOMER = "databaseFiles/customerTable.csv";
+    public static final String FILENAME_CONFIG = "databaseFiles/config.csv";
 
     /**
      * Add config file

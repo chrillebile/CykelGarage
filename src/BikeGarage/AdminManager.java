@@ -2,6 +2,9 @@ package BikeGarage;
 
 import java.util.ArrayList;
 
+/**
+ * @author Christian Bilevits
+ */
 public class AdminManager {
     CustomerManager customerManager;
     BikeManager bikeManager;
@@ -46,6 +49,13 @@ public class AdminManager {
      * @return Whether the removal was successful.
      */
     public boolean removeCustomer(String personNr){
+        if(bikeManager.hasBikeParked(customerManager.findCustomerByPersonNr(personNr))){
+            throw new IllegalArgumentException("The customer has a parked bike.");
+        }
+        ArrayList<Bike> tempList = bikeManager.findBikesByPersonNr(personNr);
+        for(Bike b: tempList){
+            removeBike(b.getBarcodeNr());
+        }
         return customerManager.removeCustomer(personNr);
     }
 
@@ -72,7 +82,7 @@ public class AdminManager {
      * @param barcodeNr This is the bike's identification number. It is unique.
      * @return Whether the bike has been successfully removed.
      */
-    public boolean removeBike(Long barcodeNr){
+    public boolean removeBike(long barcodeNr){
         return bikeManager.removeBike(barcodeNr);
     }
 
@@ -91,6 +101,13 @@ public class AdminManager {
     }
 
     /**
+     * @return The list of all parked bikes.
+     */
+    public ArrayList<Bike> getParkedBikeList(){
+        return bikeManager.getParkedBikeList();
+    }
+
+    /**
      * Seearch a specific customer given its personNr.
      * @param personNr Unique identification for the customer
      * @return The found customer.
@@ -104,7 +121,7 @@ public class AdminManager {
      * @param barcodeNr Unique identification for the bike.
      * @return The found bike.
      */
-    public Bike findBike(Long barcodeNr){
+    public Bike findBike(long barcodeNr){
         return bikeManager.findBikeByBarcodeNr(barcodeNr);
     }
 

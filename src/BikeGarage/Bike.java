@@ -1,5 +1,8 @@
 package BikeGarage;
 
+/**
+ * @author Christian Bilevits
+ */
 public class Bike {
 
     private Customer customer;
@@ -55,7 +58,6 @@ public class Bike {
      */
     public String getBarcodeNrInString(){
         String returnedString =  String.format("%05d", barcodeNr);
-
         return returnedString;
     }
 

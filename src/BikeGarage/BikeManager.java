@@ -2,6 +2,9 @@ package BikeGarage;
 
 import java.util.ArrayList;
 
+/**
+ * @author Ennio Mara
+ */
 public class BikeManager {
     private ArrayList<Bike>  bikeList;
     private ArrayList<Bike> parkedBikeList;
@@ -81,9 +84,7 @@ public class BikeManager {
     public Bike addBike(long barcodeNr, Customer customer, long regTime, long entryTime, long exitTime){
         Bike bikeToBeAdded = new Bike(barcodeNr, customer, regTime, entryTime, exitTime);
         bikeList.add(bikeToBeAdded);
-        if(entryTime > exitTime){
-            parkedBikeList.add(bikeToBeAdded);
-        }
+        changeBikeParkingStatus(bikeToBeAdded);
         return bikeToBeAdded;
     }
 
@@ -149,9 +150,7 @@ public class BikeManager {
         for (Bike bike : bikeList) {
             if(bike.getBarcodeNr() == barcodeNr){
                 bike.setEntryTime(entryTime);
-                if(bike.getParkingStatus()){
-                   parkedBikeList.add(bike);
-                }
+                changeBikeParkingStatus(bike);
                 return true;
             }
         }
@@ -168,13 +167,23 @@ public class BikeManager {
         for (Bike bike : bikeList) {
             if(bike.getBarcodeNr() == barcodeNr){
                 bike.setExitTime(exitTime);
-                if(!bike.getParkingStatus()){
-                    parkedBikeList.remove(bike);
-                }
+                changeBikeParkingStatus(bike);
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Change of bike status.
+     * @param bike The bike we want to change parking status on.
+     */
+    public void changeBikeParkingStatus(Bike bike){
+        if(bike.getParkingStatus() && !parkedBikeList.contains(bike)){
+            parkedBikeList.add(bike);
+        }else {
+            parkedBikeList.remove(bike);
+        }
     }
 
     /**

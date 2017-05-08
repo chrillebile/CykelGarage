@@ -2,6 +2,9 @@ package BikeGarage;
 
 import java.util.ArrayList;
 
+/**
+ * @author Christian Bilevits
+ */
 public class CustomerManager {
 
     private ArrayList<Customer> customerList;
@@ -15,8 +18,8 @@ public class CustomerManager {
 
     /**
      * Returns a customer if he exist
-     * @param personNr
-     * @return
+     * @param personNr The customers personal id-number.
+     * @return The found customer, if no customer was found null returns.
      */
     public Customer findCustomerByPersonNr(String personNr){
         for(Customer c: customerList){
@@ -29,8 +32,8 @@ public class CustomerManager {
 
     /**
      * Check if a pin exist
-     * @param pin
-     * @return
+     * @param pin A pin-code.
+     * @return Returns if pin-code exist.
      */
     public boolean checkIfPinExist(String pin){
         for(Customer c: customerList){
@@ -51,24 +54,18 @@ public class CustomerManager {
 
     /**
      * Create new customer if he don't already exist.
-     * @param firstName
-     * @param surname
-     * @param personNr
-     * @param pin
-     * @param phoneNr
-     * @param regTime
+     * @param firstName The customers first name
+     * @param surname The customers surname
+     * @param personNr The customers personal id-number
+     * @param pin The customers pin-code
+     * @param phoneNr The customers phone number
+     * @param regTime The customers registration time
      * @return Created customer. If customer already exist return null.
      */
     public Customer createCustomer(String firstName, String surname, String personNr, String pin, String phoneNr, long regTime){
         Customer temp1 = findCustomerByPersonNr(personNr);
-        if(temp1 == null){
-            Customer customer;
-            if(regTime == 0){
-                customer = new Customer(firstName, surname, personNr, phoneNr, pin);
-            }
-            else {
-                customer = new Customer(firstName, surname, personNr, pin, phoneNr, regTime);
-            }
+        if(temp1 == null && customerList.size() < Config.MAX_USERS){
+            Customer customer = new Customer(firstName, surname, personNr, pin, phoneNr, regTime);
             customerList.add(customer);
             return customer;
         }else {
@@ -78,8 +75,8 @@ public class CustomerManager {
 
     /**
      * Removes a customer if he exist
-     * @param personNr
-     * @return
+     * @param personNr The customers personal id-number
+     * @return If the removed customer was successfully removed
      */
     public boolean removeCustomer(String personNr){
         Customer temp = findCustomerByPersonNr(personNr);
@@ -88,10 +85,10 @@ public class CustomerManager {
 
     /**
      * Edit customers name if he exist
-     * @param personNr
-     * @param firsName
-     * @param surname
-     * @return
+     * @param personNr The customers personal id-number
+     * @param firsName The customers first name
+     * @param surname The customers surname
+     * @return If the edit was successful
      */
     public boolean editCustomerName(String personNr, String firsName, String surname){
         Customer temp = findCustomerByPersonNr(personNr);
@@ -106,9 +103,9 @@ public class CustomerManager {
 
     /**
      * Edit customers pin if he exist
-     * @param personNr
-     * @param pin
-     * @return
+     * @param personNr The customers personal id-number
+     * @param pin The customers pin-code
+     * @return If the edit was successful
      */
     public boolean editCustomerPin(String personNr, String pin){
         Customer temp = findCustomerByPersonNr(personNr);
