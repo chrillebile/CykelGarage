@@ -5,6 +5,7 @@ import BikeGarage.controllers.EditUserController;
 import BikeGarage.controllers.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -81,5 +82,13 @@ public class WindowManager {
         }
     }
 
+    public void openPopup(String message){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        alert.showAndWait();
+    }
 
 }

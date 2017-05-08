@@ -243,28 +243,43 @@ public class MainController {
     void handleRemoveUserButton(){
         Customer customerToBeRemoved = tblUserList.getSelectionModel().getSelectedItem();
 
-        adminManager.removeCustomer(customerToBeRemoved.getPersonNr());
+        try{
+            adminManager.removeCustomer(customerToBeRemoved.getPersonNr());
+            // Save the customers
+            adminManager.updateCustomers();
 
-        // Save the customers
-        adminManager.updateCustomers();
 
+            handleRefreshUserListButton();
+        }
+        catch (IllegalArgumentException e){
+            windowManager.openPopup(e.getMessage());
+            return;
+        }
 
-        handleRefreshUserListButton();
     }
 
     @FXML
     void handleRemoveBikeButton(){
         Bike bikeToBeRemoved = tblBikeList.getSelectionModel().getSelectedItem();
-        adminManager.removeBike(bikeToBeRemoved.getBarcodeNr());
 
-        // If a user is selected, the tableview cannot automatically update its internal list as its pointing in the list in adminManager.findBikesByCustomer(). Adminmanager removes the bike in adminManager.getBikeList()
-        if(tblUserList.getSelectionModel().getSelectedItem() != null){
-            tblBikeList.getItems().remove(bikeToBeRemoved);
+        try{
+            adminManager.removeBike(bikeToBeRemoved.getBarcodeNr());
+
+            // If a user is selected, the tableview cannot automatically update its internal list as its pointing in the list in adminManager.findBikesByCustomer(). Adminmanager removes the bike in adminManager.getBikeList()
+            if(tblUserList.getSelectionModel().getSelectedItem() != null){
+                tblBikeList.getItems().remove(bikeToBeRemoved);
+            }
+            // Save the new bikelist
+            adminManager.updateBikes();
+
+            tblBikeList.refresh();
+
         }
-        // Save the new bikelist
-        adminManager.updateBikes();
+        catch (IllegalArgumentException e){
+            windowManager.openPopup(e.getMessage());
+            return;
+        }
 
-        tblBikeList.refresh();
     }
 
     @FXML

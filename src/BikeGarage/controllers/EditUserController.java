@@ -47,7 +47,13 @@ public class EditUserController {
     @FXML
     void handleSaveButton(){
         if(isNewUser) {
-            customer = adminManager.createCustomer(tbxFirstName.getText(), tbxLastName.getText(), tbxPersonNr.getText(), tbxPin.getText(), tbxPhoneNr.getText());
+            try{
+                customer = adminManager.createCustomer(tbxFirstName.getText(), tbxLastName.getText(), tbxPersonNr.getText(), tbxPin.getText(), tbxPhoneNr.getText());
+            }
+            catch (IllegalArgumentException e){
+                windowManager.openPopup(e.getMessage());
+                return;
+            }
 
             // Get the number of bikes that need to be added to  the customer
             int numOfBikes = lsvBikeList.getItems().size();
@@ -58,11 +64,30 @@ public class EditUserController {
 
         }
         else{
-            // We have an existing user. Use his setters to set the data
-            customer.setFirstName(tbxFirstName.getText());
-            customer.setSurname(tbxLastName.getText());
-            customer.setPin(tbxPin.getText());
-            customer.setPhoneNr(tbxPhoneNr.getText());
+            String firstName = customer.getFirstName();
+            String lastName = customer.getSurname();
+            String personNr = customer.getPersonNr();
+            String pinKod = customer.getPin();
+            String phoneNr = customer.getPhoneNr();
+
+            try{
+                // We have an existing user. Use his setters to set the data
+                customer.setFirstName(tbxFirstName.getText());
+                customer.setSurname(tbxLastName.getText());
+                customer.setPin(tbxPin.getText());
+                customer.setPhoneNr(tbxPhoneNr.getText());
+            }
+            catch (IllegalArgumentException e){
+                // Something went wrong. Revert the attributes to what they were
+                customer.setFirstName(firstName);
+                customer.setSurname(lastName);
+                customer.setPin(pinKod);
+                customer.setPhoneNr(phoneNr);
+
+
+                windowManager.openPopup(e.getMessage());
+                return;
+            }
         }
 
         adminManager.updateCustomers();
@@ -96,6 +121,7 @@ public class EditUserController {
             tbxFirstName.setText(customer.getFirstName());
             tbxLastName.setText(customer.getSurname());
             tbxPersonNr.setText(customer.getPersonNr());
+            tbxPersonNr.setDisable(true);
             tbxPin.setText(customer.getPin());
             tbxPhoneNr.setText(customer.getPhoneNr());
 

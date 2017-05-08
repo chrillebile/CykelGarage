@@ -67,7 +67,13 @@ public class EditBikeController {
     void handleSaveButton(){
         Bike bikeToBeCreated = bike;
         if(isNewBike){
-            bikeToBeCreated = adminManager.addBike(customer);
+            try{
+                bikeToBeCreated = adminManager.addBike(customer);
+            }
+            catch (IllegalArgumentException e){
+                windowManager.openPopup(e.getMessage());
+                return;
+            }
         }
 
         // If the checkbox is selected, it means that the bike is parked
@@ -81,7 +87,13 @@ public class EditBikeController {
 
         // Check if we have made any change in personnr. If we have, then update it
         if(!isNewBike && customer != null && !(tbxBikeOwner.getText().equals(customer.getPersonNr()))){
-            bikeToBeCreated.setCustomer(adminManager.findCustomer(tbxBikeOwner.getText()));
+            Customer owner = adminManager.findCustomer(tbxBikeOwner.getText());
+            if(owner != null){
+                bikeToBeCreated.setCustomer(owner);
+            }
+            else{
+                windowManager.openPopup("Kund ej hitta användare med given personnr.");
+            }
         }
 
 
