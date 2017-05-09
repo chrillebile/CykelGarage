@@ -57,9 +57,8 @@ public class EditUserController {
             }
 
             // Get the number of bikes that need to be added to  the customer
-            int numOfBikes = lsvBikeList.getItems().size();
 
-            for (int i = 0; i < numOfBikes; i++) {
+            for (int i = 0; i < lsvBikeList.getItems().size(); i++) {
                 adminManager.addBike(customer);
             }
 
@@ -77,6 +76,12 @@ public class EditUserController {
                 customer.setSurname(tbxLastName.getText());
                 customer.setPin(tbxPin.getText());
                 customer.setPhoneNr(tbxPhoneNr.getText());
+
+                for(int i = 0; i < lsvBikeList.getItems().size(); i++){
+                    if(lsvBikeList.getItems().get(i).contentEquals("Bike")){
+                        adminManager.addBike(customer);
+                    }
+                }
             }
             catch (IllegalArgumentException e){
                 // Something went wrong. Revert the attributes to what they were
