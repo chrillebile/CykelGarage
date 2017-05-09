@@ -16,6 +16,7 @@ public class EditUserController {
     private Customer customer;
     private ObservableList<Bike> bikeList;
     private boolean isNewUser = false;
+    private MainController mainController;
 
     @FXML
     private TextField tbxPin;
@@ -90,6 +91,8 @@ public class EditUserController {
             }
         }
 
+        mainController.handleShowAllBikesButton();
+
         adminManager.updateCustomers();
         adminManager.updateBikes();
     }
@@ -100,7 +103,7 @@ public class EditUserController {
      * @param adminManager The instance of AdminManager the system uses
      * @param customer The customer that will be edited. If the customer is null, it means that a new user will be created
      */
-    public void init(WindowManager windowManager, AdminManager adminManager, Customer customer){
+    public void init(WindowManager windowManager, AdminManager adminManager, Customer customer, MainController mainController){
         this.windowManager = windowManager;
         this.adminManager = adminManager;
 
@@ -108,6 +111,7 @@ public class EditUserController {
             isNewUser = true;
         }
         this.customer = customer;
+        this.mainController = mainController;
 
         initializeAfterInit();
     }
@@ -139,8 +143,4 @@ public class EditUserController {
     void handleRemoveBikeButton(){
         lsvBikeList.getItems().remove(lsvBikeList.getSelectionModel().getSelectedIndex());
     }
-
-
-
-
 }

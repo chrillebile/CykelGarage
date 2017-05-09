@@ -108,16 +108,15 @@ public class MainController {
 
     @FXML
     void handleAddUserButton(ActionEvent event) {
-        windowManager.initEditUser(null);
+        windowManager.initEditUser(null, this);
     }
 
     @FXML
     void handleEditUserButton(ActionEvent event){
         Customer customerToEdit = tblUserList.getSelectionModel().getSelectedItem();
         if(customerToEdit != null){
-            windowManager.initEditUser(customerToEdit);
+            windowManager.initEditUser(customerToEdit, this);
         }
-
     }
 
     /**
@@ -199,7 +198,6 @@ public class MainController {
         // We have to refresh in order for it to show
         tblBikeList.refresh();
 
-
     }
 
     /**
@@ -231,30 +229,28 @@ public class MainController {
         // When changing selection, handleSelectionChangeTblUserList is fired. There we do the update
         tblUserList.getSelectionModel().select(null);
         tblBikeList.getSelectionModel().select(null);
-        tblUserList.refresh();
+        handleRefreshUserListButton();
         tblBikeList.refresh();
-
     }
 
     @FXML
     void handleEditBikeButton(){
         Bike bikeToEdit = tblBikeList.getSelectionModel().getSelectedItem();
         if(bikeToEdit != null){
-            windowManager.initEditBike(bikeToEdit, bikeToEdit.getCustomer());
+            windowManager.initEditBike(bikeToEdit, bikeToEdit.getCustomer(), this);
         }
     }
 
     @FXML
-    void handleRemoveUserButton(){
+    void handleRemoveUserButton() {
         Customer customerToBeRemoved = tblUserList.getSelectionModel().getSelectedItem();
 
-        try{
+        try {
             adminManager.removeCustomer(customerToBeRemoved.getPersonNr());
             // Save the customers
             adminManager.updateCustomers();
 
-
-            handleRefreshUserListButton();
+            handleShowAllBikesButton();
         }
         catch (IllegalArgumentException e){
             windowManager.openPopup(e.getMessage());
@@ -290,7 +286,7 @@ public class MainController {
     @FXML
     void handleAddBikeButton(){
         Customer owner = tblUserList.getSelectionModel().getSelectedItem();
-        windowManager.initEditBike(null, owner);
+        windowManager.initEditBike(null, owner, this);
     }
 
     @FXML

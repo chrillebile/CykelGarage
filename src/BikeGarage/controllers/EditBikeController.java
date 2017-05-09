@@ -19,6 +19,7 @@ public class EditBikeController {
     private Bike bike;
     private Customer customer;
     private boolean isNewBike = false;
+    private MainController mainController;
 
 
     @FXML
@@ -37,7 +38,7 @@ public class EditBikeController {
     private CheckBox chkbIsParked;
 
 
-    public void init(WindowManager windowManager, AdminManager adminManager, Bike bike, Customer customer){
+    public void init(WindowManager windowManager, AdminManager adminManager, Bike bike, Customer customer, MainController mainController){
         this.windowManager = windowManager;
         this.adminManager = adminManager;
 
@@ -47,6 +48,7 @@ public class EditBikeController {
         }
         this.bike = bike;
         this.customer = customer;
+        this.mainController = mainController;
 
         initializeAfterInit();
     }
@@ -96,6 +98,7 @@ public class EditBikeController {
             }
         }
 
+        mainController.handleShowAllBikesButton();
 
         adminManager.updateBikes();
     }
