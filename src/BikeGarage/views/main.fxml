@@ -104,7 +104,7 @@
                                     <Button fx:id="btnRemoveBike" disable="true" layoutX="77.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleRemoveBikeButton" text="Ta bort" />
                                     <Button fx:id="btnEditBike" disable="true" layoutX="145.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleEditBikeButton" text="Ändra" />
                                     <Button fx:id="btnShowAllBikes" layoutX="205.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleShowAllBikesButton" text="Uppdatera &amp; Visa alla cyklar" />
-                                    <Button fx:id="btnPrintBarcode" disable="true" layoutX="378.0" layoutY="10.0" mnemonicParsing="false" onAction="#handlePrintButton" text="Skriv ut" />
+                                    <Button fx:id="btnPrintBarcode" disable="true" layoutX="401.0" layoutY="10.0" mnemonicParsing="false" onAction="#handlePrintButton" text="Skriv ut" />
                                  </children>
                               </AnchorPane>
                            </bottom>
