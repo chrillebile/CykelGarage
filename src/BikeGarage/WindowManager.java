@@ -30,7 +30,7 @@ public class WindowManager {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("views/main.fxml"));
+            loader.setLocation(getClass().getResource(Config.WINDOWFILE_LOCATION + "main.fxml"));
             AnchorPane root = loader.load();
 
             stage.setScene(new Scene(root));
@@ -40,6 +40,10 @@ public class WindowManager {
             controller.init(this, adminManager, hardwareManager);
 
             stage.show();
+
+            if(Config.MAX_PARKING_SPOTS <= 0){
+                initSettings();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,7 +54,7 @@ public class WindowManager {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("views/editUser.fxml"));
+            loader.setLocation(getClass().getResource(Config.WINDOWFILE_LOCATION + "editUser.fxml"));
             AnchorPane root = loader.load();
 
             stage.setScene(new Scene(root));
@@ -70,7 +74,7 @@ public class WindowManager {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("views/editBike.fxml"));
+            loader.setLocation(getClass().getResource(Config.WINDOWFILE_LOCATION + "editBike.fxml"));
             AnchorPane root = loader.load();
 
             stage.setScene(new Scene(root));
@@ -80,6 +84,25 @@ public class WindowManager {
 
             stage.show();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void initSettings(){
+        Stage stage = new Stage();
+
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(Config.WINDOWFILE_LOCATION + "settings.fxml"));
+            AnchorPane root = loader.load();
+
+            stage.setScene(new Scene(root));
+
+            //ToDo:Add the settingsController
+
+            stage.show();
+
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
