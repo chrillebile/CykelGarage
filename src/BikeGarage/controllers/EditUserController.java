@@ -131,6 +131,9 @@ public class EditUserController {
 
             // Initialize the textbox
             bikeList = FXCollections.observableArrayList(adminManager.findBikesByCustomer(customer.getPersonNr()));
+            for(Bike b: bikeList){
+                lsvBikeList.getItems().add(b.getBarcodeNrInString());
+            }
         }
     }
 
