@@ -18,9 +18,11 @@ import java.io.IOException;
 public class WindowManager {
 
     private AdminManager adminManager;
+    private HardwareManager hardwareManager;
 
-    public WindowManager(AdminManager adminManager){
+    public WindowManager(AdminManager adminManager, HardwareManager hardwareManager){
         this.adminManager = adminManager;
+        this.hardwareManager = hardwareManager;
     }
 
     public void initMain(){
@@ -35,7 +37,7 @@ public class WindowManager {
 
 
             MainController controller = loader.getController();
-            controller.init(this, adminManager);
+            controller.init(this, adminManager, hardwareManager);
 
             stage.show();
         } catch (IOException e) {

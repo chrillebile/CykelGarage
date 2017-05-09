@@ -1,9 +1,6 @@
 package BikeGarage.controllers;
 
-import BikeGarage.AdminManager;
-import BikeGarage.Bike;
-import BikeGarage.Customer;
-import BikeGarage.WindowManager;
+import BikeGarage.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,6 +21,7 @@ public class MainController {
 
     private WindowManager windowManager;
     private AdminManager adminManager;
+    private HardwareManager hardwareManager;
 
     private ObservableList<Customer> customerList;
     private ObservableList<Bike> bikeList;
@@ -107,6 +105,9 @@ public class MainController {
     @FXML Button btnShowAllBikes;
 
     @FXML
+    private Button btnPrintBarcode;
+
+    @FXML
     void handleAddUserButton(ActionEvent event) {
         windowManager.initEditUser(null, this);
     }
@@ -123,10 +124,12 @@ public class MainController {
      * Used to initialize the controller. Here we set all variables ths controller requires (e.g. access to managers). Then the components get filled.
      * @param windowManager The instance of WindowManager
      * @param adminManager The instance of AdminManager the system uses
+     * @param hardwareManager The instance of HardwareManager the system uses
      */
-    public void init(WindowManager windowManager, AdminManager adminManager){
+    public void init(WindowManager windowManager, AdminManager adminManager, HardwareManager hardwareManager){
         this.windowManager = windowManager;
         this.adminManager = adminManager;
+        this.hardwareManager = hardwareManager;
 
         initializeAfterInit();
     }
@@ -211,10 +214,12 @@ public class MainController {
         if(newBike == null){
             btnEditBike.setDisable(true);
             btnRemoveBike.setDisable(true);
+            btnPrintBarcode.setDisable(true);
         }
         else{
             btnEditBike.setDisable(false);
             btnRemoveBike.setDisable(false);
+            btnPrintBarcode.setDisable(false);
         }
     }
 
@@ -307,8 +312,12 @@ public class MainController {
     }
 
     @FXML
-    void handlePrintBarcodeButton(){
-
+    void handlePrintButton(){
+        Bike bike = tblBikeList.getSelectionModel().getSelectedItem();
+        if(bike == null){
+            return;
+        }
+        hardwareManager.printBarcode(bike.getBarcodeNrInString());
     }
 
 }

@@ -30,6 +30,7 @@ public class HardwareManager {
         initElectronicLock();
         initPincodeTerminal();
         initBarcodeScanner();
+        initBarcodePrinter();
     }
 
     /**
@@ -104,5 +105,9 @@ public class HardwareManager {
         if(bikeManager.findBikeByBarcodeNr(barcodeInLong)!= null){
             electronicLock.open(10);
         }
+    }
+
+    public void printBarcode(String barcode){
+        barcodePrinter.printBarcode(barcode);
     }
 }
