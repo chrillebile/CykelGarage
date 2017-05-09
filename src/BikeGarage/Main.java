@@ -16,7 +16,9 @@ public class Main extends Application {
         BikeManager bikeManager = databaseManager.loadBikes();
         AdminManager adminManager = new AdminManager(customerManager, bikeManager, databaseManager);
 
-        WindowManager windowManager = new WindowManager(adminManager);
+        HardwareManager hardwareManager = new HardwareManager(customerManager, bikeManager);
+
+        WindowManager windowManager = new WindowManager(adminManager, hardwareManager);
         windowManager.initMain();
     }
 
