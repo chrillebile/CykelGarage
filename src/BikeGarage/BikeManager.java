@@ -68,6 +68,9 @@ public class BikeManager {
      * @return The complete bike object, including the customer.
      */
     public Bike addBike(Customer customer){
+        if(findBikesByPersonNr(customer.getPersonNr()).size() >= Config.MAX_BIKES_PER_PERSON){
+            throw new IllegalArgumentException("Du kan inte ha mer än 2 cyklar");
+        }
         Bike bikeToBeAdded = new Bike(getNextFreeBarcode(), customer);
         bikeList.add(bikeToBeAdded);
         return bikeToBeAdded;
@@ -83,6 +86,9 @@ public class BikeManager {
      * @return The created bike.
      */
     public Bike addBike(long barcodeNr, Customer customer, long regTime, long entryTime, long exitTime){
+        if(findBikesByPersonNr(customer.getPersonNr()).size() >= Config.MAX_BIKES_PER_PERSON){
+            throw new IllegalArgumentException("Du kan inte ha mer än 2 cyklar");
+        }
         Bike bikeToBeAdded = new Bike(barcodeNr, customer, regTime, entryTime, exitTime);
         bikeList.add(bikeToBeAdded);
         changeBikeParkingStatus(bikeToBeAdded);

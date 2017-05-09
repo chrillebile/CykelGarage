@@ -102,7 +102,7 @@ public class Customer {
      * @param pin The customers pin-code.
      */
     public void setPin(String pin){
-        if(pin.matches("(.*)\\D(.*)") || pin.length() != 6){
+        if(pin.matches("(.*)\\D(.*)") || pin.length() != Config.NUMBER_OF_CHARACTER_OF_PIN){
             throw new IllegalArgumentException("Pin-koden måste vara 6 siffror (0-9)");
         }
         this.pin = pin;

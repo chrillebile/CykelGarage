@@ -16,7 +16,7 @@ public class Bike {
      * @param customer The bike's owner.
      */
     public Bike(long barcodeNr, Customer customer){
-        this.barcodeNr = barcodeNr;
+        setBarcodeNr(barcodeNr);
         this.customer = customer;
         this.regTime = System.currentTimeMillis();
     }
@@ -30,7 +30,7 @@ public class Bike {
      * @param exitTime When the bike last exited the
      */
     public Bike(long barcodeNr, Customer customer, long regTime, long entryTime, long exitTime){
-        this.barcodeNr = barcodeNr;
+        setBarcodeNr(barcodeNr);
         this.customer = customer;
         this.regTime = regTime;
         this.entryTime = entryTime;
@@ -81,6 +81,17 @@ public class Bike {
      */
     public long getExitTime(){
         return exitTime;
+    }
+
+    /**
+     * To check that the barcode doesn't have more than 5 digits and setting the barcode
+     * @param barcodeNr The barcode
+     */
+    private void setBarcodeNr(long barcodeNr){
+        if(barcodeNr >= Config.MAX_NUMBER_OF_BARCODES){
+            throw new IllegalArgumentException("Du kan inte få fler barcodes");
+        }
+        this.barcodeNr = barcodeNr;
     }
 
     /**
