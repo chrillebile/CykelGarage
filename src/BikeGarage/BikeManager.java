@@ -1,10 +1,12 @@
 package BikeGarage;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Manages all the bikes
- * @author Ennio Mara
+ * @author Ennio Mara & Christian Bilevits
  */
 public class BikeManager {
     private ArrayList<Bike>  bikeList;
@@ -73,6 +75,7 @@ public class BikeManager {
         }
         Bike bikeToBeAdded = new Bike(getNextFreeBarcode(), customer);
         bikeList.add(bikeToBeAdded);
+        sortBikeList();
         return bikeToBeAdded;
     }
 
@@ -96,15 +99,36 @@ public class BikeManager {
     }
 
     /**
+     * Sorting the bikeList by barcodeNr, used by addBike so we can reuse barcode numbers.
+     */
+    public void sortBikeList(){
+        Collections.sort(bikeList, new Comparator<Bike>() {
+            @Override
+            public int compare(Bike b1, Bike b2) {
+                return b1.getBarcodeNrInString().compareTo(b2.getBarcodeNrInString());
+            }
+        });
+    }
+
+    /**
      * Iterate through the bikelist and get the next free barcode. Ideally to be used when adding a bike.
      * @return The next barcode. This barcode is not used by anyone and is one (1) larger than the current maximum barcode.
      */
     private long getNextFreeBarcode(){
         long localMaximumBarcode = -1;
+        ArrayList<Long> unusedBarcodes = new ArrayList<>();
         for (Bike bike : bikeList) {
             if(bike.getBarcodeNr() > localMaximumBarcode){
+                if((bike.getBarcodeNr()-(localMaximumBarcode+1)) >= 1){
+                    for(int i = 1; i < (bike.getBarcodeNr()-localMaximumBarcode); i++){
+                        unusedBarcodes.add((localMaximumBarcode+i));
+                    }
+                }
                 localMaximumBarcode = bike.getBarcodeNr();
             }
+        }
+        if(unusedBarcodes.size() > 0){
+            return unusedBarcodes.get(0);
         }
         // localMaximumBarcode is already taken. Since it is maximum, localMaximumBarcode + 1 is not taken.
         return localMaximumBarcode + 1;
