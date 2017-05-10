@@ -23,7 +23,7 @@ public class DatabaseManager {
     private static final String NEW_LINE_SEPARATOR = "\n";
     private static final String FILE_HEADER_CUSTOMER = "firstName;surname;personNr;pin;phoneNr;regTime";
     private static final String FILE_HEADER_BIKE = "barcodeNr;personNr;regTime;entryTime;exitTime";
-    private static final String FILE_HEADER_CONFIG = "MaxParkingSpots";
+    private static final String FILE_HEADER_CONFIG = "isFirstTimeSystemStart;MaxParkingSpots";
 
     /**
      * Customer index
@@ -122,7 +122,19 @@ public class DatabaseManager {
             String line;
             //If line is not empty it will read and set max parking spots
             if((line = fileReader.readLine()) != null) {
-                config.setMaxParkingSports(Integer.parseInt(line));
+                String[] split = line.split(COMMA_DELIMITER);
+
+                // Find whether to set it to true or false
+                switch (split[0]){
+                    case "0":
+                        config.setSystemStartedBefore(false);
+                        break;
+                    case "1":
+                        config.setSystemStartedBefore(true);
+                        break;
+                }
+
+                config.setMaxParkingSports(Integer.parseInt(split[1]));
             }
         } catch (FileNotFoundException e){
             try {
@@ -240,6 +252,17 @@ public class DatabaseManager {
             fileWriter = new FileWriter(Config.FILENAME_CONFIG);
             fileWriter.append(FILE_HEADER_CONFIG.toString());
             fileWriter.append(NEW_LINE_SEPARATOR);
+
+            // Since SYSTEM_STARTED_BEFORE is a boolean, 1 equals true and 0 equals false
+            if(Config.SYSTEM_STARTED_BEFORE){
+                fileWriter.append(String.valueOf(1));
+                fileWriter.append(COMMA_DELIMITER);
+            }
+            else{
+                fileWriter.append(String.valueOf(0));
+                fileWriter.append(COMMA_DELIMITER);
+            }
+
             fileWriter.append(String.valueOf(Config.MAX_PARKING_SPOTS));
         } catch (Exception e) {
             e.printStackTrace();
