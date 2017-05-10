@@ -70,8 +70,7 @@ public class DatabaseManager {
             try {
                 File file = new File(Config.FILENAME_BIKE);
                 file.getParentFile().mkdir();
-                fileWriter = new FileWriter(file);
-                fileWriter.append(FILE_HEADER_BIKE);
+                updateBikes();
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
@@ -100,8 +99,7 @@ public class DatabaseManager {
             try {
                 File file = new File(Config.FILENAME_CUSTOMER);
                 file.getParentFile().mkdir();
-                fileWriter = new FileWriter(file);
-                fileWriter.append(FILE_HEADER_CUSTOMER);
+                updateCustomers();
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
@@ -121,13 +119,16 @@ public class DatabaseManager {
         try {
             fileReader = new BufferedReader(new FileReader(Config.FILENAME_CONFIG));
             fileReader.readLine();
-            config.setMaxParkingSports(Integer.parseInt(fileReader.readLine()));
+            String line;
+            //If line is not empty it will read and set max parking spots
+            if((line = fileReader.readLine()) != null) {
+                config.setMaxParkingSports(Integer.parseInt(line));
+            }
         } catch (FileNotFoundException e){
             try {
                 File file = new File(Config.FILENAME_CONFIG);
                 file.getParentFile().mkdir();
-                fileWriter = new FileWriter(file);
-                fileWriter.append(FILE_HEADER_CONFIG);
+                updateConfig();
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
@@ -146,14 +147,7 @@ public class DatabaseManager {
         if(fileReader != null) {
             try {
                 fileReader.close();
-                System.out.println();
             } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                fileWriter.close();
-            } catch (Exception e){
                 e.printStackTrace();
             }
         }
