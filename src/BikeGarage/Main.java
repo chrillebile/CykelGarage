@@ -18,7 +18,7 @@ public class Main extends Application {
         AdminManager adminManager = new AdminManager(customerManager, bikeManager, databaseManager);
 
         HardwareManager hardwareManager = new HardwareManager(customerManager, bikeManager);
-        WindowManager windowManager = new WindowManager(adminManager, hardwareManager);
+        //WindowManager windowManager = new WindowManager(adminManager, hardwareManager);
     }
 
     public static void main(String[] args) {

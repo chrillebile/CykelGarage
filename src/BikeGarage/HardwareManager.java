@@ -8,8 +8,7 @@ import hardware_testdrivers.*;
  * @author Ennio Mara
  */
 public class HardwareManager {
-    private BikeManager bikeManager;
-    private CustomerManager customerManager;
+    private AdminManager adminManager;
 
     private BarcodeScanner barcodeScanner;
     private BarcodePrinter barcodePrinter;
@@ -20,14 +19,11 @@ public class HardwareManager {
     private StringBuilder pincodeTerminalInput;
 
     /**
-     * Create the class that handles connection to the hardware
-     * @param customerManager Manager that manages customers. The hardware uses this to edit customers.
-     * @param bikeManager Manager that manages bikes. The hardware uses this to edit bikes.
+     * Create the class that handles connection to the hardware. This class will automatically start the components
+     * @param adminManager Manager that manages the entire system.
      */
-    public HardwareManager(CustomerManager customerManager, BikeManager bikeManager) {
-        this.customerManager = customerManager;
-        this.bikeManager = bikeManager;
-        initElectronicLock();
+    public HardwareManager(AdminManager adminManager) {
+        this.adminManager = adminManager;
         initPincodeTerminal();
         initBarcodeScanner();
         initBarcodePrinter();
@@ -81,7 +77,7 @@ public class HardwareManager {
         if(pincodeTerminalInput.length() >= 5){
             // TODO - Verify times given
             // If the PIN exists then the door should be opened
-            if(customerManager.checkIfPinExist(pincodeTerminalInput.toString())){
+            if(adminManager.checkIfPinExist(pincodeTerminalInput.toString())){
                 electronicLock.open(5);
                 pincodeTerminal.lightLED(PincodeTerminal.GREEN_LED, 5);
             }
@@ -102,7 +98,7 @@ public class HardwareManager {
         long barcodeInLong = Long.parseLong(barcode);
 
         // Check so that there is a bike with that barcode
-        if(bikeManager.findBikeByBarcodeNr(barcodeInLong)!= null){
+        if(adminManager.findBike(barcodeInLong)!= null){
             electronicLock.open(10);
         }
     }
