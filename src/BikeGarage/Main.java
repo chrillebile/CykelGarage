@@ -14,12 +14,13 @@ public class Main extends Application {
         DatabaseManager databaseManager = new DatabaseManager();
         CustomerManager customerManager = databaseManager.loadCustomers();
         BikeManager bikeManager = databaseManager.loadBikes();
+        Config config = databaseManager.loadConfig();
+
         AdminManager adminManager = new AdminManager(customerManager, bikeManager, databaseManager);
 
         HardwareManager hardwareManager = new HardwareManager(customerManager, bikeManager);
 
-        WindowManager windowManager = new WindowManager(adminManager, hardwareManager);
-        windowManager.initMain();
+        WindowManager windowManager = new WindowManager(adminManager, hardwareManager, config);
     }
 
     public static void main(String[] args) {

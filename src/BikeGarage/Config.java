@@ -13,6 +13,7 @@ public class Config {
     public static final int TIME_TIL_PIN_DROP = 10;
     public static final int NUMBER_OF_CHARACTER_OF_PIN = 6;
     public static final int MAX_NUMBER_OF_BARCODES = 100000;
+    public static boolean SYSTEM_STARTED_BEFORE;
     public static final int MAX_USERS = 50000;
     public static final int MAX_BIKES_PER_PERSON = 2;
     public static int MAX_PARKING_SPOTS;
@@ -32,7 +33,11 @@ public class Config {
      * Set maximum of parking spots in the garage.
      * @param maxParkingSports
      */
-    public void setMaxParkingSports(int maxParkingSports){
+    public static void setMaxParkingSports(int maxParkingSports){
         MAX_PARKING_SPOTS = maxParkingSports;
+    }
+
+    public static void setSystemStartedBefore(boolean value){
+        SYSTEM_STARTED_BEFORE = value;
     }
 }
