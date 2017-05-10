@@ -74,8 +74,13 @@ public class BikeManager {
             throw new IllegalArgumentException("Du kan inte ha mer än 2 cyklar");
         }
         Bike bikeToBeAdded = new Bike(getNextFreeBarcode(), customer);
+        if(bikeList.size() > 0 && bikeToBeAdded.getBarcodeNr() < bikeList.get(bikeList.size()-1).getBarcodeNr()){
+            bikeList.add(bikeToBeAdded);
+            sortBikeList();
+            System.out.println("Den sorterade");
+            return bikeToBeAdded;
+        }
         bikeList.add(bikeToBeAdded);
-        sortBikeList();
         return bikeToBeAdded;
     }
 
@@ -116,19 +121,13 @@ public class BikeManager {
      */
     private long getNextFreeBarcode(){
         long localMaximumBarcode = -1;
-        ArrayList<Long> unusedBarcodes = new ArrayList<>();
         for (Bike bike : bikeList) {
             if(bike.getBarcodeNr() > localMaximumBarcode){
-                if((bike.getBarcodeNr()-(localMaximumBarcode+1)) >= 1){
-                    for(int i = 1; i < (bike.getBarcodeNr()-localMaximumBarcode); i++){
-                        unusedBarcodes.add((localMaximumBarcode+i));
-                    }
+                if(bikeList.get(bikeList.size()-1).getBarcodeNr() == (Config.MAX_NUMBER_OF_BARCODES-1) && (bike.getBarcodeNr()-(localMaximumBarcode+1)) >= 1){
+                    return (localMaximumBarcode+1);
                 }
                 localMaximumBarcode = bike.getBarcodeNr();
             }
-        }
-        if(unusedBarcodes.size() > 0){
-            return unusedBarcodes.get(0);
         }
         // localMaximumBarcode is already taken. Since it is maximum, localMaximumBarcode + 1 is not taken.
         return localMaximumBarcode + 1;
