@@ -159,10 +159,12 @@ public class BikeManager {
      * @return Whether the edit was successful.
      */
     public boolean editBikeCustomer(long barcodeNr, Customer newCustomer){
+        if(findBikesByPersonNr(newCustomer.getPersonNr()).size() >= Config.MAX_BIKES_PER_PERSON){
+            throw new IllegalArgumentException("Du kan inte ha mer än 2 cyklar");
+        }
         for (Bike bike: bikeList) {
             if(bike.getBarcodeNr() == barcodeNr){
                 bike.setCustomer(newCustomer);
-
                 return true;
             }
         }

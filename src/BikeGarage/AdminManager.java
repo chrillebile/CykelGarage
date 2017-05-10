@@ -89,6 +89,20 @@ public class AdminManager {
     }
 
     /**
+     * Edit a bike's customer.
+     * @param barcodeNr The bike.
+     * @param newCustomerPersonNr The new bike's customer personNr.
+     * @return Whether the edit was successful.
+     */
+    public boolean editBikeCustomer(long barcodeNr, String newCustomerPersonNr){
+        Customer customer = findCustomer(newCustomerPersonNr);
+        if(customer == null){
+            throw new IllegalArgumentException("Kund ej hitta användare med given personnr.");
+        }
+        return bikeManager.editBikeCustomer(barcodeNr, customer);
+    }
+
+    /**
      * @return The list of customers.
      */
     public ArrayList<Customer> getCustomerList(){

@@ -89,12 +89,10 @@ public class EditBikeController {
 
         // Check if we have made any change in personnr. If we have, then update it
         if(!isNewBike && customer != null && !(tbxBikeOwner.getText().equals(customer.getPersonNr()))){
-            Customer owner = adminManager.findCustomer(tbxBikeOwner.getText());
-            if(owner != null){
-                bikeToBeCreated.setCustomer(owner);
-            }
-            else{
-                windowManager.openPopup("Kund ej hitta användare med given personnr.");
+            try{
+                adminManager.editBikeCustomer(bike.getBarcodeNr(), tbxBikeOwner.getText());
+            }catch (IllegalArgumentException e){
+                windowManager.openPopup(e.getMessage());
             }
         }
 
