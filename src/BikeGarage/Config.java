@@ -24,6 +24,16 @@ public class Config {
     public static final String DATE_FORMAT = "H:mm:ss d/MM-yy";
 
     /**
+     * Time in seconds that a door is locked after being unlocked.
+     */
+    public static final int TIME_TIL_DOOR_LOCK = 5;
+
+    /**
+     * Time in seconds that an LED in a PincodeTerminal should stay on.
+     */
+    public static final int TIME_PINCODE_LED_ON = 5;
+
+    /**
      * Add config file
      */
     public Config(){
