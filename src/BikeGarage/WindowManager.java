@@ -3,10 +3,12 @@ package BikeGarage;
 import BikeGarage.controllers.EditBikeController;
 import BikeGarage.controllers.EditUserController;
 import BikeGarage.controllers.MainController;
+import BikeGarage.controllers.SettingsController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,10 +21,20 @@ public class WindowManager {
 
     private AdminManager adminManager;
     private HardwareManager hardwareManager;
+    private Config config;
 
-    public WindowManager(AdminManager adminManager, HardwareManager hardwareManager){
+    public WindowManager(AdminManager adminManager, HardwareManager hardwareManager, Config config){
         this.adminManager = adminManager;
         this.hardwareManager = hardwareManager;
+        this.config = config;
+
+        if(Config.SYSTEM_STARTED_BEFORE){
+            initMain();
+        }
+        else{
+            // This will start main after settings have been saved
+            initSettings(null);
+        }
     }
 
     public void initMain(){
@@ -41,8 +53,8 @@ public class WindowManager {
 
             stage.show();
 
-            if(Config.MAX_PARKING_SPOTS <= 0){
-                initSettings();
+            if(!Config.SYSTEM_STARTED_BEFORE){
+                initSettings(stage);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,7 +100,11 @@ public class WindowManager {
         }
     }
 
-    public void initSettings(){
+    /**
+     *
+     * @param parentStage The parent stage. Is set to null if there is no stage available.
+     */
+    public void initSettings(Stage parentStage){
         Stage stage = new Stage();
 
         try{
@@ -98,7 +114,11 @@ public class WindowManager {
 
             stage.setScene(new Scene(root));
 
-            //ToDo:Add the settingsController
+            SettingsController controller = loader.getController();
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(parentStage);
+            controller.init(this, adminManager, config);
+
 
             stage.show();
 

@@ -320,4 +320,9 @@ public class MainController {
         hardwareManager.printBarcode(bike.getBarcodeNrInString());
     }
 
+    @FXML
+    private void handleMenuBtnSettings(){
+        windowManager.initSettings(null);
+    }
+
 }
