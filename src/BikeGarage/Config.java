@@ -33,11 +33,11 @@ public class Config {
      * Set maximum of parking spots in the garage.
      * @param maxParkingSports
      */
-    public void setMaxParkingSports(int maxParkingSports){
+    public static void setMaxParkingSports(int maxParkingSports){
         MAX_PARKING_SPOTS = maxParkingSports;
     }
 
-    public void setSystemStartedBefore(boolean value){
+    public static void setSystemStartedBefore(boolean value){
         SYSTEM_STARTED_BEFORE = value;
     }
 }

@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 public class SettingsController {
     private WindowManager windowManager;
     AdminManager adminManager;
-    private Config config;
 
     @FXML
     private TextField tbxMaxParkingSpots;
@@ -22,12 +21,10 @@ public class SettingsController {
      * Used to initialize this controller. Here we set all global variables this program uses. Then the components get initialized.
      * @param windowManager The instance of WindowManager the system uses.
      * @param adminManager The istance of AdminManager.
-     * @param config The config. This controller updates the settings
      */
-    public void init(WindowManager windowManager, AdminManager adminManager, Config config){
+    public void init(WindowManager windowManager, AdminManager adminManager){
         this.windowManager = windowManager;
         this.adminManager = adminManager;
-        this.config = config;
 
         initComponents();
     }
@@ -44,12 +41,12 @@ public class SettingsController {
         int maxParkingSpots;
         try{
             maxParkingSpots = Integer.parseInt(tbxMaxParkingSpots.getText());
-            config.setMaxParkingSports(maxParkingSpots);
+            Config.setMaxParkingSports(maxParkingSpots);
 
 
             // If the setting is now changed then start main application
             if(!Config.SYSTEM_STARTED_BEFORE){
-                config.setSystemStartedBefore(true);
+                Config.setSystemStartedBefore(true);
                 windowManager.initMain();
             }
 

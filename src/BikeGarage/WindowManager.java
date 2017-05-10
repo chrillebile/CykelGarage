@@ -21,12 +21,10 @@ public class WindowManager {
 
     private AdminManager adminManager;
     private HardwareManager hardwareManager;
-    private Config config;
 
-    public WindowManager(AdminManager adminManager, HardwareManager hardwareManager, Config config){
+    public WindowManager(AdminManager adminManager, HardwareManager hardwareManager){
         this.adminManager = adminManager;
         this.hardwareManager = hardwareManager;
-        this.config = config;
 
         if(Config.SYSTEM_STARTED_BEFORE){
             initMain();
@@ -117,7 +115,7 @@ public class WindowManager {
             SettingsController controller = loader.getController();
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(parentStage);
-            controller.init(this, adminManager, config);
+            controller.init(this, adminManager);
 
 
             stage.show();
