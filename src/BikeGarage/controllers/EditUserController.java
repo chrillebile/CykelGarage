@@ -67,7 +67,6 @@ public class EditUserController {
         else{
             String firstName = customer.getFirstName();
             String lastName = customer.getSurname();
-            String personNr = customer.getPersonNr();
             String pinKod = customer.getPin();
             String phoneNr = customer.getPhoneNr();
 
@@ -153,6 +152,14 @@ public class EditUserController {
 
     @FXML
     void handleRemoveBikeButton(){
+        if(!lsvBikeList.getSelectionModel().getSelectedItem().contentEquals("Bike")){
+            try {
+                adminManager.removeBike(Long.parseLong(lsvBikeList.getSelectionModel().getSelectedItem()));
+            } catch (IllegalArgumentException e){
+                windowManager.openPopup(e.getMessage());
+                return;
+            }
+        }
         lsvBikeList.getItems().remove(lsvBikeList.getSelectionModel().getSelectedIndex());
     }
 }
