@@ -129,6 +129,10 @@ public class HardwareManager {
         // Check so that there is a bike with that barcode
         if(searchedBike!= null){
             if(lock == entryLock){
+                // Bike cannot enter when there are no parking spots left
+                if(adminManager.numberOfFreeParkingSpots() <= 0){
+                    return;
+                }
 
                 // Bike cannot enter when it's already parked.
                 if(searchedBike.getParkingStatus()){
