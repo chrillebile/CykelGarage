@@ -145,14 +145,9 @@ public class WindowManager {
     /**
      * For when the program loads the files.
      * @param stage The stage
-     * @param show If it should be shown och closed
      */
-    public static void progress(Stage stage, Boolean show){
+    public static void progress(Stage stage){
         try {
-            if (!show) {
-                stage.close();
-                return;
-            }
             ProgressIndicator progressIndicator = new ProgressIndicator();
 
             FlowPane root = new FlowPane();
