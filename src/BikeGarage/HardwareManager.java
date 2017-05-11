@@ -32,7 +32,6 @@ public class HardwareManager {
         this.adminManager = adminManager;
 
         initElectronicLocks();
-        initElectronicLocks();
         initPincodeTerminal();
         initBarcodeScanners();
         initBarcodePrinter();
@@ -126,8 +125,26 @@ public class HardwareManager {
         }
 
 
+        Bike searchedBike = adminManager.findBike(barcodeInLong);
         // Check so that there is a bike with that barcode
-        if(adminManager.findBike(barcodeInLong)!= null){
+        if(searchedBike!= null){
+            if(lock == entryLock){
+
+                // Bike cannot enter when it's already parked.
+                if(searchedBike.getParkingStatus()){
+                    return;
+                }
+                adminManager.setBikeEntryTime(barcodeInLong, System.currentTimeMillis());
+            }
+            else if(lock == exitLock){
+                // If bikeis not parked then it cannot get out
+                if(!searchedBike.getParkingStatus()){
+                    return;
+                }
+                adminManager.setBikeExitTime(barcodeInLong, System.currentTimeMillis());
+            }
+
+            adminManager.updateBikes();
             lock.open(Config.TIME_TIL_DOOR_LOCK);
         }
     }
