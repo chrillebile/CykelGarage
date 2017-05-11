@@ -42,7 +42,7 @@ public class AdminManager {
      * @return The created user.
      */
     public Customer createCustomer(String firstName, String surname, String personNr, String pin, String phoneNr){
-        return customerManager.createCustomer(firstName, surname, personNr, pin, phoneNr, 0);
+        return customerManager.createCustomer(firstName, surname, personNr, pin, phoneNr);
     }
 
     /**

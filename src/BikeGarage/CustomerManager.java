@@ -60,10 +60,9 @@ public class CustomerManager {
      * @param personNr The customers personal id-number
      * @param pin The customers pin-code
      * @param phoneNr The customers phone number
-     * @param regTime The customers registration time
      * @return Created customer. If customer already exist return null.
      */
-    public Customer createCustomer(String firstName, String surname, String personNr, String pin, String phoneNr, long regTime){
+    public Customer createCustomer(String firstName, String surname, String personNr, String pin, String phoneNr){
         // Check that the personn does not exist. findCustomer returns a customer if it exists
         Customer temp1 = findCustomerByPersonNr(personNr);
         if(temp1 != null){
@@ -73,12 +72,26 @@ public class CustomerManager {
             throw  new IllegalArgumentException("Antalet användare överstiger systemets maximala antal användare");
         }
         else{
-            Customer customer = new Customer(firstName, surname, personNr, pin, phoneNr, regTime);
+            Customer customer = new Customer(firstName, surname, personNr, pin, phoneNr, 0);
             customerList.add(customer);
             return customer;
         }
+    }
 
-
+    /**
+     * Create new customer used by the DatabaseManager.
+     * @param firstName The customers first name
+     * @param surname The customers surname
+     * @param personNr The customers personal id-number
+     * @param pin The customers pin-code
+     * @param phoneNr The customers phone number
+     * @param regTime The customers registration time
+     * @return Created customer. If customer already exist return null.
+     */
+    public Customer createCustomer(String firstName, String surname, String personNr, String pin, String phoneNr, long regTime){
+        Customer customer = new Customer(firstName, surname, personNr, pin, phoneNr, regTime);
+        customerList.add(customer);
+        return customer;
     }
 
     /**
