@@ -38,6 +38,9 @@ public class MainController {
     private MenuItem menuBtnNumberOfFreeParkingSpots;
 
     @FXML
+    private MenuItem menuBtnTotalNumberOfParkingSpots;
+
+    @FXML
     private TableView<Customer> tblUserList;
 
     @FXML
@@ -170,8 +173,9 @@ public class MainController {
 
 
         // Set the number of bikes and customers in menubar
-        menuBtnNumberOfParkedBikes.setText("Antal parkerade cyklar: " + (adminManager.totalNumberOfParkingSpots() - adminManager.numberOfFreeParkingSpots()));
-        menuBtnNumberOfFreeParkingSpots.setText("Antal lediga platser :" + adminManager.numberOfFreeParkingSpots());
+        menuBtnNumberOfParkedBikes.setText("Antal parkerade cyklar: " + (Config.MAX_PARKING_SPOTS - adminManager.numberOfFreeParkingSpots()));
+        menuBtnNumberOfFreeParkingSpots.setText("Antal lediga platser: " + adminManager.numberOfFreeParkingSpots());
+        menuBtnTotalNumberOfParkingSpots.setText("Totalt antal parkeringsplatser: " + Config.MAX_PARKING_SPOTS);
     }
 
     /**

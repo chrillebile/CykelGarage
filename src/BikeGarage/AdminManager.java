@@ -195,16 +195,8 @@ public class AdminManager {
      * @return Number of free parking spots.
      */
     public int numberOfFreeParkingSpots(){
-        return totalNumberOfParkingSpots() - bikeManager.getParkedBikeList().size();
+        return Config.MAX_PARKING_SPOTS - bikeManager.getParkedBikeList().size();
     }
-
-    /**
-     * @return Total number of parking spots the garage has.
-     */
-    public int totalNumberOfParkingSpots(){
-        return Config.MAX_PARKING_SPOTS;
-    }
-
 
     /**
      * Calls the databasemanager and performs and updates the list in database
