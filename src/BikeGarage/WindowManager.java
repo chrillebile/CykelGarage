@@ -7,7 +7,9 @@ import BikeGarage.controllers.SettingsController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -44,16 +46,20 @@ public class WindowManager {
             AnchorPane root = loader.load();
 
             stage.setScene(new Scene(root));
-
+            stage.setTitle("Leave'nLock");
 
             MainController controller = loader.getController();
             controller.init(this, adminManager, hardwareManager);
 
             stage.show();
-
             if(!Config.SYSTEM_STARTED_BEFORE){
                 initSettings(stage);
             }
+            stage.setOnCloseRequest(we -> {
+                adminManager.updateCustomers();
+                adminManager.updateBikes();
+                adminManager.updateConfig();
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,6 +74,7 @@ public class WindowManager {
             AnchorPane root = loader.load();
 
             stage.setScene(new Scene(root));
+            stage.setTitle("Lägg till/redigera användare");
 
             EditUserController controller = loader.getController();
             controller.init(this, adminManager, customer, mainController);
@@ -88,6 +95,7 @@ public class WindowManager {
             AnchorPane root = loader.load();
 
             stage.setScene(new Scene(root));
+            stage.setTitle("Lägg till/redigera cykel");
 
             EditBikeController controller = loader.getController();
             controller.init(this, adminManager, bike, customer, mainController);
@@ -111,12 +119,12 @@ public class WindowManager {
             AnchorPane root = loader.load();
 
             stage.setScene(new Scene(root));
+            stage.setTitle("Inställningar");
 
             SettingsController controller = loader.getController();
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(parentStage);
             controller.init(this, adminManager);
-
 
             stage.show();
 
@@ -134,4 +142,23 @@ public class WindowManager {
         alert.showAndWait();
     }
 
+    /**
+     * For when the program loads the files.
+     * @param stage The stage
+     */
+    public static void progress(Stage stage){
+        try {
+            ProgressIndicator progressIndicator = new ProgressIndicator();
+
+            FlowPane root = new FlowPane();
+            root.getChildren().addAll(progressIndicator);
+
+            Scene scene = new Scene(root, 75, 75);
+            stage.setTitle("Laddar filer...");
+            stage.setScene(scene);
+            stage.show();
+        } catch (Error e){
+            e.printStackTrace();
+        }
+    }
 }

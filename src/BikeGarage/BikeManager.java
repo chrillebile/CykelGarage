@@ -74,8 +74,13 @@ public class BikeManager {
             throw new IllegalArgumentException("Du kan inte ha mer än 2 cyklar");
         }
         Bike bikeToBeAdded = new Bike(getNextFreeBarcode(), customer);
+        if(bikeList.size() > 0 && bikeToBeAdded.getBarcodeNr() < bikeList.get(bikeList.size()-1).getBarcodeNr()){
+            bikeList.add(bikeToBeAdded);
+            sortBikeList();
+            return bikeToBeAdded;
+        }
         bikeList.add(bikeToBeAdded);
-        sortBikeList();
+        changeBikeParkingStatus(bikeToBeAdded);
         return bikeToBeAdded;
     }
 
@@ -89,9 +94,6 @@ public class BikeManager {
      * @return The created bike.
      */
     public Bike addBike(long barcodeNr, Customer customer, long regTime, long entryTime, long exitTime){
-        if(findBikesByPersonNr(customer.getPersonNr()).size() >= Config.MAX_BIKES_PER_PERSON){
-            throw new IllegalArgumentException("Du kan inte ha mer än 2 cyklar");
-        }
         Bike bikeToBeAdded = new Bike(barcodeNr, customer, regTime, entryTime, exitTime);
         bikeList.add(bikeToBeAdded);
         changeBikeParkingStatus(bikeToBeAdded);
@@ -116,19 +118,13 @@ public class BikeManager {
      */
     private long getNextFreeBarcode(){
         long localMaximumBarcode = -1;
-        ArrayList<Long> unusedBarcodes = new ArrayList<>();
         for (Bike bike : bikeList) {
             if(bike.getBarcodeNr() > localMaximumBarcode){
-                if((bike.getBarcodeNr()-(localMaximumBarcode+1)) >= 1){
-                    for(int i = 1; i < (bike.getBarcodeNr()-localMaximumBarcode); i++){
-                        unusedBarcodes.add((localMaximumBarcode+i));
-                    }
+                if(bikeList.get(bikeList.size()-1).getBarcodeNr() == (Config.MAX_NUMBER_OF_BARCODES-1) && (bike.getBarcodeNr()-(localMaximumBarcode+1)) >= 1){
+                    return (localMaximumBarcode+1);
                 }
                 localMaximumBarcode = bike.getBarcodeNr();
             }
-        }
-        if(unusedBarcodes.size() > 0){
-            return unusedBarcodes.get(0);
         }
         // localMaximumBarcode is already taken. Since it is maximum, localMaximumBarcode + 1 is not taken.
         return localMaximumBarcode + 1;
@@ -143,6 +139,9 @@ public class BikeManager {
         for (Bike bike : bikeList) {
             // Check that the barcodes match
             if(bike.getBarcodeNr() == barcodeNr){
+                if(bike.getParkingStatus()){
+                    throw new IllegalArgumentException("Cykeln är parkerad och kan inte tas bort");
+                }
                 bikeList.remove(bike);
                 // Removal was successful
                 return true;
@@ -173,36 +172,22 @@ public class BikeManager {
 
     /**
      * Set a bike's entry time and adds bike to parkedBikeList if it's parked.
-     * @param barcodeNr Unique identification for the bike.
+     * @param bike The Bike object that will be edited.
      * @param entryTime The time specified in unix time.
-     * @return Whether the edit was successful.
      */
-    public boolean setBikeEntryTime(long barcodeNr, long entryTime){
-        for (Bike bike : bikeList) {
-            if(bike.getBarcodeNr() == barcodeNr){
-                bike.setEntryTime(entryTime);
-                changeBikeParkingStatus(bike);
-                return true;
-            }
-        }
-        return false;
+    public void setBikeEntryTime(Bike bike, long entryTime){
+        bike.setEntryTime(entryTime);
+        changeBikeParkingStatus(bike);
     }
 
     /**
      * Set a bike's exit time and removes bike from parkedBikeList if it's not parked.
-     * @param barcodeNr Unique identification for the bike.
+     * @param bike The Bike object that will be edited.
      * @param exitTime The exit time specified in unix time.
-     * @return Whether the edit was successful.
      */
-    public boolean setBikeExitTime(long barcodeNr, long exitTime){
-        for (Bike bike : bikeList) {
-            if(bike.getBarcodeNr() == barcodeNr){
-                bike.setExitTime(exitTime);
-                changeBikeParkingStatus(bike);
-                return true;
-            }
-        }
-        return false;
+    public void setBikeExitTime(Bike bike, long exitTime){
+        bike.setExitTime(exitTime);
+        changeBikeParkingStatus(bike);
     }
 
     /**

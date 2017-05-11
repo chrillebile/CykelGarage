@@ -13,6 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * Controller for main.fxml file.
@@ -331,4 +332,11 @@ public class MainController {
         windowManager.initSettings(null);
     }
 
+    @FXML
+    private void handleButtonClose(){
+        adminManager.updateCustomers();
+        adminManager.updateBikes();
+        adminManager.updateConfig();
+        ((Stage) anchPaneBikeButtons.getScene().getWindow()).close();
+    }
 }
