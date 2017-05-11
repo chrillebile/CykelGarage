@@ -46,7 +46,7 @@ public class WindowManager {
             AnchorPane root = loader.load();
 
             stage.setScene(new Scene(root));
-
+            stage.setTitle("Leave'nLock");
 
             MainController controller = loader.getController();
             controller.init(this, adminManager, hardwareManager);
@@ -74,6 +74,7 @@ public class WindowManager {
             AnchorPane root = loader.load();
 
             stage.setScene(new Scene(root));
+            stage.setTitle("Lägg till/redigera användare");
 
             EditUserController controller = loader.getController();
             controller.init(this, adminManager, customer, mainController);
@@ -94,6 +95,7 @@ public class WindowManager {
             AnchorPane root = loader.load();
 
             stage.setScene(new Scene(root));
+            stage.setTitle("Lägg till/redigera cykel");
 
             EditBikeController controller = loader.getController();
             controller.init(this, adminManager, bike, customer, mainController);
@@ -117,6 +119,7 @@ public class WindowManager {
             AnchorPane root = loader.load();
 
             stage.setScene(new Scene(root));
+            stage.setTitle("Inställningar");
 
             SettingsController controller = loader.getController();
             stage.initModality(Modality.WINDOW_MODAL);
@@ -139,6 +142,11 @@ public class WindowManager {
         alert.showAndWait();
     }
 
+    /**
+     * For when the program loads the files.
+     * @param stage The stage
+     * @param show If it should be shown och closed
+     */
     public static void progress(Stage stage, Boolean show){
         try {
             if (!show) {
@@ -151,11 +159,8 @@ public class WindowManager {
             root.getChildren().addAll(progressIndicator);
 
             Scene scene = new Scene(root, 75, 75);
-            System.out.println("1");
-            stage.setTitle("JavaFX ProgressBar & ProgressIndicator (o7planning.org)");
-            System.out.println("2");
+            stage.setTitle("Laddar filer...");
             stage.setScene(scene);
-            System.out.println("3");
             stage.show();
         } catch (Error e){
             e.printStackTrace();
