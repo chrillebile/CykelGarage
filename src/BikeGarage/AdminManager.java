@@ -207,4 +207,12 @@ public class AdminManager {
     public void updateConfig(){
         dbManager.updateConfig();
     }
+
+    public void setBikeEntryTime(long barcodeNr, long entryTime){
+        bikeManager.setBikeEntryTime(barcodeNr, entryTime);
+    }
+
+    public void setBikeExitTime(long barcodeNr, long exitTime){
+        bikeManager.setBikeExitTime(barcodeNr, exitTime);
+    }
 }

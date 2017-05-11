@@ -8,106 +8,156 @@ import hardware_testdrivers.*;
  * @author Ennio Mara
  */
 public class HardwareManager {
-    private BikeManager bikeManager;
-    private CustomerManager customerManager;
+    private AdminManager adminManager;
 
-    private BarcodeScanner barcodeScanner;
+    private ElectronicLock entryLock;
+    private ElectronicLock exitLock;
+
+    private BarcodeScanner entryScanner;
+    private BarcodeScanner exitScanner;
+
+    private PincodeTerminal entryPincodeTerminal;
+    private StringBuilder entryPincodeTerminalInput;
+
     private BarcodePrinter barcodePrinter;
-    private ElectronicLock electronicLock;
-    private PincodeTerminal pincodeTerminal;
 
 
-    private StringBuilder pincodeTerminalInput;
+
 
     /**
-     * Create the class that handles connection to the hardware
-     * @param customerManager Manager that manages customers. The hardware uses this to edit customers.
-     * @param bikeManager Manager that manages bikes. The hardware uses this to edit bikes.
+     * Create the class that handles connection to the hardware. This class will automatically start the components
+     * @param adminManager Manager that manages the entire system.
      */
-    public HardwareManager(CustomerManager customerManager, BikeManager bikeManager) {
-        this.customerManager = customerManager;
-        this.bikeManager = bikeManager;
-        initElectronicLock();
+    public HardwareManager(AdminManager adminManager) {
+        this.adminManager = adminManager;
+
+        initElectronicLocks();
         initPincodeTerminal();
-        initBarcodeScanner();
+        initBarcodeScanners();
         initBarcodePrinter();
     }
 
     /**
-     * Initialize the barcodeScanner. Create the scanner window and register its observer.
+     * Initialize the entry and exit barcode scanners. Also sets their observers.
      */
-    public void initBarcodeScanner(){
-        barcodeScanner = new BarcodeScannerTestDriver("BarcodeScanner", 0, 0);
-        barcodeScanner.registerObserver(s -> handleScannedBarcode(s));
+    private void initBarcodeScanners(){
+        // Create the entry and exit scanners
+        entryScanner = new BarcodeScannerTestDriver("Entry Barcode Scanner", 0, 0);
+        exitScanner = new BarcodeScannerTestDriver("Exit Barcode Scanner", 0, 0);
+
+        entryScanner.registerObserver(s -> handleScannedBarcode(s, entryLock));
+        exitScanner.registerObserver(s -> handleScannedBarcode(s, exitLock));
     }
 
     /**
-     * Initialize the barcodePrinter (create the window).
+     * Initialize the barcodePrinter.
      */
-    public void initBarcodePrinter() {
+    private void initBarcodePrinter() {
         barcodePrinter = new BarcodePrinterTestDriver("BarcodePrinter", 0, 0);
     }
 
     /**
-     * Initialize the ElectronicLock (create the window).
+     * Initialize the entry and exit electronic locks.
      */
-    public void initElectronicLock(){
-        electronicLock = new ElectronicLockTestDriver("ElectronicLock", 0, 0);
+    private void initElectronicLocks(){
+        entryLock = new ElectronicLockTestDriver("Entry Lock", 0, 0);
+        exitLock = new ElectronicLockTestDriver("Exit lock", 0, 0);
     }
 
     /**
-     * Initialize the pincodeTerminal. Create the pincode window and register its observer.
+     * Initialize the system's pincode-terminal. Also registers its observer.
      */
-    public void initPincodeTerminal(){
-        pincodeTerminal = new PincodeTerminalTestDriver("PincodeTerminal", 0, 0);
+    private void initPincodeTerminal(){
+        entryPincodeTerminal = new PincodeTerminalTestDriver("PincodeTerminal", 0, 0);
+
         // Create the stringbuilder that will store the input
-        pincodeTerminalInput = new StringBuilder();
+        entryPincodeTerminalInput = new StringBuilder();
 
         // This handles the character input
-        pincodeTerminal.registerObserver(s -> handlePincodeTerminalInput(s));
+        entryPincodeTerminal.registerObserver(s -> handlePincodeTerminalInput(s));
     }
 
 
     /**
-     * Handle the characters that are input through the terminal.
-     * @param character The character input.
+     * Handle the characters that are inputted through the terminal.
+     *
+     * The characters are then set up in a string and sent for verification when the pincode has reached required length.
+     * @param character The character inputted. Only one character can be sent at a time.
      */
     private void handlePincodeTerminalInput(char character) {
         // The character that is sent to this method is appended to the global variable that stores current char input.
         // This method does a check to see the number of characters in that string. If the characters are more than the max characters allowed, the variable is emptied.
-        pincodeTerminalInput.append(character);
+        entryPincodeTerminalInput.append(character);
 
         // The PIN has reached it's required length and is sent on for verification
-        if(pincodeTerminalInput.length() >= 5){
-            // TODO - Verify times given
+        if(entryPincodeTerminalInput.length() >= Config.NUMBER_OF_CHARACTER_OF_PIN){
+            // TODO - Verify how many times the pin has entered.
             // If the PIN exists then the door should be opened
-            if(customerManager.checkIfPinExist(pincodeTerminalInput.toString())){
-                electronicLock.open(5);
-                pincodeTerminal.lightLED(PincodeTerminal.GREEN_LED, 5);
+            if(adminManager.checkIfPinExist(entryPincodeTerminalInput.toString())){
+                // Open the entry door since the terminal is there
+                entryLock.open(Config.TIME_TIL_DOOR_LOCK);
+                entryPincodeTerminal.lightLED(PincodeTerminal.GREEN_LED, Config.TIME_PINCODE_LED_ON);
             }
             else{
-                pincodeTerminal.lightLED(PincodeTerminal.RED_LED, 2);
+                entryPincodeTerminal.lightLED(PincodeTerminal.RED_LED, Config.TIME_PINCODE_LED_ON);
             }
+
             // Empty the string
-            pincodeTerminalInput.setLength(0);
+            entryPincodeTerminalInput.setLength(0);
         }
     }
 
     /**
-     * Handle the input barcode through the hardware.
+     * Handle the input barcode through the barcode scanner.
      * @param barcode The input barcode
+     * @param lock The ElectronicLock that is connected to this barcodescanner
      */
-    private void handleScannedBarcode(String barcode) {
-        // TODO - add error catching
-        long barcodeInLong = Long.parseLong(barcode);
+    private void handleScannedBarcode(String barcode, ElectronicLock lock) {
+        long barcodeInLong;
+        try{
+            barcodeInLong = Long.parseLong(barcode);
+        }
+        catch (NumberFormatException e){
+            e.printStackTrace();
 
+            // Break the method here. Barcode could not be parsed
+            return;
+        }
+
+
+        Bike searchedBike = adminManager.findBike(barcodeInLong);
         // Check so that there is a bike with that barcode
-        if(bikeManager.findBikeByBarcodeNr(barcodeInLong)!= null){
-            electronicLock.open(10);
+        if(searchedBike!= null){
+            if(lock == entryLock){
+
+                // Bike cannot enter when it's already parked.
+                if(searchedBike.getParkingStatus()){
+                    return;
+                }
+                adminManager.setBikeEntryTime(barcodeInLong, System.currentTimeMillis());
+            }
+            else if(lock == exitLock){
+                // If bikeis not parked then it cannot get out
+                if(!searchedBike.getParkingStatus()){
+                    return;
+                }
+                adminManager.setBikeExitTime(barcodeInLong, System.currentTimeMillis());
+            }
+
+            adminManager.updateBikes();
+            lock.open(Config.TIME_TIL_DOOR_LOCK);
         }
     }
 
+    /**
+     * Print a given barcode.
+     * @param barcode The barcode that will be printed. It's length should be 5 characters
+     * @throws IllegalArgumentException if the barcode is not 5 characters.
+     */
     public void printBarcode(String barcode){
+        if(barcode.length() != 5){
+            throw new IllegalArgumentException("The inputted barcode was not 5 characters");
+        }
         barcodePrinter.printBarcode(barcode);
     }
 }

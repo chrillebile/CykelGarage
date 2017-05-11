@@ -317,7 +317,13 @@ public class MainController {
         if(bike == null){
             return;
         }
-        hardwareManager.printBarcode(bike.getBarcodeNrInString());
+
+        try{
+            hardwareManager.printBarcode(bike.getBarcodeNrInString());
+        }
+        catch(IllegalArgumentException e){
+            windowManager.openPopup(e.getMessage());
+        }
     }
 
     @FXML

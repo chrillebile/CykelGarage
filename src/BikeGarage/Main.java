@@ -17,7 +17,7 @@ public class Main extends Application {
         databaseManager.loadConfig();
         AdminManager adminManager = new AdminManager(customerManager, bikeManager, databaseManager);
 
-        HardwareManager hardwareManager = new HardwareManager(customerManager, bikeManager);
+        HardwareManager hardwareManager = new HardwareManager(adminManager);
         WindowManager windowManager = new WindowManager(adminManager, hardwareManager);
     }
 
