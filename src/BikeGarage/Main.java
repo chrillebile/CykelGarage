@@ -12,9 +12,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         DatabaseManager databaseManager = new DatabaseManager();
+        databaseManager.loadConfig();
         CustomerManager customerManager = databaseManager.loadCustomers();
         BikeManager bikeManager = databaseManager.loadBikes();
-        databaseManager.loadConfig();
         AdminManager adminManager = new AdminManager(customerManager, bikeManager, databaseManager);
 
         HardwareManager hardwareManager = new HardwareManager(adminManager);
