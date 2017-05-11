@@ -7,7 +7,10 @@ import BikeGarage.controllers.SettingsController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -134,4 +137,19 @@ public class WindowManager {
         alert.showAndWait();
     }
 
+    public void progress(Stage stage){
+        ProgressBar progressBar = new ProgressBar();
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+
+        FlowPane root = new FlowPane();
+        root.setHgap(10);
+        root.getChildren().addAll(progressBar, progressIndicator);
+
+        Scene scene = new Scene(root, 400, 300);
+
+        stage.setTitle("JavaFX ProgressBar & ProgressIndicator (o7planning.org)");
+
+        stage.setScene(scene);
+        stage.show();
+    }
 }
