@@ -172,22 +172,30 @@ public class BikeManager {
 
     /**
      * Set a bike's entry time and adds bike to parkedBikeList if it's parked.
-     * @param bike The Bike object that will be edited.
+     * @param barcodeNr A bikes barcodeNr
      * @param entryTime The time specified in unix time.
      */
-    public void setBikeEntryTime(Bike bike, long entryTime){
-        bike.setEntryTime(entryTime);
-        changeBikeParkingStatus(bike);
+    public void setBikeEntryTime(long barcodeNr, long entryTime){
+        for(Bike b: bikeList) {
+            if(b.getBarcodeNr() == barcodeNr) {
+                b.setEntryTime(entryTime);
+                changeBikeParkingStatus(b);
+            }
+        }
     }
 
     /**
      * Set a bike's exit time and removes bike from parkedBikeList if it's not parked.
-     * @param bike The Bike object that will be edited.
+     * @param barcodeNr A bikes barcodeNr
      * @param exitTime The exit time specified in unix time.
      */
-    public void setBikeExitTime(Bike bike, long exitTime){
-        bike.setExitTime(exitTime);
-        changeBikeParkingStatus(bike);
+    public void setBikeExitTime(long barcodeNr, long exitTime){
+        for(Bike b: bikeList) {
+            if (b.getBarcodeNr() == barcodeNr) {
+                b.setExitTime(exitTime);
+                changeBikeParkingStatus(b);
+            }
+        }
     }
 
     /**

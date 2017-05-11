@@ -143,22 +143,22 @@ public class AdminManager {
 
     /**
      * Set a bike's entry time and adds bike to parkedBikeList if it's parked.
-     * @param bike The bike
+     * @param barcodeNr The bike
      * @param entryTime The time specified in unix time.
      * @return Whether the edit was successful.
      */
-    public void setBikeEntryTime(Bike bike, long entryTime){
-        bikeManager.setBikeEntryTime(bike, entryTime);
+    public void setBikeEntryTime(long barcodeNr, long entryTime){
+        bikeManager.setBikeEntryTime(barcodeNr, entryTime);
     }
 
     /**
      * Set a bike's exit time and removes bike from parkedBikeList if it's not parked.
-     * @param bike The bike
+     * @param barcodeNr The bike
      * @param exitTime The exit time specified in unix time.
      * @return Whether the edit was successful.
      */
-    public void setBikeExitTime(Bike bike, long exitTime){
-        bikeManager.setBikeExitTime(bike, exitTime);
+    public void setBikeExitTime(long barcodeNr, long exitTime){
+        bikeManager.setBikeExitTime(barcodeNr, exitTime);
     }
     /**
      * Seearch a specific customer given its personNr.
@@ -225,13 +225,5 @@ public class AdminManager {
      */
     public void updateConfig(){
         dbManager.updateConfig();
-    }
-
-    public void setBikeEntryTime(long barcodeNr, long entryTime){
-        bikeManager.setBikeEntryTime(barcodeNr, entryTime);
-    }
-
-    public void setBikeExitTime(long barcodeNr, long exitTime){
-        bikeManager.setBikeExitTime(barcodeNr, exitTime);
     }
 }
