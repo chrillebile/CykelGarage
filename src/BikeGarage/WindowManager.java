@@ -7,7 +7,6 @@ import BikeGarage.controllers.SettingsController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -53,10 +52,14 @@ public class WindowManager {
             controller.init(this, adminManager, hardwareManager);
 
             stage.show();
-
             if(!Config.SYSTEM_STARTED_BEFORE){
                 initSettings(stage);
             }
+            stage.setOnCloseRequest(we -> {
+                adminManager.updateCustomers();
+                adminManager.updateBikes();
+                adminManager.updateConfig();
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,7 +123,6 @@ public class WindowManager {
             stage.initOwner(parentStage);
             controller.init(this, adminManager);
 
-
             stage.show();
 
         } catch (IOException e){
@@ -137,19 +139,26 @@ public class WindowManager {
         alert.showAndWait();
     }
 
-    public void progress(Stage stage){
-        ProgressBar progressBar = new ProgressBar();
-        ProgressIndicator progressIndicator = new ProgressIndicator();
+    public static void progress(Stage stage, Boolean show){
+        try {
+            if (!show) {
+                stage.close();
+                return;
+            }
+            ProgressIndicator progressIndicator = new ProgressIndicator();
 
-        FlowPane root = new FlowPane();
-        root.setHgap(10);
-        root.getChildren().addAll(progressBar, progressIndicator);
+            FlowPane root = new FlowPane();
+            root.getChildren().addAll(progressIndicator);
 
-        Scene scene = new Scene(root, 400, 300);
-
-        stage.setTitle("JavaFX ProgressBar & ProgressIndicator (o7planning.org)");
-
-        stage.setScene(scene);
-        stage.show();
+            Scene scene = new Scene(root, 75, 75);
+            System.out.println("1");
+            stage.setTitle("JavaFX ProgressBar & ProgressIndicator (o7planning.org)");
+            System.out.println("2");
+            stage.setScene(scene);
+            System.out.println("3");
+            stage.show();
+        } catch (Error e){
+            e.printStackTrace();
+        }
     }
 }
