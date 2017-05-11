@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 /**
  * Controller for editUser.fxml
@@ -100,6 +101,9 @@ public class EditUserController {
 
         adminManager.updateCustomers();
         adminManager.updateBikes();
+
+        // Close the window
+        ((Stage) btnSave.getScene().getWindow()).close();
     }
 
     /**

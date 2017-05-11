@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * Controller for editBike.fxml
@@ -99,5 +100,9 @@ public class EditBikeController {
         mainController.handleShowAllBikesButton();
 
         adminManager.updateBikes();
+
+
+        // Close the window
+        ((Stage) btnSpara.getScene().getWindow()).close();
     }
 }
