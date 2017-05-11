@@ -142,6 +142,25 @@ public class AdminManager {
     }
 
     /**
+     * Set a bike's entry time and adds bike to parkedBikeList if it's parked.
+     * @param bike The bike
+     * @param entryTime The time specified in unix time.
+     * @return Whether the edit was successful.
+     */
+    public void setBikeEntryTime(Bike bike, long entryTime){
+        bikeManager.setBikeEntryTime(bike, entryTime);
+    }
+
+    /**
+     * Set a bike's exit time and removes bike from parkedBikeList if it's not parked.
+     * @param bike The bike
+     * @param exitTime The exit time specified in unix time.
+     * @return Whether the edit was successful.
+     */
+    public void setBikeExitTime(Bike bike, long exitTime){
+        bikeManager.setBikeExitTime(bike, exitTime);
+    }
+    /**
      * Seearch a specific customer given its personNr.
      * @param personNr Unique identification for the customer
      * @return The found customer.

@@ -80,6 +80,7 @@ public class BikeManager {
             return bikeToBeAdded;
         }
         bikeList.add(bikeToBeAdded);
+        changeBikeParkingStatus(bikeToBeAdded);
         return bikeToBeAdded;
     }
 
@@ -138,6 +139,9 @@ public class BikeManager {
         for (Bike bike : bikeList) {
             // Check that the barcodes match
             if(bike.getBarcodeNr() == barcodeNr){
+                if(bike.getParkingStatus()){
+                    throw new IllegalArgumentException("Cykeln är parkerad och kan inte tas bort");
+                }
                 bikeList.remove(bike);
                 // Removal was successful
                 return true;
@@ -168,36 +172,24 @@ public class BikeManager {
 
     /**
      * Set a bike's entry time and adds bike to parkedBikeList if it's parked.
-     * @param barcodeNr Unique identification for the bike.
+     * @param bike The bike
      * @param entryTime The time specified in unix time.
      * @return Whether the edit was successful.
      */
-    public boolean setBikeEntryTime(long barcodeNr, long entryTime){
-        for (Bike bike : bikeList) {
-            if(bike.getBarcodeNr() == barcodeNr){
-                bike.setEntryTime(entryTime);
-                changeBikeParkingStatus(bike);
-                return true;
-            }
-        }
-        return false;
+    public void setBikeEntryTime(Bike bike, long entryTime){
+        bike.setEntryTime(entryTime);
+        changeBikeParkingStatus(bike);
     }
 
     /**
      * Set a bike's exit time and removes bike from parkedBikeList if it's not parked.
-     * @param barcodeNr Unique identification for the bike.
+     * @param bike The bike
      * @param exitTime The exit time specified in unix time.
      * @return Whether the edit was successful.
      */
-    public boolean setBikeExitTime(long barcodeNr, long exitTime){
-        for (Bike bike : bikeList) {
-            if(bike.getBarcodeNr() == barcodeNr){
-                bike.setExitTime(exitTime);
-                changeBikeParkingStatus(bike);
-                return true;
-            }
-        }
-        return false;
+    public void setBikeExitTime(Bike bike, long exitTime){
+        bike.setExitTime(exitTime);
+        changeBikeParkingStatus(bike);
     }
 
     /**
