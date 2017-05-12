@@ -11,6 +11,14 @@ public class Config {
      */
     public static final int TIME_TIL_TERMINAL_DROP = 30;
     public static final int TIME_TIL_PIN_DROP = 10;
+    /**
+     * The time the customer has to enter the PIN correctly.
+     */
+    public static final int TIME_INCORRECT_PIN = 60;
+    /**
+     * Number of times a PIN is entered incorrectly before it it set on cooldown.
+     */
+    public static final int NUMBER_OF_INCORRECT_PIN_BEFORE_DROP = 3;
     public static final int NUMBER_OF_CHARACTER_OF_PIN = 6;
     public static final int MAX_NUMBER_OF_BARCODES = 100000;
     public static boolean SYSTEM_STARTED_BEFORE;

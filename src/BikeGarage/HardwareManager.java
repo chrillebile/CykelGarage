@@ -23,6 +23,8 @@ public class HardwareManager {
     private PincodeTerminal entryPincodeTerminal;
     private StringBuilder entryPincodeTerminalInput;
     private Timeline clearPincodeInputTimer;
+    private long lastTimePinCorrect = System.currentTimeMillis();
+    private int numberOfTimesIncorrectPincode;
 
     private BarcodePrinter barcodePrinter;
 
@@ -104,14 +106,25 @@ public class HardwareManager {
 
         // The PIN has reached it's required length and is sent on for verification
         if(entryPincodeTerminalInput.length() >= Config.NUMBER_OF_CHARACTER_OF_PIN){
+            // If 3 times have been entered incorrectly and we are in the timespan on one minute then block inputs
+            if(numberOfTimesIncorrectPincode >= Config.NUMBER_OF_INCORRECT_PIN_BEFORE_DROP && lastTimePinCorrect + Config.TIME_TIL_TERMINAL_DROP * 1000 > System.currentTimeMillis()){
+                return;
+            }
+
             // TODO - Verify how many times the pin has entered.
             // If the PIN exists then the door should be opened
             if(adminManager.checkIfPinExist(entryPincodeTerminalInput.toString())){
+                // Password entered correctly, empty number of incorrect pins & set current time
+                numberOfTimesIncorrectPincode = 0;
+                lastTimePinCorrect = System.currentTimeMillis();
+
                 // Open the entry door since the terminal is there
                 entryLock.open(Config.TIME_TIL_DOOR_LOCK);
                 entryPincodeTerminal.lightLED(PincodeTerminal.GREEN_LED, Config.TIME_PINCODE_LED_ON);
             }
             else{
+                numberOfTimesIncorrectPincode++;
+
                 entryPincodeTerminal.lightLED(PincodeTerminal.RED_LED, Config.TIME_PINCODE_LED_ON);
             }
 
