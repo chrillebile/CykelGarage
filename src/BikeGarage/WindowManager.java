@@ -5,9 +5,9 @@ import BikeGarage.controllers.EditUserController;
 import BikeGarage.controllers.MainController;
 import BikeGarage.controllers.SettingsController;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
@@ -47,6 +47,7 @@ public class WindowManager {
 
             stage.setScene(new Scene(root));
             stage.setTitle("Leave'nLock");
+            stage.setResizable(false);
 
             MainController controller = loader.getController();
             controller.init(this, adminManager, hardwareManager);
@@ -55,7 +56,7 @@ public class WindowManager {
             if(!Config.SYSTEM_STARTED_BEFORE){
                 initSettings(stage);
             }
-            stage.setOnCloseRequest(we -> {
+            stage.setOnCloseRequest(close -> {
                 adminManager.updateCustomers();
                 adminManager.updateBikes();
                 adminManager.updateConfig();
@@ -75,10 +76,10 @@ public class WindowManager {
 
             stage.setScene(new Scene(root));
             stage.setTitle("Lägg till/redigera användare");
+            stage.setResizable(false);
 
             EditUserController controller = loader.getController();
             controller.init(this, adminManager, customer, mainController);
-
 
             stage.show();
         } catch (IOException e) {
@@ -96,6 +97,7 @@ public class WindowManager {
 
             stage.setScene(new Scene(root));
             stage.setTitle("Lägg till/redigera cykel");
+            stage.setResizable(false);
 
             EditBikeController controller = loader.getController();
             controller.init(this, adminManager, bike, customer, mainController);
@@ -124,6 +126,7 @@ public class WindowManager {
             SettingsController controller = loader.getController();
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(parentStage);
+            stage.setResizable(false);
             controller.init(this, adminManager);
 
             stage.show();
@@ -144,19 +147,33 @@ public class WindowManager {
 
     /**
      * For when the program loads the files.
-     * @param stage The stage
      */
     public static void progress(Stage stage){
         try {
-            ProgressIndicator progressIndicator = new ProgressIndicator();
+            Label label = new Label("Laddar filer...");
+            ProgressBar progressBar = new ProgressBar();
+            progressBar.setMinWidth(200);
+            progressBar.setMinHeight(25);
+            progressBar.setPadding(new Insets(10, 0, 10, 10));
+
+            TextArea textArea = new TextArea();
+            textArea.setEditable(false);
+            textArea.setMaxWidth(380);
+            textArea.setMaxHeight(200-50-progressBar.getHeight());
 
             FlowPane root = new FlowPane();
-            root.getChildren().addAll(progressIndicator);
+            root.setPadding(new Insets(0, 10, 10, 10));
+            root.getChildren().addAll(label, progressBar, textArea);
 
-            Scene scene = new Scene(root, 75, 75);
-            stage.setTitle("Laddar filer...");
+            Scene scene = new Scene(root, 400, 200);
+            stage.setTitle("Startar...");
             stage.setScene(scene);
+            stage.toFront();
+            stage.setResizable(false);
             stage.show();
+            stage.setOnCloseRequest(close -> {
+                System.exit(0);
+            });
         } catch (Error e){
             e.printStackTrace();
         }
