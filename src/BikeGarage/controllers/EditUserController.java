@@ -77,8 +77,8 @@ public class EditUserController {
                 customer.setPin(tbxPin.getText());
                 customer.setPhoneNr(tbxPhoneNr.getText());
 
-                for(int i = 0; i < lsvBikeList.getItems().size(); i++){
-                    if(lsvBikeList.getItems().get(i).contentEquals("Bike")){
+                for (int i = 0; i < lsvBikeList.getItems().size(); i++) {
+                    if (lsvBikeList.getItems().get(i).contentEquals("Bike")) {
                         adminManager.addBike(customer);
                     }
                 }
@@ -142,12 +142,18 @@ public class EditUserController {
             for(Bike b: bikeList){
                 lsvBikeList.getItems().add(b.getBarcodeNrInString());
             }
+            if(lsvBikeList.getItems().size() >= 2){
+                btnAddBike.setDisable(true);
+            }
         }
     }
 
     @FXML
     void handleAddBikeButton(){
         lsvBikeList.getItems().add("Bike");
+        if(lsvBikeList.getItems().size() >= 2){
+            btnAddBike.setDisable(true);
+        }
     }
 
     @FXML
@@ -161,5 +167,8 @@ public class EditUserController {
             }
         }
         lsvBikeList.getItems().remove(lsvBikeList.getSelectionModel().getSelectedIndex());
+        if(lsvBikeList.getItems().size() < 2){
+            btnAddBike.setDisable(false);
+        }
     }
 }
