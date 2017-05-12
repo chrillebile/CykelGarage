@@ -185,7 +185,7 @@ public class AdminManager {
      */
     public boolean checkIfPinExist(String pin){
         for(Bike b: bikeManager.getParkedBikeList()){
-            if(b.getCustomer().getPin() == pin){
+            if(b.getCustomer().getPin().equals(pin)){
                 return true;
             }
         }
