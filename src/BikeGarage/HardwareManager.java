@@ -2,6 +2,10 @@ package BikeGarage;
 
 import hardware_interfaces.*;
 import hardware_testdrivers.*;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 /**
  * Manages and connects all the hardware.
@@ -18,6 +22,7 @@ public class HardwareManager {
 
     private PincodeTerminal entryPincodeTerminal;
     private StringBuilder entryPincodeTerminalInput;
+    private Timeline clearPincodeInputTimer;
 
     private BarcodePrinter barcodePrinter;
 
@@ -75,6 +80,10 @@ public class HardwareManager {
 
         // This handles the character input
         entryPincodeTerminal.registerObserver(s -> handlePincodeTerminalInput(s));
+
+        // Create the clearPincodeInputTimer that will clear the pincode input
+        clearPincodeInputTimer = new Timeline(new KeyFrame(Duration.seconds(Config.TIME_TIL_PIN_DROP), e-> clearPincodeTerminalInput()));
+        clearPincodeInputTimer.setCycleCount(Animation.INDEFINITE);
     }
 
 
@@ -85,6 +94,10 @@ public class HardwareManager {
      * @param character The character inputted. Only one character can be sent at a time.
      */
     private void handlePincodeTerminalInput(char character) {
+        // Reset the clearPincodeInputTimer that clears the inputted pincodes
+        clearPincodeInputTimer.stop();
+        clearPincodeInputTimer.play();
+
         // The character that is sent to this method is appended to the global variable that stores current char input.
         // This method does a check to see the number of characters in that string. If the characters are more than the max characters allowed, the variable is emptied.
         entryPincodeTerminalInput.append(character);
@@ -104,7 +117,19 @@ public class HardwareManager {
 
             // Empty the string
             entryPincodeTerminalInput.setLength(0);
+
+
+            // Stop the clearPincodeInputTimer. It will be restarted when the next characer is added ( the stringbuilder starts getting filled)
+            clearPincodeInputTimer.stop();
         }
+    }
+
+    /**
+     * Clear the saved input from pincode and stop the clearPincodeInputTimer that clears it
+     */
+    private void clearPincodeTerminalInput(){
+        entryPincodeTerminalInput.setLength(0);
+        clearPincodeInputTimer.stop();
     }
 
     /**
