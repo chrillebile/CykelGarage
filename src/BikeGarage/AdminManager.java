@@ -129,7 +129,11 @@ public class AdminManager {
      * @return Readable time
      */
     public String getFormatUnixTime(long unixTime){
-        return new SimpleDateFormat(Config.DATE_FORMAT).format(unixTime);
+        if(unixTime != 0){
+            return new SimpleDateFormat(Config.DATE_FORMAT).format(unixTime);
+        }else {
+            return "Ingen";
+        }
     }
 
     /**
