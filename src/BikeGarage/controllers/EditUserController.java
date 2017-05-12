@@ -142,7 +142,7 @@ public class EditUserController {
             for(Bike b: bikeList){
                 lsvBikeList.getItems().add(b.getBarcodeNrInString());
             }
-            if(lsvBikeList.getItems().size() >= 2){
+            if(lsvBikeList.getItems().size() >= Config.MAX_BIKES_PER_PERSON){
                 btnAddBike.setDisable(true);
             }
         }
@@ -151,7 +151,7 @@ public class EditUserController {
     @FXML
     void handleAddBikeButton(){
         lsvBikeList.getItems().add("Bike");
-        if(lsvBikeList.getItems().size() >= 2){
+        if(lsvBikeList.getItems().size() >= Config.MAX_BIKES_PER_PERSON){
             btnAddBike.setDisable(true);
         }
     }
@@ -167,7 +167,7 @@ public class EditUserController {
             }
         }
         lsvBikeList.getItems().remove(lsvBikeList.getSelectionModel().getSelectedIndex());
-        if(lsvBikeList.getItems().size() < 2){
+        if(lsvBikeList.getItems().size() < Config.MAX_BIKES_PER_PERSON){
             btnAddBike.setDisable(false);
         }
     }
