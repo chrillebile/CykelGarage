@@ -158,6 +158,10 @@ public class EditUserController {
 
     @FXML
     void handleRemoveBikeButton(){
+        if(lsvBikeList.getSelectionModel().isEmpty()){
+            windowManager.openPopup("Du måste välja en cykel för att kunna ta bort");
+            return;
+        }
         if(!lsvBikeList.getSelectionModel().getSelectedItem().contentEquals("Ny Cykel")){
             try {
                 adminManager.removeBike(Long.parseLong(lsvBikeList.getSelectionModel().getSelectedItem()));
