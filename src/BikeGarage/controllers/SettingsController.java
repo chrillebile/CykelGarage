@@ -51,7 +51,6 @@ public class SettingsController {
             }
 
             adminManager.updateConfig();
-
             // Close this window since we are done
             closeStage();
         }

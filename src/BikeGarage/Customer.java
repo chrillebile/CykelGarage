@@ -132,20 +132,4 @@ public class Customer {
         }
         this.phoneNr = phoneNr;
     }
-    /**
-     * Checks if a customer has the same personNr as this customer.
-     * @param object
-     * @return
-     */
-    public boolean equals(Object object){
-        if(object instanceof Customer){
-            return personNr == ((Customer) object).personNr;
-        } else {
-            return false;
-        }
-    }
-
-    public Object clone() throws CloneNotSupportedException{
-        return super.clone();
-    }
 }

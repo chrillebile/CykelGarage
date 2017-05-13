@@ -128,7 +128,6 @@ public class WindowManager {
             stage.initOwner(parentStage);
             stage.setResizable(false);
             controller.init(this, adminManager);
-
             stage.show();
 
         } catch (IOException e){
