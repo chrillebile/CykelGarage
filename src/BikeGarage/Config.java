@@ -52,6 +52,9 @@ public class Config {
      * @param maxParkingSports
      */
     public static void setMaxParkingSports(int maxParkingSports){
+        if(maxParkingSports > MAX_NUMBER_OF_BARCODES || maxParkingSports < 0){
+            throw new NumberFormatException("Du kan bara välja mellan 0 och " + MAX_NUMBER_OF_BARCODES + " parkeringsplatser");
+        }
         MAX_PARKING_SPOTS = maxParkingSports;
     }
 
