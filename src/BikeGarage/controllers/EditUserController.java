@@ -78,7 +78,7 @@ public class EditUserController {
                 customer.setPhoneNr(tbxPhoneNr.getText());
 
                 for (int i = 0; i < lsvBikeList.getItems().size(); i++) {
-                    if (lsvBikeList.getItems().get(i).contentEquals("Bike")) {
+                    if (lsvBikeList.getItems().get(i).contentEquals("Ny Cykel")) {
                         adminManager.addBike(customer);
                     }
                 }
@@ -150,7 +150,7 @@ public class EditUserController {
 
     @FXML
     void handleAddBikeButton(){
-        lsvBikeList.getItems().add("Bike");
+        lsvBikeList.getItems().add("Ny Cykel");
         if(lsvBikeList.getItems().size() >= Config.MAX_BIKES_PER_PERSON){
             btnAddBike.setDisable(true);
         }
@@ -158,7 +158,7 @@ public class EditUserController {
 
     @FXML
     void handleRemoveBikeButton(){
-        if(!lsvBikeList.getSelectionModel().getSelectedItem().contentEquals("Bike")){
+        if(!lsvBikeList.getSelectionModel().getSelectedItem().contentEquals("Ny Cykel")){
             try {
                 adminManager.removeBike(Long.parseLong(lsvBikeList.getSelectionModel().getSelectedItem()));
             } catch (IllegalArgumentException e){
