@@ -301,8 +301,21 @@ public class MainController {
 
     @FXML
     void handleSearchByBarcodeButton(){
-        String searchInput = tbxSearchBarcode.getText();
-        Bike foundBike = adminManager.findBike(Long.parseLong(searchInput));
+        long searchInput;
+
+        try{
+             searchInput = Long.parseLong(tbxSearchBarcode.getText());
+        }
+        catch(NumberFormatException e){
+            windowManager.openPopup("Inkorrekt inmatad streckkod");
+            return;
+        }
+        Bike foundBike = adminManager.findBike(searchInput);
+
+        if(foundBike == null){
+            windowManager.openPopup("Ingen cykel hittades.");
+            return;
+        }
 
         tblUserList.getSelectionModel().select(foundBike.getCustomer());
         tblBikeList.getSelectionModel().select(foundBike);
