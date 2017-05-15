@@ -22,10 +22,10 @@ public class HardwareManager {
 
     private PincodeTerminal entryPincodeTerminal;
     private StringBuilder entryPincodeTerminalInput;
-    private Timeline clearPincodeInputTimer;
-    private long lastTimePinCorrect = System.currentTimeMillis();
+    private Timeline clearPincodeInputTimer, pinTryCounterTimer, pincodeTerminalTimeout;
     private long lastTimePinTry;
     private int numberOfTimesIncorrectPincode;
+    private boolean timeOut = false;
 
     private BarcodePrinter barcodePrinter;
 
@@ -87,8 +87,21 @@ public class HardwareManager {
         // Create the clearPincodeInputTimer that will clear the pincode input
         clearPincodeInputTimer = new Timeline(new KeyFrame(Duration.seconds(Config.TIME_TIL_PIN_DROP), e-> clearPincodeTerminalInput()));
         clearPincodeInputTimer.setCycleCount(Animation.INDEFINITE);
+        pinTryCounterTimer = new Timeline(new KeyFrame(Duration.seconds(Config.TIME_INCORRECT_PIN), e -> timeOutReset()));
+        pinTryCounterTimer.setCycleCount(Animation.INDEFINITE);
+        pincodeTerminalTimeout = new Timeline(new KeyFrame(Duration.seconds(Config.TIME_TIL_TERMINAL_DROP), e -> timeOutReset()));
+        pincodeTerminalTimeout.setCycleCount(Animation.INDEFINITE);
     }
 
+    /**
+     * To reset the timeout of PIN-code terminal.
+     */
+    private void timeOutReset(){
+        numberOfTimesIncorrectPincode = 0;
+        timeOut = false;
+        pincodeTerminalTimeout.stop();
+        pinTryCounterTimer.stop();
+    }
 
     /**
      * Handle the characters that are inputted through the terminal.
@@ -100,6 +113,11 @@ public class HardwareManager {
         // Reset the clearPincodeInputTimer that clears the inputted pincodes
         clearPincodeInputTimer.stop();
 
+        // If someone tried and failed "NUMBER OF INCORRECT PIN BEFORE DROP" the PIN-code terminal will have a timeout
+        if(timeOut){
+            return;
+        }
+
         // The character that is sent to this method is appended to the global variable that stores current char input.
         // This method does a check to see the number of characters in that string. If the characters are more than the max characters allowed, the variable is emptied.
         // This checks if light is still on the PIN-code terminal, if it's not we will add the charcter to entryPincodeTerminalInput and start the timer.
@@ -109,17 +127,13 @@ public class HardwareManager {
         }
 
         // The PIN has reached it's required length and is sent on for verification
+        // If 3 times have been entered incorrectly and we are in the timespan on one minute then block inputs
         if(entryPincodeTerminalInput.length() >= Config.NUMBER_OF_CHARACTER_OF_PIN){
-            // If 3 times have been entered incorrectly and we are in the timespan on one minute then block inputs
-            if(numberOfTimesIncorrectPincode >= Config.NUMBER_OF_INCORRECT_PIN_BEFORE_DROP && lastTimePinCorrect + Config.TIME_TIL_TERMINAL_DROP * 1000 > System.currentTimeMillis()){
-                return;
-            }
-
             // If the PIN exists then the door should be opened
             if(adminManager.checkIfPinExist(entryPincodeTerminalInput.toString())){
                 // Password entered correctly, empty number of incorrect pins & set current time
                 numberOfTimesIncorrectPincode = 0;
-                lastTimePinCorrect = System.currentTimeMillis();
+                pinTryCounterTimer.stop();
 
                 // Open the entry door since the terminal is there
                 entryLock.open(Config.TIME_TIL_DOOR_LOCK);
@@ -127,13 +141,18 @@ public class HardwareManager {
             }
             else{
                 numberOfTimesIncorrectPincode++;
-
+                if(numberOfTimesIncorrectPincode == 1){
+                    pinTryCounterTimer.play();
+                } else if(numberOfTimesIncorrectPincode == Config.NUMBER_OF_INCORRECT_PIN_BEFORE_DROP){
+                    timeOut = true;
+                    pinTryCounterTimer.stop();
+                    pincodeTerminalTimeout.play();
+                }
                 entryPincodeTerminal.lightLED(PincodeTerminal.RED_LED, Config.TIME_PINCODE_LED_ON);
             }
             lastTimePinTry = System.currentTimeMillis();
             // Empty the string
             entryPincodeTerminalInput.setLength(0);
-
 
             // Stop the clearPincodeInputTimer. It will be restarted when the next characer is added ( the stringbuilder starts getting filled)
             clearPincodeInputTimer.stop();
