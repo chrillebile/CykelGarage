@@ -85,7 +85,11 @@ public class EditBikeController {
         // If the checkbox is selected, it means that the bike is parked
         if(chkbIsParked.isSelected()){
             // If a bike is parked, its entry time will be bigger than its exittime. Here we set it to current time, which is greater than exittime.
-            adminManager.setBikeEntryTime(bikeToBeCreated.getBarcodeNr(), System.currentTimeMillis());
+            try {
+                adminManager.setBikeEntryTime(bikeToBeCreated.getBarcodeNr(), System.currentTimeMillis());
+            }catch (IllegalArgumentException e){
+                windowManager.openPopup(e.getMessage());
+            }
         }
         else{
             adminManager.setBikeExitTime(bikeToBeCreated.getBarcodeNr(), System.currentTimeMillis());

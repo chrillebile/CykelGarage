@@ -156,6 +156,9 @@ public class AdminManager {
      * @return Whether the edit was successful.
      */
     public void setBikeEntryTime(long barcodeNr, long entryTime){
+        if(numberOfFreeParkingSpots() <= 0){
+            throw new IllegalArgumentException("Det kan inte parkeras fler cyklar");
+        }
         bikeManager.setBikeEntryTime(barcodeNr, entryTime);
     }
 
@@ -203,7 +206,7 @@ public class AdminManager {
      * @return Number of free parking spots.
      */
     public int numberOfFreeParkingSpots(){
-        return Config.MAX_PARKING_SPOTS - bikeManager.getParkedBikeList().size();
+        return Config.MAX_PARKING_SPOTS - getParkedBikeList().size();
     }
 
     /**
