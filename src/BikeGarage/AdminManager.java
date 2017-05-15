@@ -1,9 +1,5 @@
 package BikeGarage;
 
-import javax.xml.bind.DatatypeConverter;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -56,7 +52,7 @@ public class AdminManager {
      */
     public boolean removeCustomer(String personNr){
         if(bikeManager.hasBikeParked(customerManager.findCustomerByPersonNr(personNr))){
-            throw new IllegalArgumentException("The customer has a parked bike.");
+            throw new IllegalArgumentException("Kunden har en parkerad cykel.");
         }
         ArrayList<Bike> tempList = bikeManager.findBikesByPersonNr(personNr);
         for(Bike b: tempList){
