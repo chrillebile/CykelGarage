@@ -3,6 +3,7 @@ package BikeGarage;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -13,6 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        primaryStage.getIcons().add(new Image("icon_256x256.png"));
         WindowManager.progress(primaryStage);
         ((TextArea) primaryStage.getScene().getRoot().getChildrenUnmodifiable().get(2)).appendText("Startar...\n");
 

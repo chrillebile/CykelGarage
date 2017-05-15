@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
@@ -39,7 +40,7 @@ public class WindowManager {
 
     public void initMain(){
         Stage stage = new Stage();
-
+        stage.getIcons().add(new Image("icon_256x256.png"));
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(Config.WINDOWFILE_LOCATION + "main.fxml"));
