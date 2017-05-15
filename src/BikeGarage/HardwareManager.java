@@ -24,6 +24,7 @@ public class HardwareManager {
     private StringBuilder entryPincodeTerminalInput;
     private Timeline clearPincodeInputTimer;
     private long lastTimePinCorrect = System.currentTimeMillis();
+    private long lastTimePinTry;
     private int numberOfTimesIncorrectPincode;
 
     private BarcodePrinter barcodePrinter;
@@ -98,11 +99,14 @@ public class HardwareManager {
     private void handlePincodeTerminalInput(char character) {
         // Reset the clearPincodeInputTimer that clears the inputted pincodes
         clearPincodeInputTimer.stop();
-        clearPincodeInputTimer.play();
 
         // The character that is sent to this method is appended to the global variable that stores current char input.
         // This method does a check to see the number of characters in that string. If the characters are more than the max characters allowed, the variable is emptied.
-        entryPincodeTerminalInput.append(character);
+        // This checks if light is still on the PIN-code terminal, if it's not we will add the charcter to entryPincodeTerminalInput and start the timer.
+        if((System.currentTimeMillis() - lastTimePinTry) > (Config.TIME_PINCODE_LED_ON*1000)) {
+            entryPincodeTerminalInput.append(character);
+            clearPincodeInputTimer.play();
+        }
 
         // The PIN has reached it's required length and is sent on for verification
         if(entryPincodeTerminalInput.length() >= Config.NUMBER_OF_CHARACTER_OF_PIN){
@@ -111,7 +115,6 @@ public class HardwareManager {
                 return;
             }
 
-            // TODO - Verify how many times the pin has entered.
             // If the PIN exists then the door should be opened
             if(adminManager.checkIfPinExist(entryPincodeTerminalInput.toString())){
                 // Password entered correctly, empty number of incorrect pins & set current time
@@ -127,7 +130,7 @@ public class HardwareManager {
 
                 entryPincodeTerminal.lightLED(PincodeTerminal.RED_LED, Config.TIME_PINCODE_LED_ON);
             }
-
+            lastTimePinTry = System.currentTimeMillis();
             // Empty the string
             entryPincodeTerminalInput.setLength(0);
 
