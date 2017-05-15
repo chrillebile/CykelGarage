@@ -295,6 +295,10 @@ public class MainController {
 
     @FXML
     void handleAddBikeButton(){
+        if(tblUserList.getSelectionModel().isEmpty()){
+            windowManager.openPopup("Du måste välja en användare att lägga till en cykel på.");
+            return;
+        }
         Customer owner = tblUserList.getSelectionModel().getSelectedItem();
         windowManager.initEditBike(null, owner, this);
     }
