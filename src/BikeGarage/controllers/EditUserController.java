@@ -18,6 +18,7 @@ public class EditUserController {
     private ObservableList<Bike> bikeList;
     private boolean isNewUser = false;
     private MainController mainController;
+    private HardwareManager hardwareManager;
 
     @FXML
     private TextField tbxPin;
@@ -60,7 +61,8 @@ public class EditUserController {
             // Get the number of bikes that need to be added to  the customer
 
             for (int i = 0; i < lsvBikeList.getItems().size(); i++) {
-                adminManager.addBike(customer);
+                Bike bike = adminManager.addBike(customer);
+                hardwareManager.printBarcode(bike.getBarcodeNrInString());
             }
 
         }
@@ -79,7 +81,8 @@ public class EditUserController {
 
                 for (int i = 0; i < lsvBikeList.getItems().size(); i++) {
                     if (lsvBikeList.getItems().get(i).contentEquals("Ny Cykel")) {
-                        adminManager.addBike(customer);
+                        Bike bike = adminManager.addBike(customer);
+                        hardwareManager.printBarcode(bike.getBarcodeNrInString());
                     }
                 }
             }
@@ -110,10 +113,12 @@ public class EditUserController {
      * @param windowManager The instance of WindowManager
      * @param adminManager The instance of AdminManager the system uses
      * @param customer The customer that will be edited. If the customer is null, it means that a new user will be created
+     * @param hardwareManager The instance of HardwareManager the system uses
      */
-    public void init(WindowManager windowManager, AdminManager adminManager, Customer customer, MainController mainController){
+    public void init(WindowManager windowManager, AdminManager adminManager, Customer customer, MainController mainController, HardwareManager hardwareManager){
         this.windowManager = windowManager;
         this.adminManager = adminManager;
+        this.hardwareManager = hardwareManager;
 
         if(customer == null){
             isNewUser = true;

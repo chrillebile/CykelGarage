@@ -80,7 +80,7 @@ public class WindowManager {
             stage.setResizable(false);
 
             EditUserController controller = loader.getController();
-            controller.init(this, adminManager, customer, mainController);
+            controller.init(this, adminManager, customer, mainController, hardwareManager);
 
             stage.show();
         } catch (IOException e) {
@@ -101,7 +101,7 @@ public class WindowManager {
             stage.setResizable(false);
 
             EditBikeController controller = loader.getController();
-            controller.init(this, adminManager, bike, customer, mainController);
+            controller.init(this, adminManager, bike, customer, mainController, hardwareManager);
 
             stage.show();
         } catch (IOException e) {

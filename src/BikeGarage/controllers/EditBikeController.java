@@ -4,6 +4,7 @@ import BikeGarage.AdminManager;
 import BikeGarage.Bike;
 import BikeGarage.Customer;
 import BikeGarage.WindowManager;
+import BikeGarage.HardwareManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -21,6 +22,7 @@ public class EditBikeController {
     private Customer customer;
     private boolean isNewBike = false;
     private MainController mainController;
+    private HardwareManager hardwareManager;
 
 
     @FXML
@@ -39,9 +41,10 @@ public class EditBikeController {
     private CheckBox chkbIsParked;
 
 
-    public void init(WindowManager windowManager, AdminManager adminManager, Bike bike, Customer customer, MainController mainController){
+    public void init(WindowManager windowManager, AdminManager adminManager, Bike bike, Customer customer, MainController mainController, HardwareManager hardwareManager){
         this.windowManager = windowManager;
         this.adminManager = adminManager;
+        this.hardwareManager = hardwareManager;
 
         // Since there is no bike sent, it means that we must create one
         if(bike == null){
@@ -96,6 +99,12 @@ public class EditBikeController {
                 windowManager.openPopup(e.getMessage());
             }
         }
+
+        // print the barcode only if we are creating the bike
+        if(isNewBike){
+            hardwareManager.printBarcode(bikeToBeCreated.getBarcodeNrInString());
+        }
+
 
         mainController.handleShowAllBikesButton();
 
