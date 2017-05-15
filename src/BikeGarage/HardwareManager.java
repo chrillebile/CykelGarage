@@ -171,15 +171,13 @@ public class HardwareManager {
         if(searchedBike!= null){
             if(lock == entryLock){
                 // Bike cannot enter when there are no parking spots left
-                if(adminManager.numberOfFreeParkingSpots() <= 0){
-                    return;
-                }
-
                 // Bike cannot enter when it's already parked.
-                if(searchedBike.getParkingStatus()){
+                if(adminManager.numberOfFreeParkingSpots() <= 0 || searchedBike.getParkingStatus()){
+                    entryPincodeTerminal.lightLED(PincodeTerminal.RED_LED, Config.TIME_PINCODE_LED_ON);
                     return;
                 }
                 adminManager.setBikeEntryTime(barcodeInLong, System.currentTimeMillis());
+                entryPincodeTerminal.lightLED(PincodeTerminal.GREEN_LED, Config.TIME_PINCODE_LED_ON);
             }
             else if(lock == exitLock){
                 // If bikeis not parked then it cannot get out
@@ -191,6 +189,8 @@ public class HardwareManager {
 
             adminManager.updateBikes();
             lock.open(Config.TIME_TIL_DOOR_LOCK);
+        }else {
+            entryPincodeTerminal.lightLED(PincodeTerminal.RED_LED, Config.TIME_PINCODE_LED_ON);
         }
     }
 
