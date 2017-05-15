@@ -30,12 +30,11 @@ public class Customer {
             throw new IllegalArgumentException("Vänligen skriv in ditt personnummmer som 10 siffror");
         }
         this.personNr = personNr;
+        setPin(pin);
         setPhoneNr(phoneNr);
         if(regTime == 0){
-            setPin(pin);
             this.regTime = System.currentTimeMillis();
         }else {
-            this.pin = pin;
             this.regTime = regTime;
         }
     }
@@ -111,15 +110,7 @@ public class Customer {
         if(pin.matches("(.*)\\D(.*)") || pin.length() != Config.NUMBER_OF_CHARACTER_OF_PIN){
             throw new IllegalArgumentException("Pin-koden måste vara 6 siffror (0-9)");
         }
-        MessageDigest digest;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("Något gick fel");
-        }
-        byte[] hash = digest.digest(pin.getBytes(StandardCharsets.UTF_8));
-        this.pin = DatatypeConverter.printHexBinary(hash);;
+        this.pin = pin;
     }
 
     /**

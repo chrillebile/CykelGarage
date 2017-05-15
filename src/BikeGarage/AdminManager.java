@@ -192,16 +192,8 @@ public class AdminManager {
      * @return Returns if pin-code exist.
      */
     public boolean checkIfPinExist(String pin){
-        MessageDigest digest = null;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        byte[] hash = digest.digest(pin.getBytes(StandardCharsets.UTF_8));
-        String pinHash = DatatypeConverter.printHexBinary(hash);
         for(Bike b: bikeManager.getParkedBikeList()){
-            if(b.getCustomer().getPin().equals(pinHash)){
+            if(b.getCustomer().getPin().equals(pin)){
                 return true;
             }
         }
