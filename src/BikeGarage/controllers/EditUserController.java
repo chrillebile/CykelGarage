@@ -100,10 +100,8 @@ public class EditUserController {
         }
 
         mainController.handleShowAllBikesButton();
-
         adminManager.updateCustomers();
         adminManager.updateBikes();
-
         // Close the window
         ((Stage) btnSave.getScene().getWindow()).close();
     }

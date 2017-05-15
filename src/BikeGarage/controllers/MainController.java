@@ -154,7 +154,6 @@ public class MainController {
         tblColUserLastName.setCellValueFactory(customer -> new SimpleStringProperty(customer.getValue().getSurname()));
         tblColUserRegisterTime.setCellValueFactory(customer -> new SimpleStringProperty(adminManager.getFormatUnixTime(customer.getValue().getRegTime())));
         tblColUserTelephoneNr.setCellValueFactory(customer -> new SimpleStringProperty(customer.getValue().getPhoneNr()));
-
         tblUserList.setItems(customerList);
 
         tblUserList.getSelectionModel().selectedItemProperty().addListener(this::handleSelectionChangeTblUserList);
@@ -231,6 +230,8 @@ public class MainController {
 
     @FXML
     void handleRefreshUserListButton(){
+        customerList = FXCollections.observableList(adminManager.getCustomerList());
+        tblUserList.setItems(customerList);
         tblUserList.refresh();
     }
 
