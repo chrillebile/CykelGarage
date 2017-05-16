@@ -34,7 +34,7 @@ public class Main extends Application {
                 Platform.runLater(() -> {
                     ((TextArea) primaryStage.getScene().getRoot().getChildrenUnmodifiable().get(2)).appendText("Startar Leave'nLock...");
                     HardwareManager hardwareManager = new HardwareManager(adminManager);
-                    WindowManager windowManager = new WindowManager(adminManager, hardwareManager);
+                    new WindowManager(adminManager, hardwareManager);
                     ((TextArea) primaryStage.getScene().getRoot().getChildrenUnmodifiable().get(2)).appendText("Klar");
                     primaryStage.close();
                 });
