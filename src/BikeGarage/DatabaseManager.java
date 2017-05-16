@@ -4,7 +4,7 @@ package BikeGarage;
 import java.io.*;
 
 /**
- * Reads and writes to fil.
+ * Reads and writes system information to file
  * @author Christian Bilevits
  */
 public class DatabaseManager {
@@ -54,8 +54,8 @@ public class DatabaseManager {
     }
 
     /**
-     * Reads file of bikes.
-     * @return BikeManager
+     * Reads and loads the bikes from file to BikeManager
+     * @return The loaded BikeManager instance.
      */
     public BikeManager loadBikes(){
         try {
@@ -83,8 +83,8 @@ public class DatabaseManager {
     }
 
     /**
-     * Reads file of customers
-     * @return CustomerManager
+     * Read and load the customer into CustomerManager
+     * @return The loaded CustomerManager instance
      */
     public CustomerManager loadCustomers(){
         try{
@@ -112,8 +112,8 @@ public class DatabaseManager {
     }
 
     /**
-     * Reads config file
-     * @return config
+     * Read and load the config into Config
+     * @return The Config instance
      */
     public Config loadConfig(){
         try {
@@ -153,7 +153,7 @@ public class DatabaseManager {
     }
 
     /**
-     * All loaders uses the same finally
+     * Used when the loading of a file has been finished.
      */
     private void finallyForLoad(){
         if(fileReader != null) {
@@ -165,7 +165,7 @@ public class DatabaseManager {
         }
     }
     /**
-     * Updates bike file
+     * Update the stored bike file with information from BikeManager.
      */
     public void updateBikes(){
         try {
@@ -204,7 +204,7 @@ public class DatabaseManager {
     }
 
     /**
-     * Update Customer file
+     * Update the stored customers file with information from CustomerManager.
      */
     public void updateCustomers(){
         try {
@@ -245,7 +245,7 @@ public class DatabaseManager {
     }
 
     /**
-     * Update Config file
+     * Update the stored config file with information from Config.
      */
     public void updateConfig(){
         try {
