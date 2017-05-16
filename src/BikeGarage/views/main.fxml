@@ -25,7 +25,7 @@
                     <MenuItem fx:id="menuBtnClose" mnemonicParsing="false" onAction="#handleButtonClose" text="Close" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Statistik">
+                <Menu fx:id="menuBtnStatisticsMenu" mnemonicParsing="false" text="Statistik">
                   <items>
                     <MenuItem fx:id="menuBtnNumberOfParkedBikes" mnemonicParsing="false" text="Antal parkerade cyklar: " />
                         <MenuItem fx:id="menuBtnNumberOfFreeParkingSpots" mnemonicParsing="false" text="Antal lediga platser: " />

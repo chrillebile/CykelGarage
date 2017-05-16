@@ -6,12 +6,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -39,6 +37,9 @@ public class MainController {
 
     @FXML
     private MenuItem menuBtnTotalNumberOfParkingSpots;
+
+    @FXML
+    private Menu menuBtnStatisticsMenu;
 
     @FXML
     private TableView<Customer> tblUserList;
@@ -170,11 +171,15 @@ public class MainController {
 
         tblBikeList.getSelectionModel().selectedItemProperty().addListener(this::handleSelectionChangeTblBikeList);
 
-
-        // Set the number of bikes and customers in menubar
-        menuBtnNumberOfParkedBikes.setText("Antal parkerade cyklar: " + (Config.MAX_PARKING_SPOTS - adminManager.numberOfFreeParkingSpots()));
-        menuBtnNumberOfFreeParkingSpots.setText("Antal lediga platser: " + adminManager.numberOfFreeParkingSpots());
-        menuBtnTotalNumberOfParkingSpots.setText("Totalt antal parkeringsplatser: " + Config.MAX_PARKING_SPOTS);
+        // When clicking on Statistics we update the shown statistics
+        menuBtnStatisticsMenu.setOnShowing(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                menuBtnNumberOfParkedBikes.setText("Antal parkerade cyklar: " + (Config.MAX_PARKING_SPOTS - adminManager.numberOfFreeParkingSpots()));
+                menuBtnNumberOfFreeParkingSpots.setText("Antal lediga platser: " + adminManager.numberOfFreeParkingSpots());
+                menuBtnTotalNumberOfParkingSpots.setText("Totalt antal parkeringsplatser: " + Config.MAX_PARKING_SPOTS);
+            }
+        });
     }
 
     /**
@@ -283,7 +288,6 @@ public class MainController {
             }
             // Save the new bikelist
             adminManager.updateBikes();
-
             tblBikeList.refresh();
 
         }
