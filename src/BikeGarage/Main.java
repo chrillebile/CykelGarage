@@ -32,7 +32,7 @@ public class Main extends Application {
                 AdminManager adminManager = new AdminManager(customerManager, bikeManager, databaseManager);
 
                 Platform.runLater(() -> {
-                    ((TextArea) primaryStage.getScene().getRoot().getChildrenUnmodifiable().get(2)).appendText("Startar Leave'nLock...");
+                    ((TextArea) primaryStage.getScene().getRoot().getChildrenUnmodifiable().get(2)).appendText("Startar Leave'nLock... (Notera, om programmet inte startar inom två min, troligtvis har något gått snett med inläsning.");
                     HardwareManager hardwareManager = new HardwareManager(adminManager);
                     new WindowManager(adminManager, hardwareManager);
                     ((TextArea) primaryStage.getScene().getRoot().getChildrenUnmodifiable().get(2)).appendText("Klar");
