@@ -70,14 +70,14 @@ public class Bike {
     }
 
     /**
-     * @return Time of entry
+     * @return Time of entry (UNIX time)
      */
     public long getEntryTime(){
         return entryTime;
     }
 
     /**
-     * @return Time of exit
+     * @return Time of exit (UNIX time)
      */
     public long getExitTime(){
         return exitTime;
@@ -86,8 +86,9 @@ public class Bike {
     /**
      * To check that the barcode doesn't have more than 5 digits and setting the barcode
      * @param barcodeNr The barcode
+     * @throws IllegalArgumentException when the barcode exceeds the maximum length a barcode can have.
      */
-    private void setBarcodeNr(long barcodeNr){
+    private void setBarcodeNr(long barcodeNr) throws IllegalArgumentException {
         if(barcodeNr >= Config.MAX_NUMBER_OF_BARCODES){
             throw new IllegalArgumentException("Du kan inte få fler barcodes");
         }
@@ -96,7 +97,7 @@ public class Bike {
 
     /**
      * Replace the bike's customer
-     * @param customer
+     * @param customer The customer that the current owner should be replaced with.
      */
     public void setCustomer(Customer customer){
         this.customer = customer;
@@ -104,7 +105,7 @@ public class Bike {
 
     /**
      * Set time of entry in the garage
-     * @param entryTime
+     * @param entryTime The time to set it to given in UNIX time.
      */
     public void setEntryTime(long entryTime){
         this.entryTime = entryTime;
