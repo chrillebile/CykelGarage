@@ -4,7 +4,9 @@ import BikeGarage.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -45,12 +47,11 @@ public class EditUserController {
     private Button btnSave;
 
     @FXML
-    private void handleSaveButton(){
-        if(isNewUser) {
-            try{
+    private void handleSaveButton() {
+        if (isNewUser) {
+            try {
                 customer = adminManager.createCustomer(tbxFirstName.getText(), tbxLastName.getText(), tbxPersonNr.getText(), tbxPin.getText(), tbxPhoneNr.getText());
-            }
-            catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 windowManager.openPopup(e.getMessage());
                 return;
             }
@@ -62,14 +63,13 @@ public class EditUserController {
                 hardwareManager.printBarcode(bike.getBarcodeNrInString());
             }
 
-        }
-        else{
+        } else {
             String firstName = customer.getFirstName();
             String lastName = customer.getSurname();
             String pinKod = customer.getPin();
             String phoneNr = customer.getPhoneNr();
 
-            try{
+            try {
                 // We have an existing user. Use his setters to set the data
                 customer.setFirstName(tbxFirstName.getText());
                 customer.setSurname(tbxLastName.getText());
@@ -82,8 +82,7 @@ public class EditUserController {
                         hardwareManager.printBarcode(bike.getBarcodeNrInString());
                     }
                 }
-            }
-            catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 // Something went wrong. Revert the attributes to what they were
                 customer.setFirstName(firstName);
                 customer.setSurname(lastName);
@@ -105,17 +104,18 @@ public class EditUserController {
 
     /**
      * Used to initialize the controller. Here we set all variables ths controller requires (e.g. access to managers). Then the components get filled.
-     * @param windowManager The instance of WindowManager.
-     * @param adminManager The instance of AdminManager the system uses.
-     * @param customer The customer that will be edited. If the customer is null, it means that a new user will be created.
+     *
+     * @param windowManager   The instance of WindowManager.
+     * @param adminManager    The instance of AdminManager the system uses.
+     * @param customer        The customer that will be edited. If the customer is null, it means that a new user will be created.
      * @param hardwareManager The instance of HardwareManager the system uses.
      */
-    public void init(WindowManager windowManager, AdminManager adminManager, Customer customer, MainController mainController, HardwareManager hardwareManager){
+    public void init(WindowManager windowManager, AdminManager adminManager, Customer customer, MainController mainController, HardwareManager hardwareManager) {
         this.windowManager = windowManager;
         this.adminManager = adminManager;
         this.hardwareManager = hardwareManager;
 
-        if(customer == null){
+        if (customer == null) {
             isNewUser = true;
         }
         this.customer = customer;
@@ -129,7 +129,7 @@ public class EditUserController {
      */
     private void initializeAfterInit() {
         // If we have a new user then we cannot get its name because it doesn't have one yet
-        if(isNewUser == false){
+        if (isNewUser == false) {
             tbxFirstName.setText(customer.getFirstName());
             tbxLastName.setText(customer.getSurname());
             tbxPersonNr.setText(customer.getPersonNr());
@@ -139,39 +139,39 @@ public class EditUserController {
 
             // Initialize the textbox
             bikeList = FXCollections.observableArrayList(adminManager.findBikesByCustomer(customer.getPersonNr()));
-            for(Bike b: bikeList){
+            for (Bike b : bikeList) {
                 lsvBikeList.getItems().add(b.getBarcodeNrInString());
             }
-            if(lsvBikeList.getItems().size() >= Config.MAX_BIKES_PER_PERSON){
+            if (lsvBikeList.getItems().size() >= Config.MAX_BIKES_PER_PERSON) {
                 btnAddBike.setDisable(true);
             }
         }
     }
 
     @FXML
-    private void handleAddBikeButton(){
+    private void handleAddBikeButton() {
         lsvBikeList.getItems().add("Ny Cykel");
-        if(lsvBikeList.getItems().size() >= Config.MAX_BIKES_PER_PERSON){
+        if (lsvBikeList.getItems().size() >= Config.MAX_BIKES_PER_PERSON) {
             btnAddBike.setDisable(true);
         }
     }
 
     @FXML
-    private void handleRemoveBikeButton(){
-        if(lsvBikeList.getSelectionModel().isEmpty()){
+    private void handleRemoveBikeButton() {
+        if (lsvBikeList.getSelectionModel().isEmpty()) {
             windowManager.openPopup("Du måste välja en cykel för att kunna ta bort");
             return;
         }
-        if(!lsvBikeList.getSelectionModel().getSelectedItem().contentEquals("Ny Cykel")){
+        if (!lsvBikeList.getSelectionModel().getSelectedItem().contentEquals("Ny Cykel")) {
             try {
                 adminManager.removeBike(Long.parseLong(lsvBikeList.getSelectionModel().getSelectedItem()));
-            } catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 windowManager.openPopup(e.getMessage());
                 return;
             }
         }
         lsvBikeList.getItems().remove(lsvBikeList.getSelectionModel().getSelectedIndex());
-        if(lsvBikeList.getItems().size() < Config.MAX_BIKES_PER_PERSON){
+        if (lsvBikeList.getItems().size() < Config.MAX_BIKES_PER_PERSON) {
             btnAddBike.setDisable(false);
         }
     }

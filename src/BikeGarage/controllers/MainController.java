@@ -106,20 +106,21 @@ public class MainController {
     }
 
     @FXML
-    private void handleEditUserButton(ActionEvent event){
+    private void handleEditUserButton(ActionEvent event) {
         Customer customerToEdit = tblUserList.getSelectionModel().getSelectedItem();
-        if(customerToEdit != null){
+        if (customerToEdit != null) {
             windowManager.initEditUser(customerToEdit, this);
         }
     }
 
     /**
      * Used to initialize the controller. Here we set all variables ths controller requires (e.g. access to managers). Then the components get filled.
-     * @param windowManager The instance of WindowManager
-     * @param adminManager The instance of AdminManager the system uses
+     *
+     * @param windowManager   The instance of WindowManager
+     * @param adminManager    The instance of AdminManager the system uses
      * @param hardwareManager The instance of HardwareManager the system uses
      */
-    public void init(WindowManager windowManager, AdminManager adminManager, HardwareManager hardwareManager){
+    public void init(WindowManager windowManager, AdminManager adminManager, HardwareManager hardwareManager) {
         this.windowManager = windowManager;
         this.adminManager = adminManager;
         this.hardwareManager = hardwareManager;
@@ -131,7 +132,7 @@ public class MainController {
     /**
      * A custom function to initialize and fill all components with start data. To be used inside init()
      */
-    private void initializeAfterInit(){
+    private void initializeAfterInit() {
         System.out.println("init");
 
         // Set the data for the customer tableview. The bike tableview is updated when clicking on a customer
@@ -151,7 +152,7 @@ public class MainController {
         // Initialize the tblBikeList's attributes
         bikeList = FXCollections.observableList(adminManager.getBikeList());
         tblColBikeBarcode.setCellValueFactory(bike -> new SimpleStringProperty(bike.getValue().getBarcodeNrInString()));
-        tblColBikeOwner.setCellValueFactory(bike -> new SimpleStringProperty(( bike.getValue().getCustomer().getFirstName() + " " + bike.getValue().getCustomer().getSurname())));
+        tblColBikeOwner.setCellValueFactory(bike -> new SimpleStringProperty((bike.getValue().getCustomer().getFirstName() + " " + bike.getValue().getCustomer().getSurname())));
         tblColBikeParkingStart.setCellValueFactory(bike -> new SimpleStringProperty(adminManager.getFormatUnixTime(bike.getValue().getEntryTime())));
         tblColBikeParkingEnd.setCellValueFactory(bike -> new SimpleStringProperty(adminManager.getFormatUnixTime(bike.getValue().getExitTime())));
         tblColBikeParkingStatus.setCellValueFactory(bike -> new SimpleStringProperty(adminManager.getParkingStatus(bike.getValue().getParkingStatus())));
@@ -173,16 +174,15 @@ public class MainController {
     /**
      * Handles the change of selection in tblUserList. This mainly changes the items in tblBikeList.
      */
-    private void handleSelectionChangeTblUserList(ObservableValue<? extends Customer> observable, Customer oldValue, Customer newValue){
+    private void handleSelectionChangeTblUserList(ObservableValue<? extends Customer> observable, Customer oldValue, Customer newValue) {
         // selectedItemProperty does send null when there isn't a row selected. When that happens, we set bikelist to show all bikes
-        if(newValue == null){
+        if (newValue == null) {
             btnEditUser.setDisable(true);
             btnRemoveUser.setDisable(true);
             btnAddBike.setDisable(true);
 
             bikeList = FXCollections.observableList(adminManager.getBikeList());
-        }
-        else{
+        } else {
             bikeList = FXCollections.observableArrayList(adminManager.findBikesByCustomer(newValue.getPersonNr()));
 
             btnEditUser.setDisable(false);
@@ -199,18 +199,18 @@ public class MainController {
 
     /**
      * Handles the change of selection in tblBikeList.
+     *
      * @param observable
-     * @param oldBike The old bike that was selected
-     * @param newBike The new bike that is selected
+     * @param oldBike    The old bike that was selected
+     * @param newBike    The new bike that is selected
      */
-    private void handleSelectionChangeTblBikeList(ObservableValue<? extends  Bike> observable, Bike oldBike, Bike newBike){
+    private void handleSelectionChangeTblBikeList(ObservableValue<? extends Bike> observable, Bike oldBike, Bike newBike) {
         // if no selection is made, disable buttons
-        if(newBike == null){
+        if (newBike == null) {
             btnEditBike.setDisable(true);
             btnRemoveBike.setDisable(true);
             btnPrintBarcode.setDisable(true);
-        }
-        else{
+        } else {
             btnEditBike.setDisable(false);
             btnRemoveBike.setDisable(false);
             btnPrintBarcode.setDisable(false);
@@ -219,7 +219,7 @@ public class MainController {
 
 
     @FXML
-    private void handleRefreshUserListButton(){
+    private void handleRefreshUserListButton() {
         customerList = FXCollections.observableList(adminManager.getCustomerList());
         tblUserList.setItems(customerList);
         tblUserList.refresh();
@@ -229,7 +229,7 @@ public class MainController {
      * Actionhandler for when pressing the show-all-bikes button.
      */
     @FXML
-    public void handleShowAllBikesButton(){
+    public void handleShowAllBikesButton() {
         // When changing selection, handleSelectionChangeTblUserList is fired. There we do the update
         tblUserList.getSelectionModel().select(null);
         tblBikeList.getSelectionModel().select(null);
@@ -238,9 +238,9 @@ public class MainController {
     }
 
     @FXML
-    private void handleEditBikeButton(){
+    private void handleEditBikeButton() {
         Bike bikeToEdit = tblBikeList.getSelectionModel().getSelectedItem();
-        if(bikeToEdit != null){
+        if (bikeToEdit != null) {
             windowManager.initEditBike(bikeToEdit, bikeToEdit.getCustomer(), this);
         }
     }
@@ -255,8 +255,7 @@ public class MainController {
             adminManager.updateCustomers();
 
             handleShowAllBikesButton();
-        }
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             windowManager.openPopup(e.getMessage());
             return;
         }
@@ -264,22 +263,21 @@ public class MainController {
     }
 
     @FXML
-    private void handleRemoveBikeButton(){
+    private void handleRemoveBikeButton() {
         Bike bikeToBeRemoved = tblBikeList.getSelectionModel().getSelectedItem();
 
-        try{
+        try {
             adminManager.removeBike(bikeToBeRemoved.getBarcodeNr());
 
             // If a user is selected, the tableview cannot automatically update its internal list as its pointing in the list in adminManager.findBikesByCustomer(). Adminmanager removes the bike in adminManager.getBikeList()
-            if(tblUserList.getSelectionModel().getSelectedItem() != null){
+            if (tblUserList.getSelectionModel().getSelectedItem() != null) {
                 tblBikeList.getItems().remove(bikeToBeRemoved);
             }
             // Save the new bikelist
             adminManager.updateBikes();
             tblBikeList.refresh();
 
-        }
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             windowManager.openPopup(e.getMessage());
             return;
         }
@@ -287,8 +285,8 @@ public class MainController {
     }
 
     @FXML
-    private void handleAddBikeButton(){
-        if(tblUserList.getSelectionModel().isEmpty()){
+    private void handleAddBikeButton() {
+        if (tblUserList.getSelectionModel().isEmpty()) {
             windowManager.openPopup("Du måste välja en användare att lägga till en cykel på.");
             return;
         }
@@ -297,19 +295,18 @@ public class MainController {
     }
 
     @FXML
-    private void handleSearchByBarcodeButton(){
+    private void handleSearchByBarcodeButton() {
         long searchInput;
 
-        try{
-             searchInput = Long.parseLong(tbxSearchBarcode.getText());
-        }
-        catch(NumberFormatException e){
+        try {
+            searchInput = Long.parseLong(tbxSearchBarcode.getText());
+        } catch (NumberFormatException e) {
             windowManager.openPopup("Inkorrekt inmatad streckkod");
             return;
         }
         Bike foundBike = adminManager.findBike(searchInput);
 
-        if(foundBike == null){
+        if (foundBike == null) {
             windowManager.openPopup("Ingen cykel hittades.");
             return;
         }
@@ -319,7 +316,7 @@ public class MainController {
     }
 
     @FXML
-    private void handleSearchByPersonNrButton(){
+    private void handleSearchByPersonNrButton() {
         String searchInput = tbxSearchPersonalNr.getText();
         Customer foundCustomer = adminManager.findCustomer(searchInput);
 
@@ -327,27 +324,26 @@ public class MainController {
     }
 
     @FXML
-    private void handlePrintButton(){
+    private void handlePrintButton() {
         Bike bike = tblBikeList.getSelectionModel().getSelectedItem();
-        if(bike == null){
+        if (bike == null) {
             return;
         }
 
-        try{
+        try {
             hardwareManager.printBarcode(bike.getBarcodeNrInString());
-        }
-        catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             windowManager.openPopup(e.getMessage());
         }
     }
 
     @FXML
-    private void handleMenuBtnSettings(){
+    private void handleMenuBtnSettings() {
         windowManager.initSettings(null);
     }
 
     @FXML
-    private void handleButtonClose(){
+    private void handleButtonClose() {
         adminManager.updateCustomers();
         adminManager.updateBikes();
         adminManager.updateConfig();

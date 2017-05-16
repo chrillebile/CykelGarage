@@ -19,10 +19,11 @@ public class SettingsController {
 
     /**
      * Used to initialize this controller. Here we set all global variables this program uses. Then the components get initialized.
+     *
      * @param windowManager The instance of WindowManager the system uses.
-     * @param adminManager The instance of AdminManager.
+     * @param adminManager  The instance of AdminManager.
      */
-    public void init(WindowManager windowManager, AdminManager adminManager){
+    public void init(WindowManager windowManager, AdminManager adminManager) {
         this.windowManager = windowManager;
         this.adminManager = adminManager;
 
@@ -32,20 +33,20 @@ public class SettingsController {
     /**
      * A custom method to fill all components with information.
      */
-    private void initComponents(){
+    private void initComponents() {
         tbxMaxParkingSpots.setText(Config.MAX_PARKING_SPOTS + "");
     }
 
     @FXML
-    private void handleSaveButton(){
+    private void handleSaveButton() {
         int maxParkingSpots;
-        try{
+        try {
             maxParkingSpots = Integer.parseInt(tbxMaxParkingSpots.getText());
             Config.setMaxParkingSports(maxParkingSpots);
 
 
             // If the setting is now changed then start main application
-            if(!Config.SYSTEM_STARTED_BEFORE){
+            if (!Config.SYSTEM_STARTED_BEFORE) {
                 Config.setSystemStartedBefore(true);
                 windowManager.initMain();
             }
@@ -53,8 +54,7 @@ public class SettingsController {
             adminManager.updateConfig();
             // Close this window since we are done
             closeStage();
-        }
-        catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             windowManager.openPopup(e.getMessage());
             return;
         }
@@ -65,7 +65,7 @@ public class SettingsController {
     /**
      * Used when closing this window.
      */
-    private void closeStage(){
+    private void closeStage() {
         Stage stage = (Stage) tbxMaxParkingSpots.getScene().getWindow();
         stage.close();
     }

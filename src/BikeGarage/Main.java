@@ -8,17 +8,22 @@ import javafx.stage.Stage;
 
 /**
  * Starts the program.
+ *
  * @author Ennio Mara
  */
 public class Main extends Application {
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         primaryStage.getIcons().add(new Image("icon_256x256.png"));
         WindowManager.progress(primaryStage);
         ((TextArea) primaryStage.getScene().getRoot().getChildrenUnmodifiable().get(2)).appendText("Startar...\n");
 
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 DatabaseManager databaseManager = new DatabaseManager();
@@ -40,9 +45,5 @@ public class Main extends Application {
                 });
             }
         }.start();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

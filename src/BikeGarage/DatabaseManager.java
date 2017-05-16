@@ -5,16 +5,10 @@ import java.io.*;
 
 /**
  * Reads and writes system information to file
+ *
  * @author Christian Bilevits
  */
 public class DatabaseManager {
-
-    private BikeManager bikeManager;
-    private CustomerManager customerManager;
-    private Config config;
-
-    private FileWriter fileWriter;
-    private BufferedReader fileReader;
 
     /**
      * Default constants
@@ -24,7 +18,6 @@ public class DatabaseManager {
     private static final String FILE_HEADER_CUSTOMER = "firstName;surname;personNr;pin;phoneNr;regTime";
     private static final String FILE_HEADER_BIKE = "barcodeNr;personNr;regTime;entryTime;exitTime";
     private static final String FILE_HEADER_CONFIG = "isFirstTimeSystemStart;MaxParkingSpots";
-
     /**
      * Customer index
      */
@@ -34,7 +27,6 @@ public class DatabaseManager {
     private static final int CUSTOMER_PIN = 3;
     private static final int CUSTOMER_PHONENR = 4;
     private static final int CUSTOMER_REGTIME = 5;
-
     /**
      * Bike index
      */
@@ -43,11 +35,16 @@ public class DatabaseManager {
     private static final int BIKE_REGTIME = 2;
     private static final int BIKE_ENTRYTIME = 3;
     private static final int BIKE_EXITTIME = 4;
+    private BikeManager bikeManager;
+    private CustomerManager customerManager;
+    private Config config;
+    private FileWriter fileWriter;
+    private BufferedReader fileReader;
 
     /**
      * Create a database
      */
-    public DatabaseManager(){
+    public DatabaseManager() {
         bikeManager = new BikeManager();
         customerManager = new CustomerManager();
         config = new Config();
@@ -55,14 +52,15 @@ public class DatabaseManager {
 
     /**
      * Reads and loads the bikes from file to BikeManager
+     *
      * @return The loaded BikeManager instance.
      */
-    public BikeManager loadBikes(){
+    public BikeManager loadBikes() {
         try {
             fileReader = new BufferedReader(new FileReader(Config.FILENAME_BIKE));
             String line;
             fileReader.readLine();
-            while((line = fileReader.readLine()) != null){
+            while ((line = fileReader.readLine()) != null) {
                 String[] split = line.split(COMMA_DELIMITER);
                 bikeManager.addBike(Long.parseLong(split[BIKE_BARCODENR]), customerManager.findCustomerByPersonNr(split[BIKE_PERSONNR]), Long.parseLong(split[BIKE_REGTIME]), Long.parseLong(split[BIKE_ENTRYTIME]), Long.parseLong(split[BIKE_EXITTIME]));
             }
@@ -84,18 +82,19 @@ public class DatabaseManager {
 
     /**
      * Read and load the customer into CustomerManager
+     *
      * @return The loaded CustomerManager instance
      */
-    public CustomerManager loadCustomers(){
-        try{
+    public CustomerManager loadCustomers() {
+        try {
             fileReader = new BufferedReader(new FileReader(Config.FILENAME_CUSTOMER));
             String line;
             fileReader.readLine();
-            while((line = fileReader.readLine()) != null){
+            while ((line = fileReader.readLine()) != null) {
                 String[] split = line.split(COMMA_DELIMITER);
                 customerManager.createCustomer(split[CUSTOMER_FNAME], split[CUSTOMER_LNAME], split[CUSTOMER_PERSONNR], split[CUSTOMER_PIN], split[CUSTOMER_PHONENR], Long.parseLong(split[CUSTOMER_REGTIME]));
             }
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             try {
                 File file = new File(Config.FILENAME_CUSTOMER);
                 file.getParentFile().mkdir();
@@ -103,7 +102,7 @@ public class DatabaseManager {
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             finallyForLoad();
@@ -113,19 +112,20 @@ public class DatabaseManager {
 
     /**
      * Read and load the config into Config
+     *
      * @return The Config instance
      */
-    public Config loadConfig(){
+    public Config loadConfig() {
         try {
             fileReader = new BufferedReader(new FileReader(Config.FILENAME_CONFIG));
             fileReader.readLine();
             String line;
             //If line is not empty it will read and set max parking spots
-            if((line = fileReader.readLine()) != null) {
+            if ((line = fileReader.readLine()) != null) {
                 String[] split = line.split(COMMA_DELIMITER);
 
                 // Find whether to set it to true or false
-                switch (split[0]){
+                switch (split[0]) {
                     case "0":
                         config.setSystemStartedBefore(false);
                         break;
@@ -136,7 +136,7 @@ public class DatabaseManager {
 
                 config.setMaxParkingSports(Integer.parseInt(split[1]));
             }
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             try {
                 File file = new File(Config.FILENAME_CONFIG);
                 file.getParentFile().mkdir();
@@ -155,8 +155,8 @@ public class DatabaseManager {
     /**
      * Used when the loading of a file has been finished.
      */
-    private void finallyForLoad(){
-        if(fileReader != null) {
+    private void finallyForLoad() {
+        if (fileReader != null) {
             try {
                 fileReader.close();
             } catch (Exception e) {
@@ -164,16 +164,17 @@ public class DatabaseManager {
             }
         }
     }
+
     /**
      * Update the stored bike file with information from BikeManager.
      */
-    public void updateBikes(){
+    public void updateBikes() {
         try {
             fileWriter = new FileWriter(Config.FILENAME_BIKE);
             fileWriter.append(FILE_HEADER_BIKE.toString());
             fileWriter.append(NEW_LINE_SEPARATOR);
 
-            for(Bike b: bikeManager.getBikeList()){
+            for (Bike b : bikeManager.getBikeList()) {
                 StringBuilder bike = new StringBuilder();
                 try {
                     bike.append(b.getBarcodeNrInString());
@@ -187,17 +188,17 @@ public class DatabaseManager {
                     bike.append(String.valueOf(b.getExitTime()));
                     fileWriter.append(bike.toString());
                     fileWriter.append(NEW_LINE_SEPARATOR);
-                } catch(Error e){
+                } catch (Error e) {
                     e.printStackTrace();
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try{
+            try {
                 fileWriter.flush();
                 fileWriter.close();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -206,15 +207,15 @@ public class DatabaseManager {
     /**
      * Update the stored customers file with information from CustomerManager.
      */
-    public void updateCustomers(){
+    public void updateCustomers() {
         try {
             fileWriter = new FileWriter(Config.FILENAME_CUSTOMER);
             fileWriter.append(FILE_HEADER_CUSTOMER.toString());
             fileWriter.append(NEW_LINE_SEPARATOR);
 
-            for(Customer c: customerManager.getCustomerList()){
+            for (Customer c : customerManager.getCustomerList()) {
                 StringBuilder customer = new StringBuilder();
-                try{
+                try {
                     customer.append(c.getFirstName());
                     customer.append(COMMA_DELIMITER);
                     customer.append(c.getSurname());
@@ -228,17 +229,17 @@ public class DatabaseManager {
                     customer.append(String.valueOf(c.getRegTime()));
                     fileWriter.append(customer.toString());
                     fileWriter.append(NEW_LINE_SEPARATOR);
-                } catch (Error e){
+                } catch (Error e) {
                     e.printStackTrace();
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try{
+            try {
                 fileWriter.flush();
                 fileWriter.close();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -247,18 +248,17 @@ public class DatabaseManager {
     /**
      * Update the stored config file with information from Config.
      */
-    public void updateConfig(){
+    public void updateConfig() {
         try {
             fileWriter = new FileWriter(Config.FILENAME_CONFIG);
             fileWriter.append(FILE_HEADER_CONFIG.toString());
             fileWriter.append(NEW_LINE_SEPARATOR);
 
             // Since SYSTEM_STARTED_BEFORE is a boolean, 1 equals true and 0 equals false
-            if(Config.SYSTEM_STARTED_BEFORE){
+            if (Config.SYSTEM_STARTED_BEFORE) {
                 fileWriter.append(String.valueOf(1));
                 fileWriter.append(COMMA_DELIMITER);
-            }
-            else{
+            } else {
                 fileWriter.append(String.valueOf(0));
                 fileWriter.append(COMMA_DELIMITER);
             }
@@ -267,10 +267,10 @@ public class DatabaseManager {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try{
+            try {
                 fileWriter.flush();
                 fileWriter.close();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
