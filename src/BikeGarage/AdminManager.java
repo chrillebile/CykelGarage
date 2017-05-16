@@ -4,13 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * Maneges all the managers
+ * This class is the one that wires the different parts of the program together (excl. the hardware)
  * @author Christian Bilevits
  */
 public class AdminManager {
-    CustomerManager customerManager;
-    BikeManager bikeManager;
-    DatabaseManager dbManager;
+    private CustomerManager customerManager;
+    private BikeManager bikeManager;
+    private DatabaseManager dbManager;
 
     /**
      * This is the class that connects all major components of the garage. All administrative tasks are done by this.
@@ -49,8 +49,9 @@ public class AdminManager {
      * Remove a customer with a given personNr.
      * @param personNr The user's personal id number.
      * @return Whether the removal was successful.
+     * @throws IllegalArgumentException if the customer has parked bikes in the garage.
      */
-    public boolean removeCustomer(String personNr){
+    public boolean removeCustomer(String personNr) throws IllegalArgumentException{
         if(bikeManager.hasBikeParked(customerManager.findCustomerByPersonNr(personNr))){
             throw new IllegalArgumentException("Kunden har en parkerad cykel.");
         }
@@ -63,7 +64,7 @@ public class AdminManager {
 
     /**
      * Add a new bike to a specific user. The customer is already given.
-     * @param customer The customer object.
+     * @param customer The customer object that will be the bike's owner.
      * @return The created bike.
      */
     public Bike addBike(Customer customer){
@@ -71,18 +72,9 @@ public class AdminManager {
     }
 
     /**
-     * Add a new bike to a specific user. The customer is searched by personNr.
-     * @param personNr The personal id of the user.
-     * @return The bike that has been created.
-     */
-    public Bike addBike(String personNr){
-        return (findCustomer(personNr) != null) ? bikeManager.addBike(findCustomer(personNr)) : null;
-    }
-
-    /**
      * Remove a bike with a given barcodeNr.
      * @param barcodeNr This is the bike's identification number. It is unique.
-     * @return Whether the bike has been successfully removed.
+     * @return Whether the bike has been successfully removed or not.
      */
     public boolean removeBike(long barcodeNr){
         return bikeManager.removeBike(barcodeNr);
@@ -90,9 +82,9 @@ public class AdminManager {
 
     /**
      * Edit a bike's customer.
-     * @param barcodeNr The bike.
-     * @param newCustomerPersonNr The new bike's customer personNr.
-     * @return Whether the edit was successful.
+     * @param barcodeNr The bike's barcode number.
+     * @param newCustomerPersonNr The personal number the new owner has.
+     * @return Whether the owner change was successful.
      */
     public boolean editBikeCustomer(long barcodeNr, String newCustomerPersonNr){
         Customer customer = findCustomer(newCustomerPersonNr);
@@ -124,8 +116,8 @@ public class AdminManager {
     }
 
     /**
-     * Changes unix time to readable format
-     * @param unixTime Unix time
+     * Converts UNIX time to a more readable format.
+     * @param unixTime The time in UNIX time.
      * @return Readable time
      */
     public String getFormatUnixTime(long unixTime){
@@ -137,19 +129,18 @@ public class AdminManager {
     }
 
     /**
-     * Change boolean to readable format
+     * Function used to convert a boolean to a more human readable form.
      * @param status Status of parked bike
-     * @return Returns "Ja" if bikes is parked and "Nej" if it's not parked
+     * @return Returns "Ja" if the bike is parked and "Nej" if it's not parked.
      */
     public String getParkingStatus(Boolean status){
         return status ? "Ja" : "Nej";
     }
 
     /**
-     * Set a bike's entry time and adds bike to parkedBikeList if it's parked.
-     * @param barcodeNr The bike
+     * Set a bike's entry time and add the bike to parkedBikeList if it's parked.
+     * @param barcodeNr The bike's barcode number.
      * @param entryTime The time specified in unix time.
-     * @return Whether the edit was successful.
      */
     public void setBikeEntryTime(long barcodeNr, long entryTime){
         if(numberOfFreeParkingSpots() <= 0){
@@ -159,17 +150,17 @@ public class AdminManager {
     }
 
     /**
-     * Set a bike's exit time and removes bike from parkedBikeList if it's not parked.
-     * @param barcodeNr The bike
+     * Set a bike's exit time and remove bike from parkedBikeList if it's not parked.
+     * @param barcodeNr The bike's barcode number.
      * @param exitTime The exit time specified in unix time.
-     * @return Whether the edit was successful.
      */
     public void setBikeExitTime(long barcodeNr, long exitTime){
         bikeManager.setBikeExitTime(barcodeNr, exitTime);
     }
+
     /**
      * Seearch a specific customer given its personNr.
-     * @param personNr Unique identification for the customer
+     * @param personNr Unique identification for the customer.
      * @return The found customer.
      */
     public Customer findCustomer(String personNr){
@@ -178,16 +169,16 @@ public class AdminManager {
 
     /**
      * Search a specific bike given its barcodeNr.
-     * @param barcodeNr Unique identification for the bike.
-     * @return The found bike.
+     * @param barcodeNr The bike's barcode number.
+     * @return The found bike object.
      */
     public Bike findBike(long barcodeNr){
         return bikeManager.findBikeByBarcodeNr(barcodeNr);
     }
 
     /**
-     * Check if a pin exist
-     * @param pin A pin-code.
+     * Check if a pin exists in the system.
+     * @param pin The PIN code to check.
      * @return Returns if pin-code exist.
      */
     public boolean checkIfPinExist(String pin){
@@ -198,7 +189,9 @@ public class AdminManager {
         }
         return false;
     }
+
     /**
+     * Get the number of free parking spots in the system.
      * @return Number of free parking spots.
      */
     public int numberOfFreeParkingSpots(){
@@ -206,21 +199,21 @@ public class AdminManager {
     }
 
     /**
-     * Calls the databasemanager and performs and updates the list in database
+     * Calls the DatabaseManager and performs and updates the list in database
      */
     public void updateCustomers(){
         dbManager.updateCustomers();
     }
 
     /**
-     * Calls the databasemanager and performs and updates the list in database
+     * Calls the DatabaseManager and performs and updates the list in database
      */
     public void updateBikes(){
         dbManager.updateBikes();
     }
 
     /**
-     * Calls the databasemanager and performs and updates the list in database
+     * Calls the DatabaseManager and performs and updates the list in database
      */
     public void updateConfig(){
         dbManager.updateConfig();

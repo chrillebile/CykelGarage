@@ -49,7 +49,7 @@ public class Config {
 
     /**
      * Set maximum of parking spots in the garage.
-     * @param maxParkingSports
+     * @param maxParkingSports The number of parking spots to set config to.
      */
     public static void setMaxParkingSports(int maxParkingSports){
         if(maxParkingSports > MAX_NUMBER_OF_BARCODES || maxParkingSports < 0){
@@ -58,6 +58,10 @@ public class Config {
         MAX_PARKING_SPOTS = maxParkingSports;
     }
 
+    /**
+     * Set if the system has been started before.
+     * @param value True if yes, false otherwise.
+     */
     public static void setSystemStartedBefore(boolean value){
         SYSTEM_STARTED_BEFORE = value;
     }
