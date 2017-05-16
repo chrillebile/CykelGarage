@@ -32,15 +32,21 @@ public class EditBikeController {
     private TextField tbxBikeOwner;
 
     @FXML
-    private ComboBox<String> cbxParkedState;
-
-    @FXML
     private Button btnSpara;
 
     @FXML
     private CheckBox chkbIsParked;
 
 
+    /**
+     * Initialize the variables this class uses.
+     * @param windowManager
+     * @param adminManager
+     * @param bike
+     * @param customer
+     * @param mainController
+     * @param hardwareManager
+     */
     public void init(WindowManager windowManager, AdminManager adminManager, Bike bike, Customer customer, MainController mainController, HardwareManager hardwareManager){
         this.windowManager = windowManager;
         this.adminManager = adminManager;
@@ -57,6 +63,9 @@ public class EditBikeController {
         initializeAfterInit();
     }
 
+    /**
+     * Initialize the visual components of the window. To be used after initializing the variables.
+     */
     private void initializeAfterInit(){
         if(!isNewBike){
             tbxBikeBarcode.setText(bike.getBarcodeNrInString());
@@ -70,7 +79,7 @@ public class EditBikeController {
     }
 
     @FXML
-    void handleSaveButton(){
+    private void handleSaveButton(){
         Bike bikeToBeCreated = bike;
         if(isNewBike){
             try{

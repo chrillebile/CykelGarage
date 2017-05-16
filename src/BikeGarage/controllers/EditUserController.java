@@ -42,13 +42,10 @@ public class EditUserController {
     private Button btnAddBike;
 
     @FXML
-    private Button btnRemoveBike;
-
-    @FXML
     private Button btnSave;
 
     @FXML
-    void handleSaveButton(){
+    private void handleSaveButton(){
         if(isNewUser) {
             try{
                 customer = adminManager.createCustomer(tbxFirstName.getText(), tbxLastName.getText(), tbxPersonNr.getText(), tbxPin.getText(), tbxPhoneNr.getText());
@@ -108,10 +105,10 @@ public class EditUserController {
 
     /**
      * Used to initialize the controller. Here we set all variables ths controller requires (e.g. access to managers). Then the components get filled.
-     * @param windowManager The instance of WindowManager
-     * @param adminManager The instance of AdminManager the system uses
-     * @param customer The customer that will be edited. If the customer is null, it means that a new user will be created
-     * @param hardwareManager The instance of HardwareManager the system uses
+     * @param windowManager The instance of WindowManager.
+     * @param adminManager The instance of AdminManager the system uses.
+     * @param customer The customer that will be edited. If the customer is null, it means that a new user will be created.
+     * @param hardwareManager The instance of HardwareManager the system uses.
      */
     public void init(WindowManager windowManager, AdminManager adminManager, Customer customer, MainController mainController, HardwareManager hardwareManager){
         this.windowManager = windowManager;
@@ -130,7 +127,7 @@ public class EditUserController {
     /**
      * A custom function to initialize and fill all components with start data. To be used inside init()
      */
-    public void initializeAfterInit() {
+    private void initializeAfterInit() {
         // If we have a new user then we cannot get its name because it doesn't have one yet
         if(isNewUser == false){
             tbxFirstName.setText(customer.getFirstName());
@@ -152,7 +149,7 @@ public class EditUserController {
     }
 
     @FXML
-    void handleAddBikeButton(){
+    private void handleAddBikeButton(){
         lsvBikeList.getItems().add("Ny Cykel");
         if(lsvBikeList.getItems().size() >= Config.MAX_BIKES_PER_PERSON){
             btnAddBike.setDisable(true);
@@ -160,7 +157,7 @@ public class EditUserController {
     }
 
     @FXML
-    void handleRemoveBikeButton(){
+    private void handleRemoveBikeButton(){
         if(lsvBikeList.getSelectionModel().isEmpty()){
             windowManager.openPopup("Du måste välja en cykel för att kunna ta bort");
             return;
