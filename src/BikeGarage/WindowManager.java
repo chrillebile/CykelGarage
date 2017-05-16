@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Manages all the windows
+ * Manages all the windows (GUI) that the program needs.
  * @author Ennio Mara
  */
 public class WindowManager {
@@ -38,6 +38,9 @@ public class WindowManager {
         }
     }
 
+    /**
+     * Initialize the main window. This is where all administrative tasks happen. Main window will then initialize the other windows if needed.
+     */
     public void initMain(){
         Stage stage = new Stage();
         stage.getIcons().add(new Image("icon_256x256.png"));
@@ -67,6 +70,11 @@ public class WindowManager {
         }
     }
 
+    /**
+     * Initialize the edit-user window. This window is also used to add a new customer.
+     * @param customer The customer that will be edited. If null, a new customer is created.
+     * @param mainController The instance of MainController.
+     */
     public void initEditUser(Customer customer, MainController mainController){
         Stage stage = new Stage();
 
@@ -88,6 +96,12 @@ public class WindowManager {
         }
     }
 
+    /**
+     * Initialize the edit-bike window. This window is also used to add a new bike.
+     * @param bike The bike to be edited. If null, create a new bike.
+     * @param customer The bike's owner.
+     * @param mainController The instance of MainController.
+     */
     public void initEditBike(Bike bike, Customer customer, MainController mainController){
         Stage stage = new Stage();
 
@@ -110,8 +124,8 @@ public class WindowManager {
     }
 
     /**
-     *
-     * @param parentStage The parent stage. Is set to null if there is no stage available.
+     * Initialize the settings window.
+     * @param parentStage The parent stage. Used to set the owner of this window. Is set to null if there is no stage available.
      */
     public void initSettings(Stage parentStage){
         Stage stage = new Stage();
@@ -136,6 +150,10 @@ public class WindowManager {
         }
     }
 
+    /**
+     * Create an alert-type popup.
+     * @param message The message that will be displayed.
+     */
     public void openPopup(String message){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
@@ -146,7 +164,7 @@ public class WindowManager {
     }
 
     /**
-     * For when the program loads the files.
+     * Create the progress window for when the system starts. 
      */
     public static void progress(Stage stage){
         try {

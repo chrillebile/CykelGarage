@@ -18,9 +18,9 @@ public class CustomerManager {
     }
 
     /**
-     * Returns a customer if he exist
+     * Returns a customer if he exists.
      * @param personNr The customers personal id-number.
-     * @return The found customer, if no customer was found null returns.
+     * @return The found customer. If no customer was found null is returned.
      */
     public Customer findCustomerByPersonNr(String personNr){
         for(Customer c: customerList){
@@ -32,38 +32,25 @@ public class CustomerManager {
     }
 
     /**
-     * Check if a pin exist
-     * @param pin A pin-code.
-     * @return Returns if pin-code exist.
-     */
-    public boolean checkIfPinExist(String pin){
-        for(Customer c: customerList){
-            if(c.getPin() == pin){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Returns alla customers as an ArrayList
-     * @return
+     * @return All customers this manager stores.
      */
     public ArrayList<Customer> getCustomerList(){
         return customerList;
     }
 
     /**
-     * Create new customer if he don't already exist.
-     * @param firstName The customers first name
-     * @param surname The customers surname
-     * @param personNr The customers personal id-number
-     * @param pin The customers pin-code
-     * @param phoneNr The customers phone number
-     * @return Created customer. If customer already exist return null.
+     * Create new customer if he doesn't already exists.
+     * @param firstName The customers first name.
+     * @param surname The customers surname.
+     * @param personNr The customers personal id-number.
+     * @param pin The customers pin-code.
+     * @param phoneNr The customers phone number.
+     * @return The created customer. If customer already exists, return null.
+     * @throws IllegalArgumentException when the personal-id number si taken.
+     * @throws IllegalArgumentException when the system has reached maximum number of users.
      */
-    public Customer createCustomer(String firstName, String surname, String personNr, String pin, String phoneNr){
-        // Check that the personn does not exist. findCustomer returns a customer if it exists
+    public Customer createCustomer(String firstName, String surname, String personNr, String pin, String phoneNr) throws IllegalArgumentException{
+        // Check that the person does not exist. findCustomer returns a customer if it exists
         Customer temp1 = findCustomerByPersonNr(personNr);
         if(temp1 != null){
             throw new IllegalArgumentException("Personnummret redan finns");
@@ -95,46 +82,12 @@ public class CustomerManager {
     }
 
     /**
-     * Removes a customer if he exist
+     * Removes a customer if he exists
      * @param personNr The customers personal id-number
      * @return If the removed customer was successfully removed
      */
     public boolean removeCustomer(String personNr){
         Customer temp = findCustomerByPersonNr(personNr);
         return customerList.remove(temp);
-    }
-
-    /**
-     * Edit customers name if he exist
-     * @param personNr The customers personal id-number
-     * @param firsName The customers first name
-     * @param surname The customers surname
-     * @return If the edit was successful
-     */
-    public boolean editCustomerName(String personNr, String firsName, String surname){
-        Customer temp = findCustomerByPersonNr(personNr);
-        if(temp != null){
-            temp.setFirstName(firsName);
-            temp.setSurname(surname);
-            return true;
-        }else {
-            return false;
-        }
-    }
-
-    /**
-     * Edit customers pin if he exist
-     * @param personNr The customers personal id-number
-     * @param pin The customers pin-code
-     * @return If the edit was successful
-     */
-    public boolean editCustomerPin(String personNr, String pin){
-        Customer temp = findCustomerByPersonNr(personNr);
-        if(temp != null){
-            temp.setPin(pin);
-            return true;
-        }else {
-            return false;
-        }
     }
 }

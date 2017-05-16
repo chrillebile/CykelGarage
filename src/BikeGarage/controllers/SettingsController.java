@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  */
 public class SettingsController {
     private WindowManager windowManager;
-    AdminManager adminManager;
+    private AdminManager adminManager;
 
     @FXML
     private TextField tbxMaxParkingSpots;
@@ -20,7 +20,7 @@ public class SettingsController {
     /**
      * Used to initialize this controller. Here we set all global variables this program uses. Then the components get initialized.
      * @param windowManager The instance of WindowManager the system uses.
-     * @param adminManager The istance of AdminManager.
+     * @param adminManager The instance of AdminManager.
      */
     public void init(WindowManager windowManager, AdminManager adminManager){
         this.windowManager = windowManager;

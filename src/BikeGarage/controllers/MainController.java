@@ -25,10 +25,6 @@ public class MainController {
     private ObservableList<Customer> customerList;
     private ObservableList<Bike> bikeList;
 
-
-    @FXML
-    private MenuItem menuBtnClose;
-
     @FXML
     private MenuItem menuBtnNumberOfParkedBikes;
 
@@ -58,9 +54,6 @@ public class MainController {
 
     @FXML
     private TableColumn<Customer, String> tblColUserTelephoneNr;
-
-    @FXML
-    private Button btnAddUser;
 
     @FXML
     private Button btnRemoveUser;
@@ -102,23 +95,18 @@ public class MainController {
     private TextField tbxSearchBarcode;
 
     @FXML
-    private AnchorPane anchPaneCustomerButtons;
-
-    @FXML
     private AnchorPane anchPaneBikeButtons;
-
-    @FXML Button btnShowAllBikes;
 
     @FXML
     private Button btnPrintBarcode;
 
     @FXML
-    void handleAddUserButton(ActionEvent event) {
+    private void handleAddUserButton(ActionEvent event) {
         windowManager.initEditUser(null, this);
     }
 
     @FXML
-    void handleEditUserButton(ActionEvent event){
+    private void handleEditUserButton(ActionEvent event){
         Customer customerToEdit = tblUserList.getSelectionModel().getSelectedItem();
         if(customerToEdit != null){
             windowManager.initEditUser(customerToEdit, this);
@@ -143,7 +131,7 @@ public class MainController {
     /**
      * A custom function to initialize and fill all components with start data. To be used inside init()
      */
-    public void initializeAfterInit(){
+    private void initializeAfterInit(){
         System.out.println("init");
 
         // Set the data for the customer tableview. The bike tableview is updated when clicking on a customer
@@ -184,9 +172,6 @@ public class MainController {
 
     /**
      * Handles the change of selection in tblUserList. This mainly changes the items in tblBikeList.
-     * @param observable
-     * @param oldValue
-     * @param newValue
      */
     private void handleSelectionChangeTblUserList(ObservableValue<? extends Customer> observable, Customer oldValue, Customer newValue){
         // selectedItemProperty does send null when there isn't a row selected. When that happens, we set bikelist to show all bikes
@@ -234,14 +219,17 @@ public class MainController {
 
 
     @FXML
-    void handleRefreshUserListButton(){
+    private void handleRefreshUserListButton(){
         customerList = FXCollections.observableList(adminManager.getCustomerList());
         tblUserList.setItems(customerList);
         tblUserList.refresh();
     }
 
+    /**
+     * Actionhandler for when pressing the show-all-bikes button.
+     */
     @FXML
-    void handleShowAllBikesButton(){
+    public void handleShowAllBikesButton(){
         // When changing selection, handleSelectionChangeTblUserList is fired. There we do the update
         tblUserList.getSelectionModel().select(null);
         tblBikeList.getSelectionModel().select(null);
@@ -250,7 +238,7 @@ public class MainController {
     }
 
     @FXML
-    void handleEditBikeButton(){
+    private void handleEditBikeButton(){
         Bike bikeToEdit = tblBikeList.getSelectionModel().getSelectedItem();
         if(bikeToEdit != null){
             windowManager.initEditBike(bikeToEdit, bikeToEdit.getCustomer(), this);
@@ -258,7 +246,7 @@ public class MainController {
     }
 
     @FXML
-    void handleRemoveUserButton() {
+    private void handleRemoveUserButton() {
         Customer customerToBeRemoved = tblUserList.getSelectionModel().getSelectedItem();
 
         try {
@@ -276,7 +264,7 @@ public class MainController {
     }
 
     @FXML
-    void handleRemoveBikeButton(){
+    private void handleRemoveBikeButton(){
         Bike bikeToBeRemoved = tblBikeList.getSelectionModel().getSelectedItem();
 
         try{
@@ -299,7 +287,7 @@ public class MainController {
     }
 
     @FXML
-    void handleAddBikeButton(){
+    private void handleAddBikeButton(){
         if(tblUserList.getSelectionModel().isEmpty()){
             windowManager.openPopup("Du måste välja en användare att lägga till en cykel på.");
             return;
@@ -309,7 +297,7 @@ public class MainController {
     }
 
     @FXML
-    void handleSearchByBarcodeButton(){
+    private void handleSearchByBarcodeButton(){
         long searchInput;
 
         try{
@@ -331,7 +319,7 @@ public class MainController {
     }
 
     @FXML
-    void handleSearchByPersonNrButton(){
+    private void handleSearchByPersonNrButton(){
         String searchInput = tbxSearchPersonalNr.getText();
         Customer foundCustomer = adminManager.findCustomer(searchInput);
 
@@ -339,7 +327,7 @@ public class MainController {
     }
 
     @FXML
-    void handlePrintButton(){
+    private void handlePrintButton(){
         Bike bike = tblBikeList.getSelectionModel().getSelectedItem();
         if(bike == null){
             return;

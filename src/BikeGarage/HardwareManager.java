@@ -94,7 +94,7 @@ public class HardwareManager {
     }
 
     /**
-     * To reset the timeout of PIN-code terminal.
+     * Resets the timeout that the PIN-code terminal has.
      */
     private void timeOutReset(){
         numberOfTimesIncorrectPincode = 0;
@@ -160,7 +160,7 @@ public class HardwareManager {
     }
 
     /**
-     * Clear the saved input from pincode and stop the clearPincodeInputTimer that clears it
+     * Clear the saved input from pincode and stop the clearPincodeInputTimer (the timer is reset).
      */
     private void clearPincodeTerminalInput(){
         entryPincodeTerminalInput.setLength(0);
@@ -169,8 +169,8 @@ public class HardwareManager {
 
     /**
      * Handle the input barcode through the barcode scanner.
-     * @param barcode The input barcode
-     * @param lock The ElectronicLock that is connected to this barcodescanner
+     * @param barcode The inputted barcode from the hardware.
+     * @param lock The ElectronicLock that is connected to this barcodescanner. Either entry- or exitscanner.
      */
     private void handleScannedBarcode(String barcode, ElectronicLock lock) {
         long barcodeInLong;
@@ -199,7 +199,7 @@ public class HardwareManager {
                 entryPincodeTerminal.lightLED(PincodeTerminal.GREEN_LED, Config.TIME_PINCODE_LED_ON);
             }
             else if(lock == exitLock){
-                // If bikeis not parked then it cannot get out
+                // If bike is not parked then it cannot get out
                 if(!searchedBike.getParkingStatus()){
                     return;
                 }
@@ -218,7 +218,7 @@ public class HardwareManager {
      * @param barcode The barcode that will be printed. It's length should be 5 characters
      * @throws IllegalArgumentException if the barcode is not 5 characters.
      */
-    public void printBarcode(String barcode){
+    public void printBarcode(String barcode) throws IllegalArgumentException{
         if(barcode.length() != 5){
             throw new IllegalArgumentException("The inputted barcode was not 5 characters");
         }
