@@ -88,7 +88,7 @@ public class BikeManager {
     /**
      * Add a bike used by DatabaseManager.
      * @param barcodeNr Barcode number.
-     * @param customer The bke owner.
+     * @param customer The bike's owner.
      * @param regTime Registration time.
      * @param entryTime Entry time.
      * @param exitTime Exit time.
