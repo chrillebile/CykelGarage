@@ -2,6 +2,7 @@ package BikeGarage;
 
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Reads and writes system information to file
@@ -38,7 +39,7 @@ public class DatabaseManager {
     private BikeManager bikeManager;
     private CustomerManager customerManager;
     private Config config;
-    private FileWriter fileWriter;
+    private BufferedWriter fileWriter;
     private BufferedReader fileReader;
 
     /**
@@ -57,7 +58,7 @@ public class DatabaseManager {
      */
     public BikeManager loadBikes() {
         try {
-            fileReader = new BufferedReader(new FileReader(Config.FILENAME_BIKE));
+            fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(Config.FILENAME_BIKE), Config.FILE_ENCODING_TYPE));
             String line;
             fileReader.readLine();
             while ((line = fileReader.readLine()) != null) {
@@ -87,7 +88,7 @@ public class DatabaseManager {
      */
     public CustomerManager loadCustomers() {
         try {
-            fileReader = new BufferedReader(new FileReader(Config.FILENAME_CUSTOMER));
+            fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(Config.FILENAME_CUSTOMER), Config.FILE_ENCODING_TYPE));
             String line;
             fileReader.readLine();
             while ((line = fileReader.readLine()) != null) {
@@ -117,7 +118,7 @@ public class DatabaseManager {
      */
     public Config loadConfig() {
         try {
-            fileReader = new BufferedReader(new FileReader(Config.FILENAME_CONFIG));
+            fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(Config.FILENAME_CONFIG), Config.FILE_ENCODING_TYPE));
             fileReader.readLine();
             String line;
             //If line is not empty it will read and set max parking spots
@@ -170,8 +171,8 @@ public class DatabaseManager {
      */
     public void updateBikes() {
         try {
-            fileWriter = new FileWriter(Config.FILENAME_BIKE);
-            fileWriter.append(FILE_HEADER_BIKE.toString());
+            fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Config.FILENAME_BIKE), Config.FILE_ENCODING_TYPE));
+            fileWriter.append(FILE_HEADER_BIKE);
             fileWriter.append(NEW_LINE_SEPARATOR);
 
             for (Bike b : bikeManager.getBikeList()) {
@@ -209,8 +210,8 @@ public class DatabaseManager {
      */
     public void updateCustomers() {
         try {
-            fileWriter = new FileWriter(Config.FILENAME_CUSTOMER);
-            fileWriter.append(FILE_HEADER_CUSTOMER.toString());
+            fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Config.FILENAME_CUSTOMER), Config.FILE_ENCODING_TYPE));
+            fileWriter.append(FILE_HEADER_CUSTOMER);
             fileWriter.append(NEW_LINE_SEPARATOR);
 
             for (Customer c : customerManager.getCustomerList()) {
@@ -250,8 +251,8 @@ public class DatabaseManager {
      */
     public void updateConfig() {
         try {
-            fileWriter = new FileWriter(Config.FILENAME_CONFIG);
-            fileWriter.append(FILE_HEADER_CONFIG.toString());
+            fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Config.FILENAME_CONFIG), Config.FILE_ENCODING_TYPE));
+            fileWriter.append(FILE_HEADER_CONFIG);
             fileWriter.append(NEW_LINE_SEPARATOR);
 
             // Since SYSTEM_STARTED_BEFORE is a boolean, 1 equals true and 0 equals false

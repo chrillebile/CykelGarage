@@ -1,5 +1,8 @@
 package BikeGarage;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 /**
  * All setting for the program
  *
@@ -24,6 +27,7 @@ public class Config {
     public static final int MAX_NUMBER_OF_BARCODES = 100000;
     public static final int MAX_USERS = 50000;
     public static final int MAX_BIKES_PER_PERSON = 2;
+    public static final Charset FILE_ENCODING_TYPE = StandardCharsets.UTF_8;
     public static final String FILENAME_BIKE = "databaseFiles/bikeTable.csv";
     public static final String FILENAME_CUSTOMER = "databaseFiles/customerTable.csv";
     public static final String FILENAME_CONFIG = "databaseFiles/config.csv";
